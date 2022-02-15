@@ -2,8 +2,6 @@ import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
-import { DateTimeResolver } from 'graphql-scalars'
-import { ProjectLike } from '@prisma/client';
 
 
 
@@ -26,7 +24,7 @@ export default {
       }
       catch (e) {
         console.log(e)
-        return e
+        return new ApolloError("this project is denied")
 
       }
     },

@@ -13,12 +13,12 @@ model Project {
   createdAt         DateTime            @default(now()) @map("created_at")
   updatedAt         DateTime            @updatedAt @map("updated_at")
   deleted           DateTime?
-  attachments       Json
-  category          String
-  description       String
-  level             String
-  privacy           String
-  version           String
+  attachments       Json?
+  category          String?
+  description       String?
+  level             String?
+  privacy           String?
+  version           String?
   authorUserId      Int                 @map("author_user_id")
   coAuthorUserIds   Json?             @map("co_author_user_ids") 
 
