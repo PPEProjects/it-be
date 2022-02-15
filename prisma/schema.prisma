@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_IT_SQUARE")
+}
+
+model Project {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+  deleted           DateTime?
+  attachments       String              @db.LongText
+  category          String
+  description       String
+  level             String
+  privacy           String
+  version           String
+  authorUserId      Int                 @map("author_user_id")
+  coAuthorUserIds   String?             @map("co_author_user_ids") @db.LongText
+  projectComment    ProjectComment[]
+  projectInterested ProjectInterested[]
+  projectLike       ProjectLike[]
+  projectMembers    ProjectMembers[]
+  userFeedback      UserFeedback[]
+
+  @@map("project")
+}
+
+model ProjectLike {
+  id        Int      @id @default(autoincrement())
+  userId    Int?     @map("user_id")
+  projectId Int      @map("project_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  project   Project  @relation(fields: [projectId], references: [id])
+
+  @@index([projectId], map: "project_like_project_id_fkey")
+  @@map("project_like")
+}
+
+model ProjectComment {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  projectId Int       @map("project_id")
+  parentId  Int       @map("parent_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deleted   DateTime?
+  project   Project   @relation(fields: [projectId], references: [id])
+
+  @@index([projectId], map: "project_comment_project_id_fkey")
+  @@map("project_comment")
+}
+
+model ProjectInterested {
+  id        Int       @id @default(autoincrement())
+  projectId Int       @map("project_id")
+  userId    Int       @map("user_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deleted   DateTime?
+  project   Project   @relation(fields: [projectId], references: [id])
+
+  @@index([projectId], map: "project_interested_project_id_fkey")
+  @@map("project_interested")
+}
+
+model ProjectMembers {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  projectId Int       @map("project_id")
+  roles     String    @db.LongText
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deleted   DateTime?
+  project   Project   @relation(fields: [projectId], references: [id])
+
+  @@index([projectId], map: "project_members_project_id_fkey")
+  @@map("project_members")
+}
+
+model UserAdvance {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  roles     String?   @db.LongText
+  language  String?
+  skill     String?
+  info      String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deleted   DateTime?
+
+  @@map("user_advance")
+}
+
+model UserFeedback {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  projectId Int       @map("project_id")
+  grate     String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deleted   DateTime?
+  project   Project   @relation(fields: [projectId], references: [id])
+
+  @@index([projectId], map: "user_feedback_project_id_fkey")
+  @@map("user_feedback")
+}
