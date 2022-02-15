@@ -15,22 +15,6 @@ export default {
                     deleted: null
                 }
             })
-            console.log(allProject)
-            // for(const project of allProject){
-            //     var member = project.member
-            //     console.log(member)
-            //     project.member = await prismaUser.user.findMany({
-            //         where:{
-            //             id: {in: member}
-            //         },
-            //         select:{
-            //             id: true,
-            //             name: true,
-            //             email:true
-            //         }
-            //     })
-            //     console.log(project.member)
-            // }
             return allProject
         }
         catch(e){

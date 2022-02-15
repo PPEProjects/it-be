@@ -9,22 +9,22 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  firstName String?  @map("first_name")
-  name  String? 
-  platform String?
-  email     String   @unique
-  password  String   @unique
-  phoneNumber String?
-  username String?
-  role_label String?
-  quotes String?
-  is_flag Boolean @default(false)
-  avatar_attachment_id Int?
+  id                       Int      @id @default(autoincrement())
+  firstName                String?  @map("first_name")
+  name                     String?
+  platform                 String?
+  email                    String   @unique
+  password                 String   @unique
+  phoneNumber              String?
+  username                 String?
+  role_label               String?
+  quotes                   String?
+  is_flag                  Boolean  @default(false)
+  avatar_attachment_id     Int?
   background_attachment_id Int?
-  roles    Json?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  roles                    Json 
+  createdAt                DateTime @default(now()) @map("created_at")
+  updatedAt                DateTime @updatedAt @map("updated_at")
 
   @@map("user")
 }
