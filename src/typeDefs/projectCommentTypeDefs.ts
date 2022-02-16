@@ -2,27 +2,29 @@ import { gql } from 'apollo-server'
 
 export default gql`
   type Mutation {
-    createProjectLike(data: ProjectLikeInput!): ProjectLike!
-    updateProjectLike(data: ProjectLikeInput!): ProjectLike
+    createProjectComment(data: ProjectCommentInput!): JSON
+    updateProjectComment(data: ProjectCommentInput!): ProjectComment
   }
 
   type Query {
-    allProjectLike(projectId:Int): [ProjectLike!]!
+    allProjectComment(projectId:Int): [ProjectComment!]!
     myProject: [Project!]!
   }
 
-  type ProjectLike {
+  type ProjectComment{
     id: Int
+    userId:Int
     projectId: Int
+    parentId:Int  
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
   }
   
-  input ProjectLikeInput {
+  input ProjectCommentInput {
     id: Int
     projectId: Int
-
+    parentId:Int
   }
 
   scalar JSON

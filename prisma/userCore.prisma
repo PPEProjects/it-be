@@ -22,7 +22,7 @@ model User {
   is_flag                  Boolean  @default(false)
   avatar_attachment_id     Int?
   background_attachment_id Int?
-  roles                    Json 
+  roles                    String   @db.LongText
   createdAt                DateTime @default(now()) @map("created_at")
   updatedAt                DateTime @updatedAt @map("updated_at")
 

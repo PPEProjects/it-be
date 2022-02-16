@@ -13,8 +13,15 @@ export default {
             const allProject = await prisma.project.findMany({
                 where:{
                     deleted: null
+                },
+                include:{
+                    projectLike : true
                 }
+                
             })
+            for(const project of allProject){
+                console.log(project.name)
+            }
             return allProject
         }
         catch(e){

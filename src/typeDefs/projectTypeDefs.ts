@@ -24,6 +24,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
+    projectLike: [ProjectLike]
   }
   
   input ProjectInput {

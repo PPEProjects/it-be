@@ -21,7 +21,6 @@ model Project {
   version           String?
   authorUserId      Int                 @map("author_user_id")
   coAuthorUserIds   Json?             @map("co_author_user_ids") 
-
   projectComment    ProjectComment[]
   projectInterested ProjectInterested[]
   projectLike       ProjectLike[]
@@ -74,7 +73,7 @@ model ProjectMembers {
   id        Int       @id @default(autoincrement())
   userId    Int       @map("user_id")
   projectId Int       @map("project_id")
-  roles     Json?
+  roles     Json?  
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?
@@ -87,7 +86,7 @@ model ProjectMembers {
 model UserAdvance {
   id        Int       @id @default(autoincrement())
   userId    Int       @map("user_id")
-  roles     Json?
+  roles     Json?   
   language  String?
   skill     String?
   info      String?
