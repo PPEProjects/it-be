@@ -4,10 +4,12 @@ export default gql`
   type Mutation {
     createProjectLike(data: ProjectLikeInput!): ProjectLike!
     updateProjectLike(data: ProjectLikeInput!): ProjectLike
+    deleteProjectLike(id: Int): Boolean
   }
 
+
   type Query {
-    allProjectLike(projectId:Int): [ProjectLike!]!
+    allProjectLike(id:Int): [ProjectLike!]!
     myProject: [Project!]!
   }
 
@@ -17,6 +19,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
+    project: Project
   }
   
   input ProjectLikeInput {

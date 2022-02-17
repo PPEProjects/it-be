@@ -1,29 +1,30 @@
 import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
-import { arch } from 'os';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
+import { DateTimeResolver } from 'graphql-scalars'
 
 
 
 export default {
-//   JSON: GraphQLJSON,
+  JSON: GraphQLJSON,
+
   Mutation: {
-    createProjectComment: async (parent, args, context,) => {
+    createUserAdvance : async (parent, args, context,) => {
   
       try {
         const { userId } = context
         const user = await prismaUser.user.findUnique({
               where:{ id: userId}
           })
-        const createProjectComment = await prisma.projectComment.create({
+        const createUserAdvance  = await prisma.userAdvance.create({
           data: {
             ...args.data,
             userId: userId
           },
         })
-        createProjectComment.user = user
-        return createProjectComment
+        createUserAdvance.user = user
+        return createUserAdvance
       }
       catch (e) {
         console.log(e)
@@ -31,27 +32,27 @@ export default {
 
       }
     },
-    updateProjectComment: async (parent, args, content,) =>{
+    updateUserAdvance : async (parent, args, content,) =>{
       try{
-        const updateProjectComment = await prisma.projectComment.update({
+        const updateUserAdvance = await prisma.userAdvance .update({
             where:{
-               id : args.data.id  
+              id: args.data.id
             },
             data:{
               ...args.data
             }
         })
-        return updateProjectComment
+        return updateUserAdvance 
       }
       catch(e){
         console.log(e)
-        return new ApolloError(`${e}`)
       }
     },
-    deleteProjectComment: async (parent, args, content,) =>{
+
+    deleteUserAdvance : async (parent, args, content,) =>{
       try{
         const now = new Date()
-        const deleteProject = await prisma.projectComment.update({
+        const deleteProjectMembers= await prisma.userAdvance .update({
             where:{
               id: args.id 
             },
@@ -68,6 +69,8 @@ export default {
 
     }
 }
+
+
 
 
 

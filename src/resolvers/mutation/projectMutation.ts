@@ -11,8 +11,7 @@ export default {
 
   Mutation: {
     createProject: async (parent, args, context,) => {
-      console.log("createProject", args)
-      return;
+  
       try {
         const { userId } = context
         const user = await prismaUser.user.findUnique({

@@ -8,19 +8,19 @@ export default {
     JSON: GraphQLJSON,
    
   Query: {
-    allProjectComment: async (parent, args, context) => {
-            console.log(args)
+        allProjectMembers: async (parent, args, context) => {
             try{
-            const allProject = await prisma.projectComment.findMany({
+            const allProjectMembers = await prisma.projectMembers.findMany({
                 where:{
-                
                     id: args.id
                   }, include:{
                       project : true
+                    
                   }
+                  
+            
             })
-            console.log(allProject)
-            return allProject
+            return allProjectMembers
         }
         catch(e){
             console.log(e)

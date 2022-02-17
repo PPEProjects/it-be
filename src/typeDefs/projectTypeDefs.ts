@@ -16,6 +16,7 @@ export default gql`
     name: String
     user: User
     attachments: JSON
+    authorUserId:Int
     category: String
     description: String
     level: String
@@ -41,6 +42,6 @@ export default gql`
   }
 
   scalar JSON
-  scalar DateTime
+  scalar DateTimea
 `
 

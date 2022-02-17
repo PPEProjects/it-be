@@ -20,7 +20,13 @@ export default {
                 
             })
             for(const project of allProject){
-                console.log(project.name)
+               var userid = project.authorUserId
+               const user = prismaUser.user.findUnique({
+                   where:{
+                       id: userid
+                   },
+               })
+               project.user = user
             }
             return allProject
         }

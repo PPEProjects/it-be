@@ -32,7 +32,7 @@ export default {
       try{
         const updateProjectLike = await prisma.projectLike.update({
             where:{
-              id: args.id 
+              id: args.data.id
             },
             data:{
               ...args.data
@@ -44,7 +44,24 @@ export default {
         console.log(e)
       }
     },
+    deleteProjectLike: async (parent, args, content,) =>{
+      try{
+        const now = new Date()
+        const deleteProjectLike= await prisma.projectLike.delete({
+            where:{
+              id: args.id
+              
+            },
+            
+        })
+        return true
+      }
+      catch(e){
+        console.log(e)
+      }
+    },
 
+    
     }
 }
 

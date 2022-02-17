@@ -2,12 +2,13 @@ import { gql } from 'apollo-server'
 
 export default gql`
   type Mutation {
-    createProjectComment(data: ProjectCommentInput!): JSON
+    createProjectComment(data: ProjectCommentInput!): ProjectComment!
     updateProjectComment(data: ProjectCommentInput!): ProjectComment
+    deleteProjectComment(id: Int): Boolean
   }
 
   type Query {
-    allProjectComment(projectId:Int): [ProjectComment!]!
+    allProjectComment(id: Int): [ProjectComment!]!
     myProject: [Project!]!
   }
 
@@ -18,7 +19,8 @@ export default gql`
     parentId:Int  
     createdAt: DateTime!
     updatedAt: DateTime!
-    deleted: DateTime
+    deleted: DateTime!
+    project:[Project]
   }
   
   input ProjectCommentInput {
@@ -30,4 +32,5 @@ export default gql`
   scalar JSON
   scalar DateTime
 `
+
 
