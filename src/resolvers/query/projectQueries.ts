@@ -1,8 +1,7 @@
 
 import GraphQLJSON from 'graphql-type-json';
-
-const { prisma , prismaUser } = require('../../database')
-
+const { prisma , prismaUser , userCore} = require('../../database')
+import _ = require('lodash');
 
 export default {
     JSON: GraphQLJSON,
@@ -10,24 +9,33 @@ export default {
   Query: {
         allProject: async (parent, args, context) => {
             try{
-            const allProject = await prisma.project.findMany({
-                where:{
+                const allProject = await  prisma.project.findMany({
+                    where:{
                     deleted: null
-                },
-                include:{
-                    projectLike : true
-                }
-                
+                    },
+                    include:{
+                        projectLike : true,
+                        projectComment: true
+                    },
+                    orderBy:{
+                        id: "desc"
+                    }
             })
-            for(const project of allProject){
-               var userid = project.authorUserId
-               const user = prismaUser.user.findUnique({
-                   where:{
-                       id: userid
-                   },
-               })
-               project.user = user
-            }
+            
+            const getIdUser = _.map(allProject, 'authorUserId')
+            const userCore = await prismaUser.user.findMany({
+                where:{
+                    id:{
+                        in: getIdUser
+                    }
+                }
+            })
+            const users = _.keyBy(await userCore, 'id')
+
+          for(const project of allProject){
+            project.user = users[project.authorUserId]
+          }
+            
             return allProject
         }
         catch(e){

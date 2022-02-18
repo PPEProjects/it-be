@@ -6,6 +6,13 @@ import projectQueries from './query/projectQueries'
 
 import projectLikeMutation from './mutation/projectLikeMutation'
 import projectLikeQueries from './query/projectLikeQueries'
+
+import projectCommentMutation from './mutation/projectCommentMutation'
+
+const resolvers =  [userQueries, userMutation, 
+                        projectMutation, projectQueries,projectLikeQueries,
+                        projectLikeMutation,
+                        projectCommentMutation
 import projectCommentMutation from './mutation/projectCommentMutation'
 import projectCommentQueries from './query/projectCommentQueries'
 import projectInterestedMutation from './mutation/projectInterestedMutation'

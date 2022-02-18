@@ -7,7 +7,7 @@ const { prismaUser } = require('../../database')
 
 
 export default {
-//   JSON: GraphQLJSON,
+  JSON: GraphQLJSON,
   Mutation: {
     createProjectComment: async (parent, args, context,) => {
   

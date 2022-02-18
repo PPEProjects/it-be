@@ -1,6 +1,6 @@
 
 import GraphQLJSON from 'graphql-type-json';
-
+import userQueries from './userQueries';
 const { prisma , prismaUser } = require('../../database')
 
 
@@ -25,6 +25,25 @@ export default {
         catch(e){
             console.log(e)
         }
+        },
+        detailProjectComment: async (parent, args, context) => {
+            try{
+                const getUser = userQueries.Query
+                const detailProjectComment = await prisma.projectComment.findMany({
+                    where:{         
+                            projectId: args?.projectId                  
+                    }
+                })
+                for(const comment of detailProjectComment){
+                    var userId = {"id": comment.userId}
+                    var user = await getUser.detailUser(parent, userId, context)
+                    comment.user = user
+                }
+                return detailProjectComment
+            }
+            catch(e){
+                console.log(e)
+            }
         },
   }
 }

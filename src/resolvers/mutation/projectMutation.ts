@@ -11,7 +11,6 @@ export default {
 
   Mutation: {
     createProject: async (parent, args, context,) => {
-  
       try {
         const { userId } = context
         const user = await prismaUser.user.findUnique({
@@ -28,7 +27,7 @@ export default {
       }
       catch (e) {
         console.log(e)
-        return new ApolloError("this email invalid")
+        return new ApolloError(`${e}`)
 
       }
     },

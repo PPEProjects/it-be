@@ -18,5 +18,5 @@ const prismaUser = new PrismaUserCore({
 
 module.exports = {
     prisma,
-    prismaUser
+    prismaUser,
 }

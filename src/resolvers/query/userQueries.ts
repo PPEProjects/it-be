@@ -3,6 +3,7 @@ const { prismaUser } = require('../../database')
 import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
+import axios from 'axios'
 const prisma = prismaUser
 export default {
   Query: {
@@ -12,41 +13,54 @@ export default {
       return allUser
     },
     signIn: async (parent, args, context) => {
-      const user = await prisma.user.findUnique({
+      const checkUser = await prisma.user.findUnique({
         where: { email: args.email },
       })
-      if (!user) {
+      if (!checkUser) {
         return new ApolloError("Invalid email or password!")
       }
-      const valid = await bcrypt.compare(args.password, user.password)
+      const valid = await bcrypt.compare(args.password, checkUser.password)
       if (!valid) {
         return new ApolloError("Invalid email or password!")
       }
-      delete user['password']
-      const token = jwt.sign({ userId: user.id }, `${process.env.APP_SECRET}`)
+      const logIn = await axios.post(`${process.env.URL_SMILE_EYE_API}/ppe-core/auth/login`,
+       { 
+          email: args.email,    
+          password: args.password 
+        }
+      );
+      const user = logIn.data.data
+      const token = user.token
 
       return {
         token,
         user,
       }
     },
-    me: async (parent, args, context) => {
+    me: async (parent, args, context) => {  
       const { userId } = context
+      console.log(userId)
       if (!userId) {
         return new ApolloError("please login")
       }
       const me = await prisma.user.findUnique({
         where: {
           id: userId
-        },
-        include:{
-          posts: true,
-          infos: true
         }
       })
       delete me['password']
       return me
-    }
+    },
+    detailUser: async (parent, args, context) => {  
+      const user = await prisma.user.findUnique({
+        where: {
+          id: args?.id
+        }
+      })
+      delete user["password"]
+      return user
+    },
+    
   },
 
 }

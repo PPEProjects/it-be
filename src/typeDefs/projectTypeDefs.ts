@@ -1,5 +1,4 @@
 import { gql } from 'apollo-server'
-
 export default gql`
   type Mutation {
     createProject(data: ProjectInput!): Project!
@@ -22,9 +21,15 @@ export default gql`
     level: String
     privacy: String
     version: String
+    budget: JSON
+    type: String
+    salary: JSON
+    is_recruit: Boolean
+    is_involved: Boolean
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
+    projectComment: [ProjectComment]
     projectLike: [ProjectLike]
   }
   
@@ -38,7 +43,11 @@ export default gql`
     level: String
     privacy: String
     version: String
-
+    budget: JSON
+    type: String
+    salary: JSON
+    is_recruit: Boolean
+    is_involved: Boolean
   }
 
   scalar JSON

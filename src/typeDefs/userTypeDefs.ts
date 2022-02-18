@@ -9,6 +9,7 @@ export default gql`
     allUsers: [User!]!
     signIn(email: String!, password: String!): AuthPayload!
     me: User!
+    detailUser(id: Int): User 
   }
 
   type User {
@@ -25,6 +26,7 @@ export default gql`
     email: String!
     name: String
     password: String!
+    password_confirmation: String!
   }
 
   input UserUniqueInput {
