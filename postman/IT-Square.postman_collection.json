@@ -1,0 +1,895 @@
+{
+	"info": {
+		"_postman_id": "e5cd58ff-4fd9-4321-b39e-cd590042eb71",
+		"name": "IT-Square",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth-core",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Mutation($data: UserCreateInput!) {\n  signupUser(data: $data) {\n    token\n    user {\n      id\n      email\n      name\n    }\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"email\": \"test6034@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
+							},
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth SignIn",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query SignIn($email: String!, $password: String!) {\n  signIn(email: $email, password: $password) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}",
+								"variables": "{\n   \"email\": \"sadasd122@gmail.com\",\n    \"password\": \"dsadasd\"\n}\n\n\n "
+							},
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "project",
+			"item": [
+				{
+					"name": "create_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateProject($data: ProjectInput!) {\n  createProject(data: $data) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"project\",\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateProject($deleteProjectId: Int) {\n  deleteProject(id: $deleteProjectId)\n}",
+								"variables": "{\n  \"deleteProjectId\": null\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Query {\n  allProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_my_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyProject {\n  myProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "query_me",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Query {\n  me {\n    email\n    id\n    name\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query AllUsers {\n  allUsers {\n    id\n    email\n    name\n    password\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailUser($detailUserId: Int) {\n  detailUser(id: $detailUserId) {\n    email\n    id\n    name\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "interested-project",
+			"item": [
+				{
+					"name": "create_interested_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateProjectInterested($data: ProjectInterestedInput!) {\n  createProjectInterested(data: $data) {\n    id\n    projectId\n    createdAt\n    updatedAt\n    userId\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 1\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_interested_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateProjectInterested($data: ProjectInterestedInput!) {\n  updateProjectInterested(data: $data) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"projectId\": 2\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_interested_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: Int) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
+								"variables": "{\n  \"deleteProjectInterestedId\": 1\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_interested_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query AllProjectInterested {\n  allProjectInterested {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n \n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_interested_project Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailProjectInterested($detailProjectInterestedId: Int) {\n  detailProjectInterested(id: $detailProjectInterestedId) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"allProjectInterestedId\": 1\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "member-project",
+			"item": [
+				{
+					"name": "create_member_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateProjectMembers($data: ProjectMembersInput!) {\n  createProjectMembers(data: $data) {\n    id\n    userId\n    projectId\n    roles\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 8,\n    \"roles\": [\"dev\"],\n    \"userId\": null\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_member_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateProjectMembers($data: ProjectMembersInput!) {\n  updateProjectMembers(data: $data) {\n    id\n    userId\n    projectId\n    roles\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"id\": 6,\n    \"projectId\": 8,\n    \"roles\": [\"dev\"]\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_member_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation DeleteProjectMembers($deleteProjectMembersId: Int) {\n  deleteProjectMembers(id: $deleteProjectMembersId)\n}",
+								"variables": "  {\n    \"deleteProjectMembersId\": null\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_member_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query AllProjectMembers {\n  allProjectMembers{\n    id\n    userId\n    projectId\n    roles\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n \n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_member_by_project_id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailMemberByIdProject($projectId: Int) {\n  detailMemberByIdProject(projectId: $projectId) {\n    id\n    userId\n    projectId\n    roles\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n \n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user-advance",
+			"item": [
+				{
+					"name": "create_users_advance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateUserAdvance($data: UserAdvanceInput!) {\n  createUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    personalGoal\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"data\": {\n      \"roles\": [\"user\"],\n      \"language\": \"VietNames, English\",\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"personalGoal\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\"\n    }\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_users_advance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateUserAdvance($data: UserAdvanceInput!) {\n  updateUserAdvance(data: $data) {\n    id\n    roles\n    userId\n    language\n    skill\n    info\n    programLanguage\n    personalGoal\n    selfIntroduction\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"data\": {\n      \"id\": null,\n      \"userId\": null,\n      \"roles\": null,\n      \"language\": null,\n      \"skill\": null,\n      \"info\": null,\n      \"programLanguage\": null,\n      \"personalGoal\": null,\n      \"selfIntroduction\": null\n    }\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_users_advance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation DeleteUserAdvance($deleteUserAdvanceId: Int) {\n  deleteUserAdvance(id: $deleteUserAdvanceId)\n}",
+								"variables": "  {\n    \"deleteUserAdvanceId\": 1\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_users_advance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query AllUserAdvance {\n  allUserAdvance {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    personalGoal\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_users_advance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Query($userId: Int) {\n  detailUserAdvance(userId: $userId) {\n    id\n    userId\n    user{\n        id\n        name\n        email\n        phone_number\n    }\n    roles\n    language\n    skill\n    info\n    personalGoal\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"userId\": 3\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user-feedback",
+			"item": [
+				{
+					"name": "create_users_feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateUserFeedback($data: UserFeedbackInput!) {\n  createUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"data\": {\n      \"userId\": null,\n      \"projectId\": null,\n      \"grate\": null\n    }\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_users_feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateUserFeedback($data: UserFeedbackInput!) {\n  updateUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"data\": {\n      \"id\": null,\n      \"userId\": null,\n      \"projectId\": null,\n      \"grate\": null\n    }\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_users_feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation DeleteUserFeedback($deleteUserFeedbackId: Int) {\n  deleteUserFeedback(id: $deleteUserFeedbackId)\n}",
+								"variables": "  {\n    \"deleteUserFeedbackId\": 1\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_users_feedback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query AllUserFeedback {\n  allUserFeedback {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
