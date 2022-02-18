@@ -16,6 +16,7 @@ import userAdvanceQueries from './query/userAdvanceQueries'
 import userFeedbackMutation from './mutation/userFeedbackMutation'
 import userFeedbackQueries from './query/userFeedbackQueries'
 
+import exampleQueries from './query/exampleQueries'
 const resolvers =  [
                         userQueries, userMutation, 
                         projectMutation, projectQueries,
@@ -23,6 +24,7 @@ const resolvers =  [
                         projectMembersMutation, projectMembersQueries,
                         userAdvanceMutation,userAdvanceQueries,
                         userFeedbackMutation,userFeedbackQueries,
+                        exampleQueries
                     ]
 
 export  { resolvers }
