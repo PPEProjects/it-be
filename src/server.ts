@@ -12,17 +12,19 @@ const PORT = 4000
     resolvers,
     typeDefs,
     context: async({ req }) => {
-      // let webApiUrl = `${process.env.URL_SMILE_EYE_API}/get-token`
-      // let gettoken  =  req.headers.authorization
-      //   let tokenStr =  gettoken ? gettoken.replace("Bearer", "") : null
-      // const res = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
-      return {
+      //  let webApiUrl = `${process.env.URL_SMILE_EYE_API}/get-token`
+      let webApiUrl = "https://be-ppe.codeby.com/get-token"
+       let gettoken  =  req.headers.authorization
+         let tokenStr =  gettoken ? gettoken.replace("Bearer", "") : null
+       const res = await axios.get(webApiUrl, { headers: {"Authorization" : `Bearer ${tokenStr}`} });
+        console.log(res.data)
+       return {
         ...req,
         prisma,
         userId:
           req && req.headers.authorization
             // ? getUserId(req)
-            ? 1
+            ? res.data
             : null
       };
     },
