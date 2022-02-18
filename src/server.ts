@@ -1,6 +1,6 @@
 // import { resolvers, typeDefs } from './schema'
 import { resolvers } from './resolvers'
-import { typeDefs } from './typeDefs'
+const { typeDefs } =  require('./typeDefs')
 import { prisma } from '@prisma/client'
 import { ApolloServer } from 'apollo-server'
 import axios from 'axios'
