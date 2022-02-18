@@ -26,5 +26,17 @@ export default {
             console.log(e)
         }
         },
+        detailMemberByIdProject: async (parent, args, context) => {
+                try {
+                    const detailMember = await prisma.projectMembers.findMany({
+                        where:{
+                            projectId: args.projectId
+                        }
+                    })
+                    return detailMember
+                } catch (e) {
+                    console.log(e)
+                }
+        },
   }
 }

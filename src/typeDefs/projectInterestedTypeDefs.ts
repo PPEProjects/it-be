@@ -8,8 +8,8 @@ export default gql`
   }
 
   type Query {
-    allProjectInterested(id:Int): [ProjectInterested!]
-    myProject: [Project!]!
+    allProjectInterested: [ProjectInterested]
+    detailProjectInterested(id: Int): ProjectInterested
   }
 
   type ProjectInterested {

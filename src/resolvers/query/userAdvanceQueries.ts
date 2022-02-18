@@ -2,9 +2,7 @@
 import { ApolloError } from 'apollo-server';
 import GraphQLJSON from 'graphql-type-json';
 import { isDataView } from 'util/types';
-import projectMembersTypeDefs from '../../typeDefs/projectMembersTypeDefs';
-import projectCommentMutation from '../mutation/projectCommentMutation';
-import projectMembersQueries from './projectMembersQueries';
+const _ = require('lodash')
 
 const { prisma , prismaUser } = require('../../database')
 
@@ -61,6 +59,25 @@ export default {
             console.log(e)
             return new ApolloError(`${e}`)
         }
+        },
+        detailUserAdvance: async (parent, args, context) => {
+            try {
+                const detailUserAdvance = await prisma.userAdvance.findMany({
+                  where:{
+                      userId: args.userId
+                  },
+                })
+                const getUser = await prismaUser.user.findUnique({
+                    where:{
+                        id: args.userId
+                    }
+                })
+                const userAdvance = _.first(detailUserAdvance)
+                userAdvance.user = getUser
+                return userAdvance
+            } catch (e) {
+                console.log(e)
+            }
         },
   }
 }

@@ -14,13 +14,17 @@ export default {
   
       try {
         const { userId } = context
+        var getUserId = userId
+        if(args.data.userId){
+          getUserId = args.data.userId
+        }
         const user = await prismaUser.user.findUnique({
-              where:{ id: userId}
+              where:{ id: getUserId}
           })
         const createProjectMembers = await prisma.projectMembers.create({
           data: {
             ...args.data,
-            userId: userId
+            userId: getUserId
           },
         })
         createProjectMembers.user = user
@@ -32,14 +36,14 @@ export default {
 
       }
     },
-    updateProjectMembers: async (parent, args, content,) =>{
+    updateProjectMembers: async (parent, args, context,) =>{
       try{
         const updateProjectMembers= await prisma.projectMembers.update({
             where:{
               id: args.data.id
             },
             data:{
-              ...args.data
+              ...args.data,
             }
         })
         return updateProjectMembers

@@ -28,7 +28,7 @@ export default {
       }
       catch (e) {
         console.log(e)
-        return new ApolloError("this email invalid")
+        return new ApolloError(`${e}`)
 
       }
     },

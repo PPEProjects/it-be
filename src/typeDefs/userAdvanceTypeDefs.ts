@@ -8,35 +8,36 @@ export default gql`
   }
 
   type Query {
-    allUserAdvance(id:Int): [UserAdvance!]!
-    myProject: [Project!]!
+    allUserAdvance: [UserAdvance]
+     detailUserAdvance(userId: Int): UserAdvance
   }
 
   type UserAdvance{
     
-    id:       Int       
+  id:       Int       
   userId:   Int    
   roles:    JSON
   language:  String
-  skill:     String
+  skill:     JSON
   info:      String
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    deleted: DateTime
-    user: User
+  personalGoal: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deleted: DateTime
+  user: User
   project:[Project]
-projectMembers: [ProjectMembers]
-    
+  projectMembers: [ProjectMembers]
+   
   }
   
   input UserAdvanceInput {
     id:       Int       
-  userId:   Int    
-  roles:    JSON
-  language:  String
-  skill:     String
-  info:      String
-
+    userId:   Int    
+    roles:    JSON
+    language:  String
+    skill:     JSON
+    info:      String
+    personalGoal: String
   }
 
   scalar JSON

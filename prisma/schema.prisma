@@ -21,45 +21,19 @@ model Project {
   version           String?
   authorUserId      Int                 @map("author_user_id")
   coAuthorUserIds   Json?             @map("co_author_user_ids") 
-  budget           Json?
-  salary           Json?
+  budget            Json?
+  salary            Json?
   is_involved       Boolean?
   is_recruit        Boolean?
   type              String?
-  projectComment    ProjectComment[]
+
   projectInterested ProjectInterested[]
-  projectLike       ProjectLike[]
   projectMembers    ProjectMembers[]
   userFeedback      UserFeedback[]
 
   @@map("project")
 }
 
-model ProjectLike {
-  id        Int      @id @default(autoincrement())
-  userId    Int?     @map("user_id")
-  projectId Int      @map("project_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  project   Project  @relation(fields: [projectId], references: [id])
-
-  @@index([projectId], map: "project_like_project_id_fkey")
-  @@map("project_like")
-}
-
-model ProjectComment {
-  id        Int       @id @default(autoincrement())
-  userId    Int       @map("user_id")
-  projectId Int       @map("project_id")
-  parentId  Int       @map("parent_id")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deleted   DateTime?
-  project   Project   @relation(fields: [projectId], references: [id])
-
-  @@index([projectId], map: "project_comment_project_id_fkey")
-  @@map("project_comment")
-}
 
 model ProjectInterested {
   id        Int       @id @default(autoincrement())
@@ -91,10 +65,11 @@ model ProjectMembers {
 model UserAdvance {
   id        Int       @id @default(autoincrement())
   userId    Int       @map("user_id")
-  roles   Json?
+  roles     Json?
   language  String?
-  skill     String?
-  info      String?
+  skill     Json?
+  info      String?   @db.MediumText
+  personalGoal String? @db.MediumText @map("personal_goal")
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?

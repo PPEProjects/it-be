@@ -17,6 +17,15 @@ export default gql`
     id: Int!
     name: String
     password: String
+    roles: JSON
+    first_name: String
+    phone_number:             String
+    username:                 String
+    role_label:               String  
+    is_flag:                  Boolean
+    quotes:                   String  
+    avatar_attachment_id:    JSON
+    background_attachment_id: JSON
   }
   type AuthPayload {
     token: String
