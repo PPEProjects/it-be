@@ -35,5 +35,3 @@ const PORT = 4000
   🚀 Server ready at: http://localhost:${PORT}`),
   )
 
-  
-  https://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@github.com/PPEProjects/it-be.git
