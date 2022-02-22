@@ -1,7 +1,9 @@
 
 import GraphQLJSON from 'graphql-type-json';
+import { sum } from 'lodash';
 const { prisma, prismaUser, userCore } = require('../../database')
 import _ = require('lodash');
+import { isArrayBufferView } from 'util/types';
 
 export default {
     JSON: GraphQLJSON,
@@ -13,10 +15,9 @@ export default {
                     where: {
                         deleted: null
                     },
-                    orderBy: {
-                        id: "desc"
-                    }
+ 
                 })
+        
 
                 const getIdUser = _.map(allProject, 'authorUserId')
                 const userCore = await prismaUser.user.findMany({
@@ -33,6 +34,7 @@ export default {
                 }
 
                 return allProject
+            
             }
             catch (e) {
                 console.log(e)

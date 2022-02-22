@@ -1,19 +1,20 @@
 
-const { prismaUser } = require('../../database')
+const _ = require('lodash')
+
+const { prismaUser, prisma } = require('../../database')
 import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
 import axios from 'axios'
-const prisma = prismaUser
 export default {
   Query: {
     allUsers: async (parent, args, context) => {
-      const allUser = await prisma.user.findMany({
+      const allUser = await prismaUser.user.findMany({
       })
       return allUser
     },
     signIn: async (parent, args, context) => {
-      const checkUser = await prisma.user.findUnique({
+      const checkUser = await prismaUser.user.findUnique({
         where: { email: args.email },
       })
       if (!checkUser) {
@@ -37,22 +38,66 @@ export default {
         user,
       }
     },
-    me: async (parent, args, context) => {  
-      const { userId } = context
-      console.log(userId)
-      if (!userId) {
-        return new ApolloError("please login")
-      }
-      const me = await prisma.user.findUnique({
-        where: {
-          id: userId
+    me: async (parent, args, context) => {    
+      try {
+        const { userId } = context
+
+        if (!userId) {
+          return new ApolloError("please login")
         }
+        const me = await prismaUser.user.findUnique({
+          where: {
+            id: userId
+          }
+        })
+      
+        const getuserAdvance = await prisma.userAdvance.findMany({
+          where:{
+              userId: args.userId
+          },
+        
+        })
+       
+        const getuserfeedback = await prisma.userFeedback.findMany({
+          where:{
+              userId: args.userId
+          }
       })
-      delete me['password']
-      return me
+      const getprojectmember = await prisma.projectMembers.findMany({
+        where:{
+            userId : args.userId
+        },
+        include:{
+            project: true
+        }
+        
+    })
+    const project =  await prisma.project.findMany({
+      where:{
+          id : args.userId
+      }
+  })
+  const numberSeftIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' FROM project WHERE author_user_id = ${args.userId}`
+  const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' FROM project_members WHERE user_id=${args.userId}`
+  
+      me.userAdvance = getuserAdvance
+      // console.log(userme.userAdvance)
+      me.userFeedback = getuserfeedback
+      me.projectMembers = getprojectmember
+    me.project = project
+    me.seftIdeas = _.first(numberSeftIdeas).number
+    console.log(numberSeftIdeas)
+    me.joinedProject = _.first(numberJoinProject).joined
+  
+        return me
+      } catch (e) {
+        console.log(e)
+        
+      }
+
     },
     detailUser: async (parent, args, context) => {  
-      const user = await prisma.user.findUnique({
+      const user = await prismaUser.user.findUnique({
         where: {
           id: args?.id
         }

@@ -31,6 +31,22 @@ export default {
 
       }
     },
+    updateProject: async (parent, args, content,) =>{
+      try{
+        const updateProject = await prisma.project .update({
+            where:{
+              id: args.data.id
+            },
+            data:{
+              ...args.data
+            }
+        })
+        return updateProject 
+      }
+      catch(e){
+        console.log(e)
+      }
+    },
     deleteProject: async (parent, args, content,) =>{
       try{
         const now = new Date()

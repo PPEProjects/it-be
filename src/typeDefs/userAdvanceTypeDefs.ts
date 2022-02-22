@@ -27,8 +27,14 @@ export default gql`
   user: User
   project:[Project]
   projectMembers: [ProjectMembers]
-   
+  userFeedback: [UserFeedback]
+  seftIdeas:  Int
+  joinedProject: Int
+  framework: Int
+    
   }
+   
+  
   
   input UserAdvanceInput {
     id:       Int       

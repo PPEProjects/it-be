@@ -2,6 +2,7 @@ import { gql } from 'apollo-server'
 export default gql`
   type Mutation {
     createProject(data: ProjectInput!): Project!
+    updateProject(data: ProjectInput!): Project
     deleteProject(id: Int): Boolean
   }
 
