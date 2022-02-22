@@ -24,33 +24,33 @@ export default {
             
                 
             })
-            for(const useradvance of allUserAdvance){
-                var userid = useradvance.userId
+            for(const userAdvance of allUserAdvance){
+                var userId = userAdvance.userId
                 
                 const user = prismaUser.user.findUnique({
                     where:{
-                        id: userid
+                        id: userId
                     },
                 })
                 
                 const project =  await prisma.Project.findMany({
                     where:{
-                        authorUserId: userid
+                        authorUserId: userId
                     }
                 })
     
-                const projectmember = await prisma.ProjectMembers.findMany({
+                const projectMember = await prisma.projectMembers.findMany({
                     where:{
-                        userId: userid,
+                        userId: userId,
                     
                     },
                     include:{
                         project: true
                     }
                 })
-                useradvance.user = user
-                useradvance.project= project
-                useradvance.projectMembers = projectmember
+                userAdvance.user = user
+                userAdvance.project= project
+                userAdvance.projectMembers = projectMember
                 
             
 
@@ -65,7 +65,7 @@ export default {
         },
         detailUserAdvance: async (parent, args, context) => {
             try {
-                const detailUserAdvance = await prisma.userAdvance.findMany({
+                const detailUserAdvance = await prisma.userAdvance.findFirst({
                   where:{
                       userId: args.userId
                   },
@@ -83,36 +83,40 @@ export default {
                     }
                 })
               
-                const getprojectmember = await prisma.ProjectMembers.findMany({
+                const getProjectMember = await prisma.projectMembers.findMany({
                     where:{
-                        userId : args.userId
-                    },
-                    include:{
-                        project: true
+                        pmUserId : args.userId
                     }
                     
                 })
-                const getuserfeedback = await prisma.userFeedback.findMany({
+                const getUserFeedback = await prisma.userFeedback.findMany({
                     where:{
                         userId: args.userId
                     }
                 })
                
-                const numberSeftIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' FROM project WHERE author_user_id = ${args.userId}`
-                const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' FROM project_members WHERE user_id=${args.userId}`
+                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
+                                                                FROM project 
+                                                                WHERE author_user_id = ${args.userId}`
+                const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
+                                                                    FROM project_members 
+                                                                    WHERE pm_user_id=${args.userId}`
                 
                 
-                const userAdvance = _.first(detailUserAdvance)
-                 const count = (userAdvance.skill[0].framework).length
+                const userAdvance = detailUserAdvance
+                if(userAdvance)
+                {
+                    const count = (userAdvance.skill[0].framework) ? (userAdvance.skill[0].framework).length : 0
+                
+                    userAdvance.user = getUser
+                    userAdvance.project = project
+                    userAdvance.projectMembers = getProjectMember
+                    userAdvance.userFeedback = getUserFeedback
+                    userAdvance.selfIdeas = _.first(numberSelfIdeas).number
+                    userAdvance.joinedProject = _.first(numberJoinProject).joined
+                    userAdvance.framework = count
+                }
                  
-            
-                userAdvance.user = getUser
-                userAdvance.project = project
-                userAdvance.projectMembers = getprojectmember
-                userAdvance.userFeedback = getuserfeedback
-                userAdvance.seftIdeas = _.first(numberSeftIdeas).number
-                userAdvance.joinedProject = _.first(numberJoinProject).joined
-                userAdvance.framework = count
                 return userAdvance
             } catch (e) {
                 console.log(e)

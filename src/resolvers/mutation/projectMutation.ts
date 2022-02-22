@@ -33,7 +33,7 @@ export default {
     },
     updateProject: async (parent, args, content,) =>{
       try{
-        const updateProject = await prisma.project .update({
+        const updateProject = await prisma.project.update({
             where:{
               id: args.data.id
             },

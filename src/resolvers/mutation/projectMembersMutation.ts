@@ -24,7 +24,7 @@ export default {
         const createProjectMembers = await prisma.projectMembers.create({
           data: {
             ...args.data,
-            userId: getUserId
+            pmUserId: getUserId
           },
         })
         createProjectMembers.user = user
@@ -32,7 +32,7 @@ export default {
       }
       catch (e) {
         console.log(e)
-        return new ApolloError("this email invalid")
+        return new ApolloError(`${e}`)
 
       }
     },

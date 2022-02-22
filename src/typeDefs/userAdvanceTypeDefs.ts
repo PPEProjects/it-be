@@ -21,6 +21,9 @@ export default gql`
   skill:     JSON
   info:      String
   personalGoal: String
+  address: String
+  country: String
+  dateOfBirth: String
   createdAt: DateTime!
   updatedAt: DateTime!
   deleted: DateTime
@@ -28,7 +31,7 @@ export default gql`
   project:[Project]
   projectMembers: [ProjectMembers]
   userFeedback: [UserFeedback]
-  seftIdeas:  Int
+  selfIdeas:  Int
   joinedProject: Int
   framework: Int
     

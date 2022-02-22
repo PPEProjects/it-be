@@ -25,6 +25,8 @@ export default gql`
     budget: JSON
     type: String
     salary: JSON
+    status:     String
+    memberJoin: JSON
     is_recruit: Boolean
     is_involved: Boolean
     createdAt: DateTime!
@@ -46,6 +48,8 @@ export default gql`
     budget: JSON
     type: String
     salary: JSON
+    status:     String
+    memberJoin: JSON
     is_recruit: Boolean
     is_involved: Boolean
   }

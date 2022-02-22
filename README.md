@@ -7,9 +7,9 @@ Install npm dependencies:
 
 ```
 cd prisma-graphql
-npm install
-```
 
+```
+npm install
 ```
 
 </details>

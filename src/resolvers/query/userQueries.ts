@@ -25,9 +25,9 @@ export default {
         return new ApolloError("Invalid email or password!")
       }
       const logIn = await axios.post(`${process.env.URL_SMILE_EYE_API}/ppe-core/auth/login`,
-       { 
-          email: args.email,    
-          password: args.password 
+        {
+          email: args.email,
+          password: args.password
         }
       );
       const user = logIn.data.data
@@ -38,9 +38,9 @@ export default {
         user,
       }
     },
-    me: async (parent, args, context) => {    
+    me: async (parent, args, context) => {
       try {
-        const { userId } = context
+        const { userId, token } = context
 
         if (!userId) {
           return new ApolloError("please login")
@@ -50,62 +50,65 @@ export default {
             id: userId
           }
         })
-      
-        const getuserAdvance = await prisma.userAdvance.findMany({
-          where:{
-              userId: args.userId
+        const getUserAdvance = await prisma.userAdvance.findFirst({
+          where: {
+            userId: args.userId
           },
-        
+
         })
-       
-        const getuserfeedback = await prisma.userFeedback.findMany({
-          where:{
-              userId: args.userId
+
+        const getUserFeedback = await prisma.userFeedback.findMany({
+          where: {
+            userId: args.userId
           }
-      })
-      const getprojectmember = await prisma.projectMembers.findMany({
-        where:{
-            userId : args.userId
-        },
-        include:{
-            project: true
-        }
-        
-    })
-    const project =  await prisma.project.findMany({
-      where:{
-          id : args.userId
-      }
-  })
-  const numberSeftIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' FROM project WHERE author_user_id = ${args.userId}`
-  const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' FROM project_members WHERE user_id=${args.userId}`
-  
-      me.userAdvance = getuserAdvance
-      // console.log(userme.userAdvance)
-      me.userFeedback = getuserfeedback
-      me.projectMembers = getprojectmember
-    me.project = project
-    me.seftIdeas = _.first(numberSeftIdeas).number
-    console.log(numberSeftIdeas)
-    me.joinedProject = _.first(numberJoinProject).joined
-  
+        })
+        const getProjectMember = await prisma.projectMembers.findMany({
+          where: {
+            userId: args.userId
+          }
+
+        })
+        const project = await prisma.project.findMany({
+          where: {
+            id: args.userId
+          }
+        })
+        const numberSelfProject = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
+                                                        FROM project 
+                                                        WHERE author_user_id = ${userId}`
+        const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
+                                                          FROM project_members 
+                                                          WHERE member_user_id=${userId}`
+
+        me.userAdvance = getUserAdvance
+        me.userFeedback = getUserFeedback
+        me.projectMembers = getProjectMember
+        me.project = project
+        me.selfProject = _.first(numberSelfProject).number
+        me.joinedProject = _.first(numberJoinProject).joined
+
         return me
       } catch (e) {
         console.log(e)
-        
+
       }
 
     },
-    detailUser: async (parent, args, context) => {  
-      const user = await prismaUser.user.findUnique({
-        where: {
-          id: args?.id
-        }
-      })
-      delete user["password"]
-      return user
+    detailUser: async (parent, args, context) => {
+      try {
+        const user = await prismaUser.user.findUnique({
+          where: {
+            id: args.id
+          },
+        })
+        // delete user["password"]
+        return user
+      }
+      catch (e) {
+        console.log(e)
+      }
     },
-    
+
   },
 
 }

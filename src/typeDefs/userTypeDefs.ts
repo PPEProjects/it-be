@@ -11,7 +11,7 @@ export default gql`
     me: User!
     detailUser(id: Int): User 
   }
-
+  
   type User {
     email: String!
     id: Int!
@@ -26,13 +26,12 @@ export default gql`
     quotes:                   String  
     avatar_attachment_id:    JSON
     background_attachment_id: JSON
-
     project:[Project]
-  projectMembers: [ProjectMembers]
-  userFeedback: [UserFeedback]
-    userAdvance: [UserAdvance]
-    seftIdeas:  Int
-  joinedProject: Int
+    projectMembers: [ProjectMembers]
+    userFeedback: [UserFeedback]
+    userAdvance: UserAdvance
+    selfProject:  Int
+    joinedProject: Int
   }
   type AuthPayload {
     token: String

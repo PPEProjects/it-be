@@ -10,11 +10,7 @@ export default {
     Query: {
         allProjectInterested: async (parent, args, context) => {
             try {
-                console.log(args)
                 const allProjectInterested = await prisma.projectInterested.findMany({
-                  include: {
-                        project: true
-                    }
 
                 })
                 return allProjectInterested

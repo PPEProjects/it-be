@@ -10,9 +10,6 @@ datasource db {
 model Project {
   id                Int                 @id @default(autoincrement())
   name              String
-  createdAt         DateTime            @default(now()) @map("created_at")
-  updatedAt         DateTime            @updatedAt @map("updated_at")
-  deleted           DateTime?
   attachments       Json?
   category          String?
   description       String?
@@ -20,16 +17,18 @@ model Project {
   privacy           String?
   version           String?
   authorUserId      Int                 @map("author_user_id")
-  coAuthorUserIds   Json?             @map("co_author_user_ids") 
+  coAuthorUserIds   Json?               @map("co_author_user_ids") 
   budget            Json?
   salary            Json?
   is_involved       Boolean?
   is_recruit        Boolean?
   type              String?
+  status            String?
+  memberJoin        Json?               @map("member_join")
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+  deleted           DateTime?
 
-  projectInterested ProjectInterested[]
-  projectMembers    ProjectMembers[]
-  userFeedback      UserFeedback[]
 
   @@map("project")
 }
@@ -42,29 +41,34 @@ model ProjectInterested {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?
-  project   Project   @relation(fields: [projectId], references: [id])
 
-  @@index([projectId], map: "project_interested_project_id_fkey")
   @@map("project_interested")
 }
 
 model ProjectMembers {
   id        Int       @id @default(autoincrement())
-  userId    Int       @map("user_id")
-  projectId Int       @map("project_id")
-  roles   Json?
+  memberUserId   Int?       @map("member_user_id")
+  projectId       Int       @map("project_id")
+  position        String?   
+  linkTest      String?    @map("link_test")
+  pmUserId      Int       @map("pm_user_id")
+  salary        Json?
+  fee           Json? 
+  status        String?
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?
-  project   Project   @relation(fields: [projectId], references: [id])
+  
 
-  @@index([projectId], map: "project_members_project_id_fkey")
   @@map("project_members")
 }
 
 model UserAdvance {
   id        Int       @id @default(autoincrement())
   userId    Int       @map("user_id")
+  address   String?
+  country   String?
+  dateOfBirth String?
   roles     Json?
   language  String?
   skill     Json?
@@ -85,8 +89,6 @@ model UserFeedback {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?
-  project   Project   @relation(fields: [projectId], references: [id])
-
-  @@index([projectId], map: "user_feedback_project_id_fkey")
+  
   @@map("user_feedback")
 }

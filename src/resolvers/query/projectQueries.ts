@@ -11,13 +11,12 @@ export default {
     Query: {
         allProject: async (parent, args, context) => {
             try {
-                const allProject = await prisma.project.findMany({
+                const listProject = await prisma.project.findMany({
                     where: {
                         deleted: null
                     },
- 
                 })
-        
+                let allProject = _.orderBy(listProject, ["type", "id"], ["desc", "desc"])
 
                 const getIdUser = _.map(allProject, 'authorUserId')
                 const userCore = await prismaUser.user.findMany({
@@ -25,7 +24,7 @@ export default {
                         id: {
                             in: getIdUser
                         }
-                    }
+                    },
                 })
                 const users = _.keyBy(await userCore, 'id')
 

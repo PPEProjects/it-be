@@ -3,7 +3,7 @@
 import { ApolloError } from 'apollo-server';
 import { count } from 'console';
 import GraphQLJSON from 'graphql-type-json';
-import { ary, cond } from 'lodash';
+import { ary, cond, values } from 'lodash';
 import { isDataView } from 'util/types';
 import projectQueries from './projectQueries';
 const _ = require('lodash')
@@ -24,15 +24,15 @@ export default {
                     id: args.id
                   }, 
             })
-                  for(const projectmembers of allProjectMembers){
-                    var projectid = projectmembers.id
+                  for(const projectMembers of allProjectMembers){
+                    var projectId = projectMembers.id
                     
                     const project =  await prisma.project.findMany({
                         where:{
-                            id: projectid
+                            id: projectId
                         }
                     })
-                    projectmembers.project = project
+                    projectMembers.project = project
                 
                 }
 
@@ -54,8 +54,21 @@ export default {
                              id: args.id
                         }
                     })
-                    const projectMembers = _.first(detailMember)
-                    projectMembers.project = project
+                    var getIdMembers = _.map(detailMember, "memberUserId")
+                    getIdMembers = _.xor(getIdMembers, [null])
+                    const members = await prismaUser.user.findMany({
+                        where:{
+                            id:{
+                                in: getIdMembers
+                            }
+                        }
+                    })
+                    const setKeyMembers = _.keyBy(members, "id")
+                    const projectMembers = _.map(detailMember, (projectMember, index)  => {
+                            projectMember.project = project
+                            projectMember.memberUser = setKeyMembers[projectMember.memberUserId]
+                            return projectMember
+                    })
                   
                     return projectMembers
                 } catch (e) {
