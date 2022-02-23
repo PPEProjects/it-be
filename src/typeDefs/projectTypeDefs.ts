@@ -8,7 +8,10 @@ export default gql`
 
   type Query {
     allProject: [Project!]!
-    myProject: [Project!]!
+    myProject(type:String): [Project!]!
+    listJoinProject(id:Int):[Project!]!
+    listInterestedProject(id:Int):[Project!]!
+    myIdeas(type:String): [Project!]!
   }
 
   type Project {
@@ -32,6 +35,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
+    countProject: Int
    
   }
   
