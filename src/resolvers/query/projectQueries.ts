@@ -167,6 +167,9 @@ export default {
                         }
                     },
                 })
+                if(listProject.length === 0){
+                    return null
+                }
                 const getIdUsers = _.map(listProject, "authorUserId") // get id user from project
 
                 const getIdProject = _.map(listProject, "id")
@@ -182,10 +185,9 @@ export default {
                 userIds = _.xor(userIds, [null]) // diff all value is null
 
                 var listIdUsers = _.merge( userIds, getIdUsers)
-                console.log(listIdUsers)
 
                 listIdUsers = _.uniqWith(listIdUsers, _.isEqual) // remove all value is duplicate
-                
+
                 const users = await getUsers(listIdUsers) // get data user
 
                 projectMembers.forEach((member) => {
