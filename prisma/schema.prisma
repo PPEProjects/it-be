@@ -6,33 +6,32 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL_IT_SQUARE")
 }
- 
-model Project {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  attachments       Json?
-  category          String?
-  description       String?
-  level             String?
-  privacy           String?
-  version           String?
-  authorUserId      Int                 @map("author_user_id")
-  coAuthorUserIds   Json?               @map("co_author_user_ids") 
-  budget            Json?
-  salary            Json?
-  is_involved       Boolean?
-  is_recruit        Boolean?
-  type              String?
-  status            String?
-  memberJoin        Json?               @map("member_join")
-  createdAt         DateTime            @default(now()) @map("created_at")
-  updatedAt         DateTime            @updatedAt @map("updated_at")
-  deleted           DateTime?
 
+model Project {
+  id              Int              @id @default(autoincrement())
+  name            String
+  attachments     Json?
+  category        String?
+  description     String?
+  level           String?
+  privacy         String?
+  version         String?
+  authorUserId    Int              @map("author_user_id")
+  coAuthorUserIds Json?            @map("co_author_user_ids")
+  budget          Json?
+  salary          Json?
+  is_involved     Boolean?
+  is_recruit      Boolean?
+  type            String?
+  status          String?
+  memberJoin      Json?            @map("member_join")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+  deleted         DateTime?
+  projectMembers  ProjectMembers[]
 
   @@map("project")
 }
-
 
 model ProjectInterested {
   id        Int       @id @default(autoincrement())
@@ -46,37 +45,38 @@ model ProjectInterested {
 }
 
 model ProjectMembers {
-  id        Int       @id @default(autoincrement())
-  memberUserId   Int?       @map("member_user_id")
-  projectId       Int       @map("project_id")
-  position        String?   
-  linkTest      String?    @map("link_test")
-  pmUserId      Int       @map("pm_user_id")
-  salary        Json?
-  fee           Json? 
-  status        String?
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deleted   DateTime?
-  
+  id           Int       @id @default(autoincrement())
+  memberUserId Int?      @map("member_user_id")
+  projectId    Int       @map("project_id")
+  position     String?
+  linkTest     String?   @map("link_test")
+  pmUserId     Int       @map("pm_user_id")
+  salary       Json?
+  fee          Json?
+  status       String?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deleted      DateTime?
+
+  project Project @relation(fields: [projectId], references: [id])
 
   @@map("project_members")
 }
 
 model UserAdvance {
-  id        Int       @id @default(autoincrement())
-  userId    Int       @map("user_id")
-  address   String?
-  country   String?
-  dateOfBirth String?
-  roles     Json?
-  language  String?
-  skill     Json?
-  info      String?   @db.MediumText
-  personalGoal String? @db.MediumText @map("personal_goal")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deleted   DateTime?
+  id           Int       @id @default(autoincrement())
+  userId       Int       @map("user_id")
+  address      String?
+  country      String?
+  dateOfBirth  String?
+  roles        Json?
+  language     String?
+  skill        Json?
+  info         String?   @db.MediumText
+  personalGoal String?   @map("personal_goal") @db.MediumText
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deleted      DateTime?
 
   @@map("user_advance")
 }
@@ -89,6 +89,6 @@ model UserFeedback {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?
-  
+
   @@map("user_feedback")
 }

@@ -23,7 +23,12 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation Mutation($data: UserCreateInput!) {\n  signupUser(data: $data) {\n    token\n    user {\n      id\n      email\n      name\n    }\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"email\": \"test6034@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"email\": \"test6034ss@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
+							},
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
 						},
 						"url": {
@@ -89,7 +94,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProject($data: ProjectInput!) {\n  createProject(data: $data) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"project\",\n    \"status\": \"registering\",\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"status\": \"registering\",\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
 							}
 						},
 						"url": {
@@ -119,7 +124,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProject($data: ProjectInput!) {\n  updateProject(data: $data) {\n    id\n    name\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\":2,\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"project\",\n    \"status\": \"registering\",\n    \"memberJoin\":[{\n        \"userId\": 2,\n        \"postion\":\"BE\",\n        \"skill\":\"php\",\n        \"exip\": \"create AI\",\n        \"level\": \"senior\"\n    }],\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\":2,\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"status\": \"running\",\n    \"memberJoin\":[{\n        \"userId\": 2,\n        \"postion\":\"BE\",\n        \"skill\":\"php\",\n        \"exip\": \"create AI\",\n        \"level\": \"senior\"\n    }],\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
 							}
 						},
 						"url": {
@@ -149,7 +154,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProject($deleteProjectId: Int) {\n  deleteProject(id: $deleteProjectId)\n}",
-								"variables": "{\n  \"deleteProjectId\": null\n}"
+								"variables": "{\n  \"deleteProjectId\": 5\n}"
 							}
 						},
 						"url": {
@@ -180,6 +185,36 @@
 							"graphql": {
 								"query": "query Query {\n  allProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_search_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query SearchProject($name: String, $type: String, $status: String) {\n  searchProject(name: $name, type: $type, status: $status) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    members{\n        id\n        position\n        memberUserId\n        memberUser{\n            id\n            name\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n    \"type\": \"project\"\n}"
 							}
 						},
 						"url": {
@@ -273,7 +308,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query AllUsers {\n  allUsers {\n    id\n    email\n    name\n    password\n  }\n}",
+								"query": "query AllUsers {\n  allUsers {\n    id\n    email\n    name\n  }\n}",
 								"variables": ""
 							}
 						},
@@ -304,7 +339,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailUser($detailUserId: Int) {\n  detailUser(id: $detailUserId) {\n    email\n    id\n    name\n  }\n}",
-								"variables": ""
+								"variables": "{\n  \"detailUserId\": 1\n}"
 							}
 						},
 						"url": {
@@ -339,7 +374,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectInterested($data: ProjectInterestedInput!) {\n  createProjectInterested(data: $data) {\n    id\n    projectId\n    createdAt\n    updatedAt\n    userId\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 1\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
 							}
 						},
 						"url": {
@@ -459,7 +494,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailProjectInterested($detailProjectInterestedId: Int) {\n  detailProjectInterested(id: $detailProjectInterestedId) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"allProjectInterestedId\": 1\n}"
+								"variables": "  {\n    \"detailProjectInterestedId\": 1\n  }"
 							}
 						},
 						"url": {
@@ -494,7 +529,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectMembers($data: ProjectMembersInput!) {\n  createProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 2,\n    \"memberUserId\": null,\n    \"position\": \"leader\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 1,\n    \"memberUserId\": null,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
@@ -769,7 +804,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query Query($userId: Int) {\n  detailUserAdvance(userId: $userId) {\n    id\n    userId\n    user{\n        id\n        name\n        email\n        phone_number\n    }\n    address\n    dateOfBirth\n    roles\n    language\n    skill\n    info\n    personalGoal\n    selfIdeas\n    joinedProject\n    framework\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"userId\": 6\n  }"
+								"variables": "  {\n    \"userId\": 2\n  }"
 							}
 						},
 						"url": {

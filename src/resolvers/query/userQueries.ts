@@ -88,9 +88,10 @@ export default {
         me.joinedProject = _.first(numberJoinProject).joined
 
         return me
-      } catch (e) {
+      } 
+      catch (e) {
         console.log(e)
-
+        return new ApolloError(`${e}`)
       }
 
     },
@@ -114,5 +115,9 @@ export default {
 }
 function id(id: any) {
   throw new Error('Function not implemented.')
+}
+
+export function User() {
+    throw new Error('Function not implemented.')
 }
 

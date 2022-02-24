@@ -31,7 +31,7 @@ npm install
 Run the following command to create your SQLite database file. This also creates the `User` and `Info` tables that are defined in [`prisma/schema.prisma`](./prisma/schema.prisma):
 
 ```
-npm run create-db
+npm run create-db; npm run pg-schema; npm run pg-user-core
 ```
 ## OR
 

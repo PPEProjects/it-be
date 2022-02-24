@@ -1,13 +1,8 @@
-import { ApolloError } from 'apollo-server';
-import { count } from 'console';
 
-import { ary } from 'lodash';
-import { isDataView } from 'util/types';
 const _ = require('lodash')
+import { ApolloError } from 'apollo-server';
 import GraphQLJSON from 'graphql-type-json';
-import { sum } from 'lodash';
-const { prisma, prismaUser, userCore } = require('../../database')
-import { isArrayBufferView } from 'util/types';
+const { prisma, prismaUser, getUsers } = require('../../database')
 
 export default {
     JSON: GraphQLJSON,
@@ -155,6 +150,65 @@ export default {
                 return myIdeas
             } catch (e) {
                 console.log(e)
+            }
+        },
+        searchProject: async (parent, args, context) => {
+            try {
+                var listProject = await prisma.project.findMany({
+                    where: {
+                        name: {
+                            contains: args.name || undefined
+                        },
+                        type: {
+                            contains: args.type || undefined
+                        },
+                        status: {
+                            contains: args.status || undefined
+                        }
+                    },
+                })
+                const getIdUsers = _.map(listProject, "authorUserId") // get id user from project
+
+                const getIdProject = _.map(listProject, "id")
+                const projectMembers = await prisma.projectMembers.findMany({
+                    where: {
+                        projectId: {
+                            in: getIdProject
+                        }
+                    },
+                })
+
+                var userIds = _.map(projectMembers, "memberUserId") // get id user from project_member
+                userIds = _.xor(userIds, [null]) // diff all value is null
+
+                var listIdUsers = _.merge( userIds, getIdUsers)
+                console.log(listIdUsers)
+
+                listIdUsers = _.uniqWith(listIdUsers, _.isEqual) // remove all value is duplicate
+                
+                const users = await getUsers(listIdUsers) // get data user
+
+                projectMembers.forEach((member) => {
+                    member.memberUser = users[member.memberUserId]
+                });
+
+                // group data project_member by projectId
+                var groupByProjectId = _.chain(projectMembers)
+                    .groupBy("projectId")
+                    .map((value, key) => ({ projectId: key, members: value }))
+                    .value()
+
+                const memberProject = _.keyBy(groupByProjectId, "projectId")
+
+                listProject.forEach((project) => {
+                    project.user = users[project.authorUserId]
+                    project.members = (memberProject[project.id]) ? memberProject[project.id].members : null
+                });
+
+                return listProject
+            } catch (e) {
+                console.log(e)
+                return new ApolloError(`${e}`)
             }
         },
 

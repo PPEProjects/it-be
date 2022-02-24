@@ -32,6 +32,8 @@ export default gql`
     userAdvance: UserAdvance
     selfProject:  Int
     joinedProject: Int
+    createdAt: DateTime
+    updatedAt: DateTime
   }
   type AuthPayload {
     token: String
