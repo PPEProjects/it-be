@@ -4,6 +4,7 @@ export default gql`
   type Mutation {
     createUserAdvance(data: UserAdvanceInput!): UserAdvance!
     updateUserAdvance(data: UserAdvanceInput!): UserAdvance
+    upsertUserAdvance(data: UserAdvanceInput!): UserAdvance
     deleteUserAdvance(id: Int): Boolean
   }
 
@@ -20,7 +21,8 @@ export default gql`
   language:  String
   skill:     JSON
   info:      String
-  personalGoal: String
+  plan:         String    
+  goal:         String
   address: String
   country: String
   dateOfBirth: String
@@ -28,16 +30,15 @@ export default gql`
   updatedAt: DateTime!
   deleted: DateTime
   user: User
-  project:[Project]
-  projectMembers: [ProjectMembers]
+  selfProject:[Project]
+  joinProject: [ProjectMembers]
   userFeedback: [UserFeedback]
-  selfIdeas:  Int
-  joinedProject: Int
-  framework: Int
+  numberSelfIdeas:  Int
+  numberJoinedProject: Int
+  numberFramework: Int
     
   }
    
-  
   
   input UserAdvanceInput {
     id:       Int       
@@ -46,7 +47,9 @@ export default gql`
     language:  String
     skill:     JSON
     info:      String
-    personalGoal: String
+    plan:         String    
+    goal:         String
+    user: UserUpdateInput
   }
 
   scalar JSON

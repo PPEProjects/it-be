@@ -15,9 +15,9 @@ export default gql`
   type UserFeedback{
     
     id:       Int      
-  userId:   Int       
-  projectId: Int       
-  grate:     String
+    userId:   Int       
+    projectId: Int       
+    grate:     String
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
@@ -33,6 +33,6 @@ export default gql`
   }
 
   scalar JSON
-  scalar DateTimea
+  scalar DateTime
 `
 

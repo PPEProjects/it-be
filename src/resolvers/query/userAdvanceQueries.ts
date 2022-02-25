@@ -41,11 +41,8 @@ export default {
     
                 const projectMember = await prisma.projectMembers.findMany({
                     where:{
-                        userId: userId,
+                        pmUserId: userId || undefined,
                     
-                    },
-                    include:{
-                        project: true
                     }
                 })
                 userAdvance.user = user
@@ -109,11 +106,11 @@ export default {
                     const count = (userAdvance.skill[0].framework) ? (userAdvance.skill[0].framework).length : 0
                 
                     userAdvance.user = getUser
-                    userAdvance.project = project
-                    userAdvance.projectMembers = getProjectMember
+                    userAdvance.selfProject = project
+                    userAdvance.joinProject = getProjectMember
                     userAdvance.userFeedback = getUserFeedback
-                    userAdvance.selfIdeas = _.first(numberSelfIdeas).number
-                    userAdvance.joinedProject = _.first(numberJoinProject).joined
+                    userAdvance.numberSelfIdeas = _.first(numberSelfIdeas).number
+                    userAdvance.numberJoinedProject = _.first(numberJoinProject).joined
                     userAdvance.framework = count
                 }
                  
