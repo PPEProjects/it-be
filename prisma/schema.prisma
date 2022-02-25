@@ -65,7 +65,7 @@ model ProjectMembers {
 
 model UserAdvance {
   id           Int       @id @default(autoincrement())
-  userId       Int       @map("user_id")
+  userId       Int       @unique @map("user_id")
   address      String?
   country      String?
   dateOfBirth  String?
