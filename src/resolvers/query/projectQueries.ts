@@ -182,7 +182,7 @@ export default {
                 })
 
                 var userIds = _.map(projectMembers, "memberUserId") // get id user from project_member
-                userIds = _.xor(userIds, [null]) // diff all value is null
+                userIds = _.difference(userIds, [null]) // diff all value is null
 
                 var listIdUsers = _.merge( userIds, getIdUsers)
 
@@ -213,7 +213,33 @@ export default {
                 return new ApolloError(`${e}`)
             }
         },
-
+        detailProject: async (parent, args, context) => {
+            try {
+                const detailProject = await prisma.project.findFirst({
+                    where:{
+                        id: args.id
+                    },
+                })
+                const projectMembers = await prisma.projectMembers.findMany({
+                    where:{
+                        projectId: detailProject.id
+                    }
+                })
+                var getIdMember = _.difference(_.map(projectMembers, "memberUserId"), [null])
+                    getIdMember.push(detailProject.authorUserId)
+                const listUserIds = _.uniqWith(getIdMember, _.isEqual) // remove all value is duplicate
+                const users = _.keyBy(await getUsers(listUserIds), "id")
+                detailProject.user = users[detailProject.authorUserId]
+                projectMembers.forEach(member => {
+                    member.memberUser = users[member.memberUserId]
+                });
+                detailProject.members = projectMembers
+                return detailProject
+            } catch (e) {
+                console.log(e)
+                return new ApolloError(`${e}`)
+            }
+        },
 
     }
 }

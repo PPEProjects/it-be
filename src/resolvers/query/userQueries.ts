@@ -88,7 +88,7 @@ export default {
         me.joinedProject = _.first(numberJoinProject).joined
 
         return me
-      } 
+      }
       catch (e) {
         console.log(e)
         return new ApolloError(`${e}`)
@@ -97,12 +97,55 @@ export default {
     },
     detailUser: async (parent, args, context) => {
       try {
-        const user = await prismaUser.user.findUnique({
+        const user = await prismaUser.user.findFirst({
           where: {
             id: args.id
           },
         })
-        // delete user["password"]
+        const userAdvance = await prisma.userAdvance.findFirst({
+          where: {
+            userId: args.id
+          }
+        })
+        user.userAdvance = userAdvance
+        if (userAdvance) {
+           
+            const projectMember = await prisma.projectMembers.findMany({
+                where: {
+                  memberUserId: user.id
+                },
+              })
+             const getIdProject =  _.map(projectMember, "projectId")
+             const projects = await prisma.project.findMany({
+              where: {
+                OR:[{
+                  id: {
+                    in: getIdProject
+                  }
+                },
+                {authorUserId: user.id}
+              ]
+              },
+            })
+              const selfProject = _.filter(projects, function(project) {
+                    return project.authorUserId == user.id
+              });
+             const joinProject = await prisma.projectMembers.findMany({
+                      where:{
+                        memberUserId: user.id
+                      },
+                      include:{
+                          project: true
+                      }
+              });
+              let numberFramework = 0
+              if(typeof user.userAdvance.skill[0].framework !== 'undefined'){
+                   numberFramework  = (user.userAdvance.skill[0].framework).length
+              }
+              user.userAdvance.numberFramework = numberFramework
+              user.userAdvance.selfProject = selfProject
+              user.userAdvance.joinProject = joinProject
+        }
         return user
       }
       catch (e) {
@@ -118,6 +161,6 @@ function id(id: any) {
 }
 
 export function User() {
-    throw new Error('Function not implemented.')
+  throw new Error('Function not implemented.')
 }
 

@@ -16,22 +16,27 @@ export default gql`
     email: String!
     id: Int!
     name: String
-    password: String
     roles: JSON
     first_name: String
-    phone_number:             String
-    username:                 String
-    role_label:               String  
-    is_flag:                  Boolean
-    quotes:                   String  
-    avatar_attachment_id:    JSON
+    phone_number: String
+    username: String
+    role_label: String  
+    is_flag: Boolean
+    quotes: String  
+    avatar_attachment_id: JSON
     background_attachment_id: JSON
     project:[Project]
     projectMembers: [ProjectMembers]
-    userFeedback: [UserFeedback]
-    userAdvance: UserAdvance
-    selfProject:  Int
-    joinedProject: Int
+    userFeedback:   [UserFeedback]
+    userAdvance:    UserAdvance
+    selfProject:    Int
+    joinedProject:  Int
+    avatar_attachment:     JSON
+    background_attachment: JSON
+    address:               String
+    country:               String
+    gender:                String
+    date_of_birth:         String
     createdAt: DateTime
     updatedAt: DateTime
   }
@@ -45,7 +50,18 @@ export default gql`
     password: String!
     password_confirmation: String!
   }
-
+  input UserUpdateInput {
+    id: Int
+    first_name: String
+    name: String
+    phone_number: String
+    avatar_attachment:     JSON
+    background_attachment: JSON
+    address:               String
+    country:               String
+    gender:                String
+    date_of_birth:         String
+  }
   input UserUniqueInput {
     email: String
     id: Int

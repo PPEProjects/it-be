@@ -2,13 +2,14 @@ generator client {
   provider = "prisma-client-js"
   output   = "./generator/clientUserCore"
 }
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL_USER")
 }
 
 model User {
-  id                       Int    @id @default(autoincrement()) 
+  id                       Int       @id @default(autoincrement())
   first_name               String?   @db.VarChar(255)
   name                     String    @db.VarChar(255)
   platform                 String    @default("email") @db.VarChar(255)
@@ -25,6 +26,12 @@ model User {
   quotes                   String?   @db.VarChar(255)
   avatar_attachment_id     Json?
   background_attachment_id Json?
+  avatar_attachment        Json?
+  background_attachment    Json?
+  address                  String?
+  country                  String?
+  gender                   String?
+  date_of_birth            String?
   remember_token           String?   @db.VarChar(100)
   created_at               DateTime? @db.Timestamp(0)
   updated_at               DateTime? @db.Timestamp(0)

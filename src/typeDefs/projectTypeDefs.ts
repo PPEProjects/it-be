@@ -13,6 +13,7 @@ export default gql`
     listInterestedProject(id:Int):[Project]
     myIdeas(type:String): [Project]
     searchProject(name: String, type: String, status: String):[Project]
+    detailProject(id: Int): Project
   }
 
   type Project {
@@ -36,6 +37,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
+    timeToDo: String
     countProject: Int
     members: [ProjectMembers]
   }
@@ -46,6 +48,7 @@ export default gql`
     coAuthorUserIds: JSON
     attachments: JSON
     category: String
+    timeToDo: String
     description: String
     level: String
     privacy: String

@@ -200,6 +200,36 @@
 					"response": []
 				},
 				{
+					"name": "query_detail_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailProject($detailProjectId: Int) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
+								"variables": "{\n  \"detailProjectId\": 2\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "query_search_project",
 					"request": {
 						"method": "POST",
@@ -213,8 +243,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query SearchProject($name: String, $type: String, $status: String) {\n  searchProject(name: $name, type: $type, status: $status) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    members{\n        id\n        position\n        memberUserId\n        memberUser{\n            id\n            name\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n    \"type\": \"project\"\n}"
+								"query": "query SearchProject($name: String, $type: String, $status: String) {\n  searchProject(name: $name, type: $type, status: $status) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUserId\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n}"
 							}
 						},
 						"url": {
@@ -338,7 +368,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailUser($detailUserId: Int) {\n  detailUser(id: $detailUserId) {\n    email\n    id\n    name\n  }\n}",
+								"query": "query DetailUser($detailUserId: Int) {\n  detailUser(id: $detailUserId) {\n    id\n    first_name\n    name\n    email\n    phone_number\n    address\n    date_of_birth\n    gender\n    userAdvance{\n        id\n        userId\n        roles\n        language\n        skill\n        info\n        plan\n        goal\n        numberFramework\n        selfProject{\n            id\n            name\n            attachments\n        }\n        joinProject{\n            id \n            position\n            project{\n                id\n                name\n                category\n                attachments\n                timeToDo\n            }\n        }\n    }\n  }\n}",
 								"variables": "{\n  \"detailUserId\": 1\n}"
 							}
 						},
@@ -670,6 +700,36 @@
 			"name": "user-advance",
 			"item": [
 				{
+					"name": "upsert_users_advance",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpsertUserAdvance($data: UserAdvanceInput!) {\n  upsertUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    goal\n    plan\n  }\n}",
+								"variables": "{\n  \"data\": {\n     \"roles\": [\"admin\", \"pm\"],\n      \"goal\": \"Backend developer\",\n      \"language\": \"VietNames, English\",\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"kelvin\",\n      \"name\": \"kids\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create_users_advance",
 					"request": {
 						"method": "POST",
@@ -684,7 +744,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateUserAdvance($data: UserAdvanceInput!) {\n  createUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    personalGoal\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"roles\": [\"user\"],\n      \"language\": \"VietNames, English\",\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"personalGoal\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\"\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"roles\": [\"user\"],\n      \"goal\": \"Backend developer\",\n      \"language\": \"VietNames, English\",\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\"\n    }\n  }"
 							}
 						},
 						"url": {
@@ -773,7 +833,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query AllUserAdvance {\n  allUserAdvance {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    personalGoal\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query AllUserAdvance {\n  allUserAdvance {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    plan\n    goal\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n\n}"
 							}
 						},
@@ -803,8 +863,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query Query($userId: Int) {\n  detailUserAdvance(userId: $userId) {\n    id\n    userId\n    user{\n        id\n        name\n        email\n        phone_number\n    }\n    address\n    dateOfBirth\n    roles\n    language\n    skill\n    info\n    personalGoal\n    selfIdeas\n    joinedProject\n    framework\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"userId\": 2\n  }"
+								"query": "query Query($userId: Int) {\n  detailUserAdvance(userId: $userId) {\n    id\n    userId\n    user{\n        id\n        name\n        email\n        phone_number\n    }\n    roles\n    language\n    skill\n    info\n    goal\n    numberSelfIdeas\n    numberJoinedProject\n    numberFramework\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"userId\": 1\n  }"
 							}
 						},
 						"url": {
