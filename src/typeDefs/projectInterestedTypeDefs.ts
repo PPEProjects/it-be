@@ -7,9 +7,9 @@ export default gql`
     deleteProjectInterested(id: Int): Boolean
   }
 
-  type Query {
+  type Query {  
     allProjectInterested: [ProjectInterested]
-    detailProjectInterested(id: Int): ProjectInterested
+    detailProjectInterested(projectId:Int): ProjectInterested
   }
 
   type ProjectInterested {
@@ -19,7 +19,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
-project: Project
+project: [Project]
   }
   
   input ProjectInterestedInput {
