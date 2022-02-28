@@ -80,7 +80,7 @@ export default {
                             id: args.userId
                         }
                     })
-                    console.log(project)
+                   
                     const getProjectMember = await prisma.projectMembers.findMany({
                         where: {
                             pmUserId: args.userId

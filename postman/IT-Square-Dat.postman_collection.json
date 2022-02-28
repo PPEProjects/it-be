@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "eccec38a-88de-4986-9e05-0454ac64dd74",
+		"_postman_id": "923533ba-5ad6-429e-9270-392b9d0b6284",
 		"name": "IT-Square-Dat",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -381,6 +381,36 @@
 				},
 				{
 					"name": "query_detail_users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailUser($detailUserId: Int) {\n  detailUser(id: $detailUserId) {\n    email\n    id\n    name\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_search_users",
 					"request": {
 						"method": "POST",
 						"header": [

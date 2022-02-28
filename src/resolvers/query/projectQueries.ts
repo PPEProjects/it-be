@@ -1,8 +1,9 @@
 
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
+import { triggerAsyncId } from 'async_hooks';
 import GraphQLJSON from 'graphql-type-json';
-import { ary } from 'lodash';
+import { ary, maxBy, pullAllWith } from 'lodash';
 import { type } from 'os';
 const { prisma, prismaUser, getUsers } = require('../../database')
 
@@ -79,7 +80,7 @@ export default {
                 })
                 const listJoinProject = await prisma.project.findMany({
                     where: {
-                        authorUserId: userId, 
+                        authorUserId: userId,
                         type: args.type
                     }
                 })
@@ -92,7 +93,7 @@ export default {
                     project.countProject = _.first(numberSelfIdeas).joined
 
                 }
-                if(listJoinProject.length === 0){
+                if (listJoinProject.length === 0) {
                     return null
                 }
 
@@ -125,7 +126,7 @@ export default {
                     project.countProject = _.first(numberSelfIdeas).number
 
                 }
-                if(listInterstedProject.length === 0){
+                if (listInterstedProject.length === 0) {
                     return null
                 }
 
@@ -137,7 +138,7 @@ export default {
             }
 
         },
-   
+
         searchProject: async (parent, args, context) => {
             try {
                 var listProject = await prisma.project.findMany({
@@ -153,7 +154,7 @@ export default {
                         }
                     },
                 })
-                if(listProject.length === 0){
+                if (listProject.length === 0) {
                     return null
                 }
                 const getIdUsers = _.map(listProject, "authorUserId") // get id user from project
@@ -170,7 +171,7 @@ export default {
                 var userIds = _.map(projectMembers, "memberUserId") // get id user from project_member
                 userIds = _.difference(userIds, [null]) // diff all value is null
 
-                var listIdUsers = _.merge( userIds, getIdUsers)
+                var listIdUsers = _.merge(userIds, getIdUsers)
 
                 listIdUsers = _.uniqWith(listIdUsers, _.isEqual) // remove all value is duplicate
 
@@ -202,17 +203,17 @@ export default {
         detailProject: async (parent, args, context) => {
             try {
                 const detailProject = await prisma.project.findFirst({
-                    where:{
+                    where: {
                         id: args.id
                     },
                 })
                 const projectMembers = await prisma.projectMembers.findMany({
-                    where:{
+                    where: {
                         projectId: detailProject.id
                     }
                 })
                 var getIdMember = _.difference(_.map(projectMembers, "memberUserId"), [null])
-                    getIdMember.push(detailProject.authorUserId)
+                getIdMember.push(detailProject.authorUserId)
                 const listUserIds = _.uniqWith(getIdMember, _.isEqual) // remove all value is duplicate
                 const users = _.keyBy(await getUsers(listUserIds), "id")
                 detailProject.user = users[detailProject.authorUserId]
@@ -226,6 +227,40 @@ export default {
                 return new ApolloError(`${e}`)
             }
         },
+        adminProject: async (parent, args, context) => {
+            try {
+                 const { userId } = context
+                const listProject = await prisma.project.findMany({
+                    where: {
+                        id: args.id
+                    }
+                })
+                let allProject = _.orderBy(listProject, ["updatedAt"], ["desc"])
+                let interProject = _.orderBy(listProject, ["countProject"], ["desc"])
+                const getIdUser = _.map(allProject, 'authorUserId')
+                const userCore = await prismaUser.user.findMany({
+                    where: {
+                        id: {
+                            in: getIdUser
+                        }
+                    },
+                })
+                const users = _.keyBy(await userCore, 'id')
+                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as "number" FROM project_interested WHERE user_id=${userId}`
+                for (const project of allProject) {
+                    project.user = users[project.authorUserId]
+                }
+                for(const project of interProject){
+                    project.countProject = _.first(numberSelfIdeas).number
+                }
+        
+                return allProject
+
+            } catch (e) {
+                console.log(e)
+                return new ApolloError(`${e}`)
+            }
+        }
 
     }
 }

@@ -59,8 +59,14 @@ export default {
             userId: userId
           }
         })
+        const getUserAdvance = await prisma.userAdvance.findMany({
+          where:{
+            userId : args.userId
+          }
+        })
        
         user.userFeedback = getUserFeedback
+        user.userAdvance = getUserAdvance
        
       }
      

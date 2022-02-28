@@ -14,6 +14,7 @@ export default gql`
     listInterestedProject(id:Int, type:String):[Project]
     searchProject(name: String, type: String, status: String):[Project]
     detailProject(id: Int): Project
+  adminProject:[Project]
   }
 
   type Project {
