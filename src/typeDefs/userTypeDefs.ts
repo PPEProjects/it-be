@@ -29,7 +29,7 @@ export default gql`
     project:[Project]
     projectMembers: [ProjectMembers]
     userFeedback:   [UserFeedback]
-    userAdvance:    UserAdvance
+    userAdvance:    [UserAdvance]
     selfProject:    String
     joinedProject:  String
     numberSelfProject:    Int
