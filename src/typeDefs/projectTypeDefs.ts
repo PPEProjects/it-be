@@ -34,6 +34,8 @@ export default gql`
     memberJoin: JSON
     is_recruit: Boolean
     is_involved: Boolean
+    framework:  String
+    programingLanguage: String
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
@@ -57,6 +59,8 @@ export default gql`
     type: String
     salary: JSON
     status:     String
+    framework:  String
+    programingLanguage: String
     memberJoin: JSON
     is_recruit: Boolean
     is_involved: Boolean

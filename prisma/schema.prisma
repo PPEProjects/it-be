@@ -8,28 +8,30 @@ datasource db {
 }
 
 model Project {
-  id              Int              @id @default(autoincrement())
-  name            String
-  attachments     Json?
-  category        String?
-  description     String?
-  level           String?
-  privacy         String?
-  version         String?
-  authorUserId    Int              @map("author_user_id")
-  coAuthorUserIds Json?            @map("co_author_user_ids")
-  budget          Json?
-  salary          Json?
-  is_involved     Boolean?
-  is_recruit      Boolean?
-  type            String?
-  status          String?
-  timeToDo        String?         @map("time_to_do")
-  memberJoin      Json?            @map("member_join")
-  createdAt       DateTime         @default(now()) @map("created_at")
-  updatedAt       DateTime         @updatedAt @map("updated_at")
-  deleted         DateTime?
-  projectMembers  ProjectMembers[]
+  id                 Int              @id @default(autoincrement())
+  name               String
+  attachments        Json?
+  category           String?
+  description        String?
+  level              String?
+  privacy            String?
+  version            String?
+  authorUserId       Int              @map("author_user_id")
+  coAuthorUserIds    Json?            @map("co_author_user_ids")
+  budget             Json?
+  salary             Json?
+  is_involved        Boolean?
+  is_recruit         Boolean?
+  type               String?
+  status             String?
+  timeToDo           String?          @map("time_to_do")
+  memberJoin         Json?            @map("member_join")
+  programingLanguage String?          @map("programing_language")
+  framework          String?
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+  deleted            DateTime?
+  projectMembers     ProjectMembers[]
 
   @@map("project")
 }
@@ -47,7 +49,7 @@ model ProjectInterested {
 
 model ProjectMembers {
   id           Int       @id @default(autoincrement())
-  memberUserId Int?      @unique @map("member_user_id")
+  memberUserId Int?      @map("member_user_id")
   projectId    Int       @map("project_id")
   position     String?
   linkTest     String?   @map("link_test")
@@ -65,17 +67,17 @@ model ProjectMembers {
 }
 
 model UserAdvance {
-  id           Int       @id @default(autoincrement())
-  userId       Int        @unique @map("user_id")
-  roles        Json?
-  language     String?
-  skill        Json?
-  info         String?   @db.MediumText
-  plan         String?    @db.MediumText
-  goal         String?
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
-  deleted      DateTime?
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique @map("user_id")
+  roles     Json?
+  language  String?
+  skill     Json?
+  info      String?   @db.MediumText
+  plan      String?   @db.MediumText
+  goal      String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deleted   DateTime?
 
   @@map("user_advance")
 }

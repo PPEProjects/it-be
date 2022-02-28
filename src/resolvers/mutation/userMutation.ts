@@ -22,16 +22,23 @@ export default {
         if(args.data.password != args.data.password_confirmation){
           return new ApolloError("the password not confirm.")
         }
-        const register = await axios.post(`${process.env.URL_SMILE_EYE_API}/ppe-core/auth/register`,
+        const register = await prismaUser.user.create(
         { 
+          data:{
            name: args.data.name,
            email: args.data.email,    
-           password: args.data.password,
-           password_confirmation: args.data.password_confirmation
-         }
-       );
-        const user = register.data.data.user
-        const token = register.data.data.access_token
+           password: args.data.password
+          }
+         })
+        const user = register
+        const getToken = await axios.get(`${process.env.URL_SMILE_EYE_API}/return-token`, 
+          {
+            params:{
+                id: register.id
+            }
+          }
+          );
+        const token = getToken.data
         return {
           token,
           user,

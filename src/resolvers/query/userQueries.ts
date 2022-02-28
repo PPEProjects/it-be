@@ -74,25 +74,24 @@ export default {
 
     },
     signIn: async (parent, args, context) => {
-      const checkUser = await prismaUser.user.findUnique({
+      const user = await prismaUser.user.findUnique({
         where: { email: args.email },
       })
-      if (!checkUser) {
+      if (!user) {
         return new ApolloError("Invalid email or password!")
       }
-      const valid = await bcrypt.compare(args.password, checkUser.password)
+      const valid = await bcrypt.compare(args.password, user.password)
       if (!valid) {
         return new ApolloError("Invalid email or password!")
       }
-      const logIn = await axios.post(`${process.env.URL_SMILE_EYE_API}/ppe-core/auth/login`,
-        {
-          email: args.email,
-          password: args.password
+      const getToken = await axios.get(`${process.env.URL_SMILE_EYE_API}/return-token`, 
+      {
+        params:{
+          id: user.id
         }
-      );
-      const user = logIn.data.data
-      const token = user.token
-
+      }
+    );
+      const token = getToken.data
       return {
         token,
         user,
@@ -100,7 +99,7 @@ export default {
     },
     me: async (parent, args, context) => {
       try {
-        const { userId, token } = context
+        const { userId } = context
 
         if (!userId) {
           return new ApolloError("please login")
@@ -112,26 +111,29 @@ export default {
         })
         const getUserAdvance = await prisma.userAdvance.findFirst({
           where: {
-            userId: args.userId
+            userId: userId
           },
 
         })
 
         const getUserFeedback = await prisma.userFeedback.findMany({
           where: {
-            userId: args.userId
+            userId: userId
           }
         })
         const getProjectMember = await prisma.projectMembers.findMany({
           where: {
-            userId: args.userId
+            memberUserId: userId 
+          },
+          include:{
+            project: true
           }
-
         })
-        const project = await prisma.project.findMany({
+
+        const selfProject = await prisma.project.findMany({
           where: {
-            id: args.userId
-          }
+            authorUserId: me.id
+          },
         })
         const numberSelfProject = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
                                                         FROM project 
@@ -143,9 +145,9 @@ export default {
         me.userAdvance = getUserAdvance
         me.userFeedback = getUserFeedback
         me.projectMembers = getProjectMember
-        me.project = project
-        me.selfProject = _.first(numberSelfProject).number
-        me.joinedProject = _.first(numberJoinProject).joined
+        me.project = selfProject
+        me.numberSelfProject = _.first(numberSelfProject).number
+        me.numberJoinedProject = _.first(numberJoinProject).joined
 
         return me
       }

@@ -30,8 +30,10 @@ export default gql`
     projectMembers: [ProjectMembers]
     userFeedback:   [UserFeedback]
     userAdvance:    UserAdvance
-    selfProject:    Int
-    joinedProject:  Int
+    selfProject:    String
+    joinedProject:  String
+    numberSelfProject:    Int
+    numberJoinedProject:  Int
     avatar_attachment:     JSON
     background_attachment: JSON
     address:               String
