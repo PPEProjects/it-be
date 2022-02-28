@@ -3,15 +3,15 @@ export default gql`
   type Mutation {
     createProject(data: ProjectInput!): Project!
     updateProject(data: ProjectInput!): Project
+    upsertProject(data: ProjectInput!): Project
     deleteProject(id: Int): Boolean
   }
 
   type Query {
     allProject: [Project]
     myProject(type:String): [Project]
-    listJoinProject(id:Int):[Project]
-    listInterestedProject(id:Int):[Project]
-    myIdeas(type:String): [Project]
+    listJoinProject(id:Int,type:String):[Project]
+    listInterestedProject(id:Int, type:String):[Project]
     searchProject(name: String, type: String, status: String):[Project]
     detailProject(id: Int): Project
   }

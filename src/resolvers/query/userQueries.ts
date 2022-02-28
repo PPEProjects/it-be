@@ -6,12 +6,72 @@ import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
 import axios from 'axios'
+import { ary, countBy, get } from 'lodash'
+import { getUnpackedSettings } from 'http2'
+import { UUID } from 'graphql-scalars/mocks'
 export default {
   Query: {
     allUsers: async (parent, args, context) => {
-      const allUser = await prismaUser.user.findMany({
-      })
-      return allUser
+      try {
+        const allUser = await prismaUser.user.findMany({
+         id: args.userId
+        })
+      
+        for (const user of allUser) {
+          const { userId } = context
+          const getUserFeedback = await prisma.userFeedback.findMany({
+            where: {
+              userId: userId
+            }
+          })
+         
+          user.userFeedback = getUserFeedback
+         
+        }
+
+       
+        return allUser
+      } catch (e) {
+        console.log(e)
+        return new ApolloError(`${e}`)
+      }
+    },
+    searchUsers: async (parent, args, context) => {
+     
+      var allUser = await prismaUser.user.findMany({
+        where:{
+          name:{
+            contains: args.name 
+          },
+        
+         
+        },
+      
+        })
+        if(allUser.length === 0){
+          return null
+      }
+    
+      for (const user of allUser) {
+        const { userId } = context
+        const getUserFeedback = await prisma.userFeedback.findMany({
+          where: {
+            userId: userId
+          }
+        })
+       
+        user.userFeedback = getUserFeedback
+       
+      }
+     
+      const selectroles = prisma.$queryRaw`SELECT * FROM user_advance WHERE roles LIKE '%${args.roles}%'`
+     
+      allUser.roles = selectroles
+    
+  
+    
+        return allUser
+
     },
     signIn: async (parent, args, context) => {
       const checkUser = await prismaUser.user.findUnique({

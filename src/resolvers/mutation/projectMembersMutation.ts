@@ -3,6 +3,7 @@ import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
 import { DateTimeResolver } from 'graphql-scalars'
+import { ary } from 'lodash';
 
 
 
@@ -50,6 +51,28 @@ export default {
       }
       catch(e){
         console.log(e)
+      }
+    },
+    upsertProjectMembers: async (parent, args, context,) =>{
+      try {
+        
+        const upsertProjectMembers= await prisma.projectMembers.upsert({
+          where:{
+           memberUserId: args.data.memberUserId
+          },
+          update:{
+            ...args.data,
+          },
+          create:{
+            ...args.data,
+          }
+        
+      })
+      return upsertProjectMembers
+        
+      } catch (e) {
+        console.log(e)
+        
       }
     },
 

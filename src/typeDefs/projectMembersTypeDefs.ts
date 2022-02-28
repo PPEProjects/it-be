@@ -4,6 +4,7 @@ export default gql`
   type Mutation {
     createProjectMembers(data: ProjectMembersInput!): ProjectMembers !
     updateProjectMembers(data: ProjectMembersInput!): ProjectMembers 
+    upsertProjectMembers(data: ProjectMembersInput!):ProjectMembers
     deleteProjectMembers(id: Int): Boolean
   }
 
@@ -29,6 +30,7 @@ export default gql`
     createdAt:  DateTime!
     updatedAt:  DateTime!
     deleted:    DateTime
+    joinedProject: Int
   }
   
   input ProjectMembersInput {

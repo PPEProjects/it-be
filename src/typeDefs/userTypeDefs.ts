@@ -7,6 +7,7 @@ export default gql`
 
   type Query {
     allUsers: [User!]!
+    searchUsers(name:String,roles:JSON):[User]
     signIn(email: String!, password: String!): AuthPayload!
     me: User!
     detailUser(id: Int): User 
@@ -39,6 +40,7 @@ export default gql`
     date_of_birth:         String
     createdAt: DateTime
     updatedAt: DateTime
+    
   }
   type AuthPayload {
     token: String

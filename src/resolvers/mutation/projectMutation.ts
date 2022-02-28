@@ -47,6 +47,28 @@ export default {
         console.log(e)
       }
     },
+    upsertProjectMembers: async (parent, args, context,) =>{
+      try {
+        
+        const upsertProjectMember= await prisma.project.upsert({
+          where:{
+           memberUserId: args.data.memberUserId
+          },
+          update:{
+            ...args.data,
+          },
+          create:{
+            ...args.data,
+          }
+        
+      })
+      return upsertProjectMember
+        
+      } catch (e) {
+        console.log(e)
+        
+      }
+    },
     deleteProject: async (parent, args, content,) =>{
       try{
         const now = new Date()

@@ -2,6 +2,8 @@
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
 import GraphQLJSON from 'graphql-type-json';
+import { ary } from 'lodash';
+import { type } from 'os';
 const { prisma, prismaUser, getUsers } = require('../../database')
 
 export default {
@@ -55,7 +57,7 @@ export default {
                 const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
                                                                 FROM project 
                                                                 WHERE 
-                                                                type= 'project'
+                                                                type= ${args.type}
                                                                `
                 for (const project of myProject) {
                     project.user = me
@@ -77,16 +79,21 @@ export default {
                 })
                 const listJoinProject = await prisma.project.findMany({
                     where: {
-                        authorUserId: userId
+                        authorUserId: userId, 
+                        type: args.type
                     }
                 })
                 const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
                                                                   FROM project_members 
-                                                                  WHERE member_user_id=${userId}`
+                                                                  WHERE 
+                                                                  member_user_id=${userId}`
                 for (const project of listJoinProject) {
                     project.user = me
                     project.countProject = _.first(numberSelfIdeas).joined
 
+                }
+                if(listJoinProject.length === 0){
+                    return null
                 }
 
 
@@ -108,7 +115,8 @@ export default {
                 })
                 const listInterstedProject = await prisma.project.findMany({
                     where: {
-                        authorUserId: userId
+                        authorUserId: userId,
+                        type: args.type
                     }
                 })
                 const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as "number" FROM project_interested WHERE user_id=${userId}`
@@ -116,6 +124,9 @@ export default {
                     project.user = me
                     project.countProject = _.first(numberSelfIdeas).number
 
+                }
+                if(listInterstedProject.length === 0){
+                    return null
                 }
 
                 return listInterstedProject
@@ -126,32 +137,7 @@ export default {
             }
 
         },
-        myIdeas: async (parent, args, context) => {
-            try {
-                const { userId } = context
-                const me = await prismaUser.user.findUnique({
-                    where: {
-                        id: userId
-                    }
-                })
-                const myIdeas = await prisma.project.findMany({
-                    where: {
-                        authorUserId: userId,
-                        type: args.type
-                    }
-                })
-                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
-                                                                FROM project WHERE type = 'ideas'`
-                for (const project of myIdeas) {
-                    project.user = me
-                    project.countProject = _.first(numberSelfIdeas).number
-                }
-
-                return myIdeas
-            } catch (e) {
-                console.log(e)
-            }
-        },
+   
         searchProject: async (parent, args, context) => {
             try {
                 var listProject = await prisma.project.findMany({

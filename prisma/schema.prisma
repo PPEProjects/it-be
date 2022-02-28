@@ -47,7 +47,7 @@ model ProjectInterested {
 
 model ProjectMembers {
   id           Int       @id @default(autoincrement())
-  memberUserId Int?      @map("member_user_id")
+  memberUserId Int?      @unique @map("member_user_id")
   projectId    Int       @map("project_id")
   position     String?
   linkTest     String?   @map("link_test")
