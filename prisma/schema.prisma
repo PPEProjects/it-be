@@ -26,8 +26,8 @@ model Project {
   status             String?
   timeToDo           String?          @map("time_to_do")
   memberJoin         Json?            @map("member_join")
-  programingLanguage String?          @map("programing_language")
-  framework          String?
+  programingLanguage Json?          @map("programing_language")
+  framework          Json?
   createdAt          DateTime         @default(now()) @map("created_at")
   updatedAt          DateTime         @updatedAt @map("updated_at")
   deleted            DateTime?
@@ -70,7 +70,7 @@ model UserAdvance {
   id        Int       @id @default(autoincrement())
   userId    Int       @unique @map("user_id")
   roles     Json?
-  language  String?
+  language  Json?
   skill     Json?
   info      String?   @db.MediumText
   plan      String?   @db.MediumText

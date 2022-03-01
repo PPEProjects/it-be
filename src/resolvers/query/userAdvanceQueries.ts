@@ -77,19 +77,19 @@ export default {
 
                     const project = await prisma.Project.findMany({
                         where: {
-                            id: args.userId
+                            id: +args.userId
                         }
                     })
                    
                     const getProjectMember = await prisma.projectMembers.findMany({
                         where: {
-                            pmUserId: args.userId
+                            pmUserId: +args.userId
                         }
 
                     })
                     const getUserFeedback = await prisma.userFeedback.findMany({
                         where: {
-                            userId: args.userId
+                            userId: +args.userId
                         }
                     })
                     userAdvanceall.user = getUser
@@ -105,10 +105,10 @@ export default {
 
                 const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
                                                                 FROM project 
-                                                                WHERE author_user_id = ${args.userId}`
+                                                                WHERE author_user_id = ${+args.userId}`
                 const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
                                                                     FROM project_members 
-                                                                    WHERE pm_user_id=${args.userId}`
+                                                                    WHERE pm_user_id=${+args.userId}`
 
 
                 const userAdvance = detailUserAdvance

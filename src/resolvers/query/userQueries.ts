@@ -4,6 +4,7 @@ const { prismaUser, prisma } = require('../../database')
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
 import axios from 'axios'
+import { Prisma } from '@prisma/client'
 export default {
   User:{
         id: (parent, args, context, info) => parent.id,
@@ -58,6 +59,8 @@ export default {
           return null
         }
         const getIdUsers = _.map(allUser, "id")
+        const test = await prisma.$queryRaw`SELECT * FROM user_advance WHERE user_id IN (${Prisma.join(getIdUsers)})`
+        console.log(test)
         const listUserAdvance = await prisma.userAdvance.findMany({
           where: {
             userId: {

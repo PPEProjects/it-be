@@ -5,20 +5,20 @@ export default gql`
     createUserAdvance(data: UserAdvanceInput!): UserAdvance!
     updateUserAdvance(data: UserAdvanceInput!): UserAdvance
     upsertUserAdvance(data: UserAdvanceInput!): UserAdvance
-    deleteUserAdvance(id: Int): Boolean
+    deleteUserAdvance(id: ID): Boolean
   }
 
   type Query {
     allUserAdvance: [UserAdvance]
-     detailUserAdvance(userId: Int): UserAdvance
+     detailUserAdvance(userId: ID): UserAdvance
   }
 
   type UserAdvance{
     
-  id:       Int       
+  id:       ID     
   userId:   Int    
   roles:    JSON
-  language:  String
+  language:  JSON
   skill:     JSON
   info:      String
   plan:         String    
@@ -44,7 +44,7 @@ export default gql`
     id:       Int       
     userId:   Int    
     roles:    JSON
-    language:  String
+    language:  JSON
     skill:     JSON
     info:      String
     plan:         String    
