@@ -201,7 +201,6 @@ export default {
             }
         },
         detailProject: async (parent, args, context) => {
-            console.log("hello")
             try {
                 const detailProject = await prisma.project.findFirst({
                     where: {
