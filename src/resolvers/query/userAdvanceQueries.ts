@@ -19,7 +19,7 @@ export default {
                 const allUserAdvance = await prisma.userAdvance.findMany({
                     where: {
                         deleted: null,
-                        id: args.id
+                        id: +args.id
                     },
 
 
@@ -64,14 +64,14 @@ export default {
             try {
                 const detailUserAdvance = await prisma.userAdvance.findFirst({
                     where: {
-                        userId: args.userId
+                        userId: +args.userId
                     },
 
                 })
                 for (const userAdvanceall of detailUserAdvance) {
                     const getUser = await prismaUser.user.findMany({
                         where: {
-                            id: args.userId
+                            id: +args.userId
                         }
                     })
 

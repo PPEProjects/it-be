@@ -1,22 +1,30 @@
 
 const _ = require('lodash')
-
 const { prismaUser, prisma } = require('../../database')
-import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
 import axios from 'axios'
-import { ary, countBy, get } from 'lodash'
-import { getUnpackedSettings } from 'http2'
-import { UUID } from 'graphql-scalars/mocks'
 export default {
+  User:{
+        id: (parent, args, context, info) => parent.id,
+        // userId: (parent) => parent.userId,
+        // roles: (parent) => parent.roles,
+        // language: (parent) => parent.language,
+        // skill: (parent) => parent.skill,
+        // info: (parent) => parent.info,
+        // goal: (parent) => parent.goal,
+        // plan: (parent) => parent.plan,
+        createdAt: (parent) => parent.createdAt,
+        updatedAt: (parent) => parent.updatedAt,
+        // deleted: (parent) => parent.deleted,
+  },
   Query: {
     allUsers: async (parent, args, context) => {
       try {
         const allUser = await prismaUser.user.findMany({
-         id: args.userId
+          id: args.userId
         })
-      
+
         for (const user of allUser) {
           const { userId } = context
           const getUserFeedback = await prisma.userFeedback.findMany({
@@ -24,12 +32,12 @@ export default {
               userId: userId
             }
           })
-         
+
           user.userFeedback = getUserFeedback
-         
+
         }
 
-       
+
         return allUser
       } catch (e) {
         console.log(e)
@@ -37,46 +45,77 @@ export default {
       }
     },
     searchUsers: async (parent, args, context) => {
-     
-      var allUser = await prismaUser.user.findMany({
-        where:{
-          name:{
-            contains: args.name 
-          },
-        
-         
-        },
-      
-        })
-        if(allUser.length === 0){
-          return null
-      }
-    
-      for (const user of allUser) {
-        const { userId } = context
-        const getUserFeedback = await prisma.userFeedback.findMany({
+      try {
+        var allUser = await prismaUser.user.findMany({
           where: {
-            userId: userId
-          }
+            name: {
+              contains: args.name
+            },
+          },
+
         })
-        const getUserAdvance = await prisma.userAdvance.findMany({
-          where:{
-            userId : args.userId
+        if (allUser.length === 0) {
+          return null
+        }
+        const getIdUsers = _.map(allUser, "id")
+        const listUserAdvance = await prisma.userAdvance.findMany({
+          where: {
+            userId: {
+              in: getIdUsers
+            },
           }
+        }) 
+        const userAdvances = _.keyBy(listUserAdvance, "userId")
+        const users = _.map(allUser, function (user) {
+          user.userAdvance = userAdvances[user.id]
+          return user
         })
-       
-        user.userFeedback = getUserFeedback
-        user.userAdvance = getUserAdvance
-       
+        var results = users
+        if (args?.roles) {
+          results = _.filter(users, function (item) {
+            if (item.userAdvance?.roles !== undefined) {
+              var roles = item.userAdvance?.roles
+              var searchRoles = roles.filter(function (str) {
+                let role = str.toLowerCase()
+                let search = (args.roles).toLowerCase()
+                return role.indexOf(search) > -1
+              })
+              var checkRoles = _.isEmpty(_.intersection(roles, searchRoles))
+              if (!checkRoles) {
+                return item
+              }
+            }
+          });
+        }
+        // console.log("test: ", results)
+        // for (const user of allUser) {
+        //   const { userId } = context
+        //   const getUserFeedback = await prisma.userFeedback.findMany({
+        //     where: {
+        //       userId: userId
+        //     }
+        //   })
+        //   const getUserAdvance = await prisma.userAdvance.findMany({
+        //     where:{
+        //       userId : args.userId
+        //     }
+        //   })
+
+        //   user.userFeedback = getUserFeedback
+        //   user.userAdvance = getUserAdvance
+
+        // }
+
+        // const selectroles = prisma.$queryRaw`SELECT * FROM user_advance WHERE roles LIKE '%${args.roles}%'`
+
+        // allUser.roles = selectroles
+
+        return results
       }
-     
-      const selectroles = prisma.$queryRaw`SELECT * FROM user_advance WHERE roles LIKE '%${args.roles}%'`
-     
-      allUser.roles = selectroles
-    
-  
-    
-        return allUser
+      catch (e) {
+        console.log(e)
+        return new ApolloError(`${e}`)
+      }
 
     },
     signIn: async (parent, args, context) => {
@@ -90,13 +129,13 @@ export default {
       if (!valid) {
         return new ApolloError("Invalid email or password!")
       }
-      const getToken = await axios.get(`${process.env.URL_SMILE_EYE_API}/return-token`, 
-      {
-        params:{
-          id: user.id
+      const getToken = await axios.get(`${process.env.URL_SMILE_EYE_API}/return-token`,
+        {
+          params: {
+            id: user.id
+          }
         }
-      }
-    );
+      );
       const token = getToken.data
       return {
         token,
@@ -129,9 +168,9 @@ export default {
         })
         const getProjectMember = await prisma.projectMembers.findMany({
           where: {
-            memberUserId: userId 
+            memberUserId: userId
           },
-          include:{
+          include: {
             project: true
           }
         })
@@ -167,52 +206,52 @@ export default {
       try {
         const user = await prismaUser.user.findFirst({
           where: {
-            id: args.id
+            id: +args.id
           },
         })
         const userAdvance = await prisma.userAdvance.findFirst({
           where: {
-            userId: args.id
+            userId: +args.id
           }
         })
         user.userAdvance = userAdvance
         if (userAdvance) {
-           
-            const projectMember = await prisma.projectMembers.findMany({
-                where: {
-                  memberUserId: user.id
-                },
-              })
-             const getIdProject =  _.map(projectMember, "projectId")
-             const projects = await prisma.project.findMany({
-              where: {
-                OR:[{
-                  id: {
-                    in: getIdProject
-                  }
-                },
-                {authorUserId: user.id}
-              ]
+
+          const projectMember = await prisma.projectMembers.findMany({
+            where: {
+              memberUserId: user.id
+            },
+          })
+          const getIdProject = _.map(projectMember, "projectId")
+          const projects = await prisma.project.findMany({
+            where: {
+              OR: [{
+                id: {
+                  in: getIdProject
+                }
               },
-            })
-              const selfProject = _.filter(projects, function(project) {
-                    return project.authorUserId == user.id
-              });
-             const joinProject = await prisma.projectMembers.findMany({
-                      where:{
-                        memberUserId: user.id
-                      },
-                      include:{
-                          project: true
-                      }
-              });
-              let numberFramework = 0
-              if(typeof user.userAdvance.skill[0].framework !== 'undefined'){
-                   numberFramework  = (user.userAdvance.skill[0].framework).length
-              }
-              user.userAdvance.numberFramework = numberFramework
-              user.userAdvance.selfProject = selfProject
-              user.userAdvance.joinProject = joinProject
+              { authorUserId: user.id }
+              ]
+            },
+          })
+          const selfProject = _.filter(projects, function (project) {
+            return project.authorUserId == user.id
+          });
+          const joinProject = await prisma.projectMembers.findMany({
+            where: {
+              memberUserId: user.id
+            },
+            include: {
+              project: true
+            }
+          });
+          let numberFramework = 0
+          if (typeof user.userAdvance.skill[0].framework !== 'undefined') {
+            numberFramework = (user.userAdvance.skill[0].framework).length
+          }
+          user.userAdvance.numberFramework = numberFramework
+          user.userAdvance.selfProject = selfProject
+          user.userAdvance.joinProject = joinProject
         }
         return user
       }

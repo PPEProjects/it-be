@@ -74,7 +74,7 @@ export default {
         const now = new Date()
         const deleteProject = await prisma.project.update({
             where:{
-              id: args.id 
+              id: +args.id 
             },
             data:{
               deleted: now

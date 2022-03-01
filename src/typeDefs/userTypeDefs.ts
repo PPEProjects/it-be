@@ -10,12 +10,12 @@ export default gql`
     searchUsers(name:String,roles:JSON):[User]
     signIn(email: String!, password: String!): AuthPayload!
     me: User!
-    detailUser(id: Int): User 
+    detailUser(id: ID): User 
   }
   
   type User {
     email: String!
-    id: Int!
+    id: ID!
     name: String
     roles: JSON
     first_name: String
@@ -29,7 +29,7 @@ export default gql`
     project:[Project]
     projectMembers: [ProjectMembers]
     userFeedback:   [UserFeedback]
-    userAdvance:    [UserAdvance]
+    userAdvance:    UserAdvance
     selfProject:    String
     joinedProject:  String
     numberSelfProject:    Int
