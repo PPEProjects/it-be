@@ -26,16 +26,17 @@ export default {
             try {
                 const detailProjectInterested = await prisma.projectInterested.findFirst({
                     where: {
-                        id: args.userId
+                        projectId : args.projectId
                     },
 
                 })
-                const project12 = await prisma.Project.findMany({
+                const project = await prisma.Project.findMany({
                     where: {
-                        id: args.userId
+                        id: args.projectId
                     }
                 })
-                detailProjectInterested.project = project12
+                detailProjectInterested.project = project
+                
                 return detailProjectInterested
             } catch (e) {
                 console.log(e)

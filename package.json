@@ -1,7 +1,7 @@
 {
   "name": "typescript-graphql",
   "scripts": {
-    "dev": "ts-node-dev --no-notify --respawn --transpile-only src/server",
+    "dev": "ts-node-dev --no-notify --respawn --transpile-only src/serverLocal",
     "seed-db": "npx prisma db seed",
     "create-only-db": "prisma migrate dev --create-only",
     "migrate": "npx prisma db push --preview-feature; npm run pg-schema; npm run pg-usercore",

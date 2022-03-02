@@ -13,8 +13,9 @@ export default gql`
     listJoinProject(id:Int,type:String):[Project]
     listInterestedProject(id:ID, type:String):[Project]
     searchProject(name: String, type: String, status: String):[Project]
-    detailProject(id: ID): Project
-  adminProject:[Project]
+    detailProject(id: Int): Project
+  adminProject(type:String):[Project]
+  adminProjectIdeas(type:String, name: String): [Project]
   }
 
   type Project {

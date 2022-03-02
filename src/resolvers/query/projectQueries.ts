@@ -4,7 +4,7 @@ import { ApolloError } from 'apollo-server';
 import { triggerAsyncId } from 'async_hooks';
 import GraphQLJSON from 'graphql-type-json';
 import { ary, maxBy, pullAllWith } from 'lodash';
-import { type } from 'os';
+import { arch, type } from 'os';
 const { prisma, prismaUser, getUsers } = require('../../database')
 
 export default {
@@ -229,14 +229,14 @@ export default {
         },
         adminProject: async (parent, args, context) => {
             try {
-                 const { userId } = context
                 const listProject = await prisma.project.findMany({
                     where: {
-                        id: args.id
+                        id: args.id,
+
                     }
                 })
                 let allProject = _.orderBy(listProject, ["updatedAt"], ["desc"])
-                let interProject = _.orderBy(listProject, ["countProject"], ["desc"])
+
                 const getIdUser = _.map(allProject, 'authorUserId')
                 const userCore = await prismaUser.user.findMany({
                     where: {
@@ -246,21 +246,57 @@ export default {
                     },
                 })
                 const users = _.keyBy(await userCore, 'id')
-                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as "number" FROM project_interested WHERE user_id=${userId}`
-                for (const project of allProject) {
+                const numberSelfIdeas = await prisma.$queryRaw`SELECT  project_id ,COUNT(project_id) as number FROM project_interested WHERE project_id  GROUP BY project_id`
+                var interested = _.keyBy(numberSelfIdeas, "project_id")
+
+                allProject.forEach(project => {
                     project.user = users[project.authorUserId]
+                    const number = (interested[project.id]?.number) ? interested[project.id]?.number : 0
+                    project.countProject = number
+                });
+
+
+                if (args?.type == "lastest") {
+                    allProject = _.orderBy(listProject, ["countProject"], ["desc"])
                 }
-                for(const project of interProject){
+                return allProject
+            } catch (e) {
+                console.log(e)
+                return new ApolloError(`${e}`)
+            }
+        },
+        adminProjectIdeas: async (parent, args, context) => {
+            try {
+                const { userId } = context
+                const me = await prismaUser.user.findUnique({
+                    where: {
+                        id: userId
+                    }
+                })
+                const myProject = await prisma.project.findMany({
+                    where: {
+                        authorUserId: userId,
+                        type: args.type
+                    }
+                })
+                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
+                                                                FROM project 
+                                                                WHERE 
+                                                                type= ${args.type}
+                                                               `
+                for (const project of myProject) {
+                    project.user = me
                     project.countProject = _.first(numberSelfIdeas).number
                 }
-        
-                return allProject
+
+                return myProject
 
             } catch (e) {
                 console.log(e)
                 return new ApolloError(`${e}`)
             }
         }
+
 
     }
 }
