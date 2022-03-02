@@ -3,6 +3,7 @@ import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
 import { DateTimeResolver } from 'graphql-scalars'
+import { update } from 'lodash';
 
 
 export default {
@@ -96,6 +97,7 @@ export default {
               ...dataUser
             },
           })
+          upsertUserAdvance.user = updateUser
         return upsertUserAdvance
       }
       catch(e){
