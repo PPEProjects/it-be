@@ -241,8 +241,14 @@ export default {
                         type: {
                             contains: args.type || undefined
                         },
+                        status: {
+                            contains: args.status || undefined
+                        }
                     },
                 })
+                if(listProject.length === 0){
+                    return null
+                }
 
                 let allProject = _.orderBy(listProject, ["updatedAt"], ["desc"])
 
@@ -264,7 +270,7 @@ export default {
                     project.countProject = number
 
                 });
-                if (args?.typelast == "lastest") {
+                if (args?.arrange == "lastest") {
                     allProject = _.orderBy(listProject, ["countProject"], ["desc"])
                 }
                 return allProject
