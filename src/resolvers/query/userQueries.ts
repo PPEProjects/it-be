@@ -6,19 +6,7 @@ import { ApolloError } from 'apollo-server'
 import axios from 'axios'
 import { Prisma } from '@prisma/client'
 export default {
-  User:{
-        id: (parent, args, context, info) => parent.id,
-        // userId: (parent) => parent.userId,
-        // roles: (parent) => parent.roles,
-        // language: (parent) => parent.language,
-        // skill: (parent) => parent.skill,
-        // info: (parent) => parent.info,
-        // goal: (parent) => parent.goal,
-        // plan: (parent) => parent.plan,
-        createdAt: (parent) => parent.createdAt,
-        updatedAt: (parent) => parent.updatedAt,
-        // deleted: (parent) => parent.deleted,
-  },
+
   Query: {
     allUsers: async (parent, args, context) => {
       try {
@@ -59,8 +47,6 @@ export default {
           return null
         }
         const getIdUsers = _.map(allUser, "id")
-        const test = await prisma.$queryRaw`SELECT * FROM user_advance WHERE user_id IN (${Prisma.join(getIdUsers)})`
-        console.log(test)
         const listUserAdvance = await prisma.userAdvance.findMany({
           where: {
             userId: {
@@ -248,11 +234,11 @@ export default {
               project: true
             }
           });
-          let numberFramework = 0
-          if (typeof user.userAdvance.skill[0].framework !== 'undefined') {
-            numberFramework = (user.userAdvance.skill[0].framework).length
-          }
-          user.userAdvance.numberFramework = numberFramework
+          // let numberFramework = 0
+          // if (typeof user.userAdvance.skill[0].framework !== 'undefined') {
+          //   numberFramework = (user.userAdvance.skill[0].framework).length
+          // }
+          // user.userAdvance.numberFramework = numberFramework
           user.userAdvance.selfProject = selfProject
           user.userAdvance.joinProject = joinProject
         }
