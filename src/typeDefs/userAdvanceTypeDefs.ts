@@ -14,7 +14,6 @@ export default gql`
   }
 
   type UserAdvance{
-    
   id:       ID     
   userId:   Int    
   roles:    JSON
@@ -41,8 +40,8 @@ export default gql`
    
   
   input UserAdvanceInput {
-    id:       Int       
-    userId:   Int    
+    id:       ID      
+    userId:   ID
     roles:    JSON
     language:  JSON
     skill:     JSON
@@ -53,6 +52,6 @@ export default gql`
   }
 
   scalar JSON
-  scalar DateTimea
+  scalar DateTime
 `
 
