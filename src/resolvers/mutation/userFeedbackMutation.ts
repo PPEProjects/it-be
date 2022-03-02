@@ -35,12 +35,15 @@ export default {
     },
     updateUserFeedback: async (parent, args, content,) =>{
       try{
+        const id = +args.data.id
+        delete (args.data)['id']
         const updateUserFeedback = await prisma.userFeedback .update({
             where:{
-              id: args.data.id
+              id: id
             },
             data:{
-              ...args.data
+              ...args.data,
+              userId: +args.data.userId
             }
         })
         return updateUserFeedback 
@@ -55,7 +58,7 @@ export default {
         const now = new Date()
         const deleteUserFeedback = await prisma.userFeedback.update({
             where:{
-              id: args.id 
+              id: +args.id 
             },
             data:{
               deleted: now

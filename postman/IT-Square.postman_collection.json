@@ -124,7 +124,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProject($data: ProjectInput!) {\n  updateProject(data: $data) {\n    id\n    name\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\":15,\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"status\": \"running\",\n    \"memberJoin\":[{\n        \"userId\": 2,\n        \"postion\":\"BE\",\n        \"skill\":\"php\",\n        \"exip\": \"create AI\",\n        \"level\": \"senior\"\n    }],\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\":1,\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"status\": \"running\",\n    \"memberJoin\":[{\n        \"postion\":\"BE\",\n        \"skill\":\"php\",\n        \"exip\": \"create AI\",\n        \"level\": \"senior\"\n    },{\n        \"postion\":\"FE\",\n        \"skill\":\"ReactJs\",\n        \"exip\": \"create UI\",\n        \"level\": \"junior\"\n    }\n    ],\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
 							}
 						},
 						"url": {
@@ -200,6 +200,36 @@
 					"response": []
 				},
 				{
+					"name": "query_my_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyProject {\n  myProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "query_detail_project",
 					"request": {
 						"method": "POST",
@@ -244,7 +274,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query SearchProject($name: String, $type: String, $status: String) {\n  searchProject(name: $name, type: $type, status: $status) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUserId    \n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n \n}"
+								"variables": "{\n\n}"
 							}
 						},
 						"url": {
@@ -280,36 +310,6 @@
 							"graphql": {
 								"query": "query Me {\n  me {\n    id\n    name\n    avatar_attachment\n    userAdvance {\n      goal\n      plan\n      language\n      roles\n    }\n    userFeedback {\n      grate\n    }\n    project {\n        id\n        name\n        type\n    }\n    projectMembers {\n        id\n        project {\n            name\n        }\n        position\n    }\n    numberSelfProject\n    numberJoinedProject\n  }\n}\n",
 								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}/graphql",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"graphql"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "query_my_project",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query MyProject {\n  myProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n}"
 							}
 						},
 						"url": {
@@ -369,7 +369,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailUser($detailUserId: ID) {\n  detailUser(id: $detailUserId) {\n    id\n    first_name\n    name\n    email\n    phone_number\n    address\n    date_of_birth\n    gender\n    userAdvance{\n        id\n        userId\n        roles\n        language\n        skill\n        info\n        plan\n        goal\n        numberFramework\n        selfProject{\n            id\n            name\n            attachments\n        }\n        joinProject{\n            id \n            position\n            project{\n                id\n                name\n                category\n                attachments\n                timeToDo\n            }\n        }\n    }\n  }\n}",
-								"variables": "{\n  \"detailUserId\": 1\n}"
+								"variables": "{\n  \"detailUserId\":  1\n}"
 							}
 						},
 						"url": {
@@ -434,7 +434,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProjectInterested($data: ProjectInterestedInput!) {\n  updateProjectInterested(data: $data) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"projectId\": 2\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\": 17,\n    \"projectId\": 2\n  }\n}"
 							}
 						},
 						"url": {
@@ -523,8 +523,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailProjectInterested($detailProjectInterestedId: Int) {\n  detailProjectInterested(id: $detailProjectInterestedId) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"detailProjectInterestedId\": 9\n  }"
+								"query": "query AdminProject($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"projectId\": 2\n  }"
 							}
 						},
 						"url": {
@@ -589,7 +589,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProjectMembers($data: ProjectMembersInput!) {\n  updateProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"position\": \"dev\",\n    \"memberUserId\": 2\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"position\": \"dev\",\n    \"memberUserId\": 1\n  }\n}"
 							}
 						},
 						"url": {
@@ -679,7 +679,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailMemberByIdProject($projectId: Int) {\n  detailMemberByIdProject(projectId: $projectId) {\n   id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    memberUser{\n        id\n        name\n    }\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"projectId\": 4\n  }"
+								"variables": "  {\n    \"projectId\": 2\n  }"
 							}
 						},
 						"url": {
@@ -713,8 +713,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation UpsertUserAdvance($data: UserAdvanceInput!) {\n  upsertUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    goal\n    plan\n  }\n}",
-								"variables": "{\n  \"data\": {\n     \"roles\": [\"admin\", \"pm\", \"fullstack\"],\n      \"goal\": \"Backend developer\",\n      \"language\": [\"VietNames\", \"English\"],\n      \"skill\": [{\n          \"program_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"kelvin\",\n      \"name\": \"kids\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
+								"query": "mutation UpsertUserAdvance($data: UserAdvanceInput!) {\n  upsertUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    goal\n    plan\n    user{\n        id\n        email\n        first_name\n        name\n        phone_number\n        address\n        country\n        gender\n        date_of_birth\n        avatar_attachment\n        background_attachment\n    }\n  }\n}",
+								"variables": "{\n  \"data\": {\n     \"roles\": [\"admin\", \"pm\", \"fullstack\"],\n      \"goal\": \"Backend developer\",\n      \"language\": [\"VietNames\", \"English\"],\n      \"skill\": {\n          \"program_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      },\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"hello\",\n      \"name\": \"users\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
@@ -803,7 +803,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteUserAdvance($deleteUserAdvanceId: Int) {\n  deleteUserAdvance(id: $deleteUserAdvanceId)\n}",
+								"query": "mutation DeleteUserAdvance($deleteUserAdvanceId: ID) {\n  deleteUserAdvance(id: $deleteUserAdvanceId)\n}",
 								"variables": "  {\n    \"deleteUserAdvanceId\": 1\n  }"
 							}
 						},
@@ -899,7 +899,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateUserFeedback($data: UserFeedbackInput!) {\n  createUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"userId\": null,\n      \"projectId\": null,\n      \"grate\": null\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"userId\": 1,\n      \"projectId\": 1,\n      \"grate\":\"2\"\n    }\n  }"
 							}
 						},
 						"url": {
@@ -929,7 +929,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateUserFeedback($data: UserFeedbackInput!) {\n  updateUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"id\": null,\n      \"userId\": null,\n      \"projectId\": null,\n      \"grate\": null\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"id\": 1,\n         \"userId\": 1,\n      \"projectId\": 2,\n      \"grate\":\"2\"\n    }\n  }"
 							}
 						},
 						"url": {
@@ -958,7 +958,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteUserFeedback($deleteUserFeedbackId: Int) {\n  deleteUserFeedback(id: $deleteUserFeedbackId)\n}",
+								"query": "mutation DeleteUserFeedback($deleteUserFeedbackId: ID) {\n  deleteUserFeedback(id: $deleteUserFeedbackId)\n}",
 								"variables": "  {\n    \"deleteUserFeedbackId\": 1\n  }"
 							}
 						},
@@ -988,7 +988,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query AllUserFeedback {\n  allUserFeedback {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query AllUserFeedback {\n  allUserFeedback {\n    id\n    userId\n    projectId\n    grate\n    project{\n        id\n        name\n    }\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n  \n}"
 							}
 						},

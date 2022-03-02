@@ -49,30 +49,26 @@ export default {
                     where: {
                         projectId: args.projectId
                     },
-                 
-
                 })
                 const project = await prisma.project.findFirst({
                     where: {
                         id: args.id
                     },                              
                 })
-
+                if(detailMember.length === 0){
+                    return null
+                }
              
                 // author = _.keyBy()
                 var getIdMembers = _.map(detailMember, "memberUserId")
-                getIdMembers = _.xor(getIdMembers, [null])
+                getIdMembers = _.difference(getIdMembers, [null])
                 const members = await prismaUser.user.findMany({
                     where: {
                         id: {
-                            in: getIdMembers
+                            in: getIdMembers || undefined
                         }
                     }
-                })
-                
-               
-                
-              
+                })   
                 const setKeyMembers = _.keyBy(members, "id")
                 const projectMembers = _.map(detailMember, (projectMember, index) => {
                    

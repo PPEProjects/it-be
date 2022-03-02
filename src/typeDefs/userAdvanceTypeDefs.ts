@@ -15,7 +15,7 @@ export default gql`
 
   type UserAdvance{
   id:       ID     
-  userId:   Int    
+  userId:   ID   
   roles:    JSON
   language:  JSON
   skill:     JSON

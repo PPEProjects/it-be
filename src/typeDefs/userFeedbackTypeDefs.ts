@@ -4,18 +4,17 @@ export default gql`
   type Mutation {
     createUserFeedback(data: UserFeedbackInput!): UserFeedback!
     updateUserFeedback(data: UserFeedbackInput!): UserFeedback 
-    deleteUserFeedback(id: Int): Boolean
+    deleteUserFeedback(id: ID): Boolean
   }
 
   type Query {
-    allUserFeedback: [UserFeedback!]!
-    myProject: [Project!]!
+    allUserFeedback: [UserFeedback]
   }
 
   type UserFeedback{
     
-    id:       Int      
-    userId:   Int       
+    id:       ID      
+    userId:   ID     
     projectId: Int       
     grate:     String
     createdAt: DateTime!
@@ -26,8 +25,8 @@ export default gql`
   }
   
   input UserFeedbackInput {
-    id:       Int      
-  userId:   Int       
+    id:       ID  
+  userId:   ID   
   projectId: Int       
   grate:     String
   }

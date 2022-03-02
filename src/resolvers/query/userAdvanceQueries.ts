@@ -5,7 +5,6 @@ import GraphQLJSON from 'graphql-type-json';
 import { ary } from 'lodash';
 import { isDataView } from 'util/types';
 const _ = require('lodash')
-
 const { prisma, prismaUser } = require('../../database')
 
 
@@ -19,7 +18,6 @@ export default {
                 const allUserAdvance = await prisma.userAdvance.findMany({
                     where: {
                         deleted: null,
-                        id: +args.id
                     },
 
 
@@ -66,10 +64,8 @@ export default {
                     where: {
                         userId: +args.userId
                     },
-
                 })
-                for (const userAdvanceall of detailUserAdvance) {
-                    const getUser = await prismaUser.user.findMany({
+                    const getUser = await prismaUser.user.findFirst({
                         where: {
                             id: +args.userId
                         }
@@ -92,16 +88,10 @@ export default {
                             userId: +args.userId
                         }
                     })
-                    userAdvanceall.user = getUser
-                    userAdvanceall.selfProject = project
-                    userAdvanceall.joinProject = getProjectMember
-                    userAdvanceall.userFeedback = getUserFeedback
-
-
-
-
-                }
-
+                    detailUserAdvance.user = getUser
+                    detailUserAdvance.selfProject = project
+                    detailUserAdvance.joinProject = getProjectMember
+                    detailUserAdvance.userFeedback = getUserFeedback
 
                 const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
                                                                 FROM project 
@@ -112,11 +102,9 @@ export default {
 
 
                 const userAdvance = detailUserAdvance
-                if (userAdvance) {
-                    const count = (userAdvance.skill[0].framework) ? (userAdvance.skill[0].framework).length : 0
+                if (userAdvance) {              
                     userAdvance.numberSelfIdeas = _.first(numberSelfIdeas).number
                     userAdvance.numberJoinedProject = _.first(numberJoinProject).joined
-                    userAdvance. numberFramework = count
                 }
 
                 return userAdvance

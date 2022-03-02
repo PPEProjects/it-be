@@ -9,7 +9,7 @@ export default gql`
 
   type Query {  
     allProjectInterested: [ProjectInterested]
-    detailProjectInterested(projectId:Int): ProjectInterested
+    detailProjectInterested(projectId:ID): ProjectInterested
   }
 
   type ProjectInterested {
@@ -19,7 +19,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
-project: [Project]
+    project: [Project]
   }
   
   input ProjectInterestedInput {
@@ -30,6 +30,6 @@ project: [Project]
   }
 
   scalar JSON
-  scalar DateTimea
+  scalar DateTime
 `
 

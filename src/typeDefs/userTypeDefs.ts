@@ -68,7 +68,7 @@ export default gql`
   }
   input UserUniqueInput {
     email: String
-    id: Int
+    id: ID
   }
 
   scalar DateTime

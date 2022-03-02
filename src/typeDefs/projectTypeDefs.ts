@@ -13,7 +13,7 @@ export default gql`
     listJoinProject(id:Int,type:String):[Project]
     listInterestedProject(id:ID, type:String):[Project]
     searchProject(name: String, type: String, status: String):[Project]
-    detailProject(id: Int): Project
+    detailProject(id: ID): Project
   adminProject(type:String, name: String, arrange:String,status:String):[Project]
   }
 
@@ -69,6 +69,6 @@ export default gql`
   }
 
   scalar JSON
-  scalar DateTimea
+  scalar DateTime
 `
 

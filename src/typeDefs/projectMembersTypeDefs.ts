@@ -14,18 +14,17 @@ export default gql`
   }
 
   type ProjectMembers {
-    id:         Int     
-    pmUserId:     Int      
-    projectId:  Int       
+    id:         ID
+    pmUserId:    ID   
+    projectId:  ID   
     roles:      JSON
     project:    Project
-    memberUserId:   Int  
+    memberUserId:   ID 
     position:        String
     linkTest:      String    
     salary:        JSON
     fee:           JSON
     status:        String
-
     memberUser: User
     createdAt:  DateTime!
     updatedAt:  DateTime!
@@ -34,11 +33,11 @@ export default gql`
   }
   
   input ProjectMembersInput {
-    id:    Int     
-    pmUserId:  Int      
-    projectId: Int       
+    id:    ID 
+    pmUserId:  ID      
+    projectId: ID     
     roles:    JSON 
-    memberUserId:   Int  
+    memberUserId:   ID
     position:        String
     linkTest:      String    
     salary:        JSON

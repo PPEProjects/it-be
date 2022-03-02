@@ -25,6 +25,7 @@ export default {
         const createProjectMembers = await prisma.projectMembers.create({
           data: {
             ...args.data,
+            projectId: +args.data?.projectId,
             pmUserId: getUserId
           },
         })
@@ -39,12 +40,15 @@ export default {
     },
     updateProjectMembers: async (parent, args, context,) =>{
       try{
+        const id = +args.data.id
+        delete (args.data)['id']
         const updateProjectMembers= await prisma.projectMembers.update({
             where:{
-              id: args.data.id
+              id: id
             },
             data:{
               ...args.data,
+              memberUserId: +args.data?.memberUserId
             }
         })
         return updateProjectMembers
@@ -58,7 +62,7 @@ export default {
         
         const upsertProjectMembers= await prisma.projectMembers.upsert({
           where:{
-           memberUserId: args.data.memberUserId
+           memberUserId: +args.data.memberUserId
           },
           update:{
             ...args.data,
@@ -81,7 +85,7 @@ export default {
         const now = new Date()
         const deleteProjectMembers= await prisma.projectMembers.update({
             where:{
-              id: args.id 
+              id: +args.id 
             },
             data:{
               deleted: now

@@ -26,13 +26,13 @@ export default {
             try {
                 const detailProjectInterested = await prisma.projectInterested.findFirst({
                     where: {
-                        projectId : args.projectId
+                        projectId : +args.projectId
                     },
 
                 })
                 const project = await prisma.Project.findMany({
                     where: {
-                        id: args.projectId
+                        id: +args.projectId
                     }
                 })
                 detailProjectInterested.project = project
