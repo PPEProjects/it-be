@@ -14,8 +14,7 @@ export default gql`
     listInterestedProject(id:ID, type:String):[Project]
     searchProject(name: String, type: String, status: String):[Project]
     detailProject(id: Int): Project
-  adminProject(type:String):[Project]
-  adminProjectIdeas(type:String, name: String): [Project]
+  adminProject(type:String, name: String, typelast:String):[Project]
   }
 
   type Project {
@@ -43,6 +42,7 @@ export default gql`
     deleted: DateTime
     timeToDo: String
     countProject: Int
+    typelast: String
     members: [ProjectMembers]
   }
   
