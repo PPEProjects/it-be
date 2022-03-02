@@ -18,6 +18,9 @@ export default {
                 const allUserAdvance = await prisma.userAdvance.findMany({
                     where: {
                         deleted: null,
+                        NOT:{
+                            status: "pending"
+                        }
                     },
 
 
@@ -99,12 +102,15 @@ export default {
                 const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
                                                                     FROM project_members 
                                                                     WHERE pm_user_id=${+args.userId}`
+                 const numberAvg = await prisma.$queryRaw`SELECT AVG(grate) as number FROM user_feedback 
+                                                                    WHERE user_id= ${+args.userId}`    
 
 
                 const userAdvance = detailUserAdvance
                 if (userAdvance) {              
                     userAdvance.numberSelfIdeas = _.first(numberSelfIdeas).number
                     userAdvance.numberJoinedProject = _.first(numberJoinProject).joined
+                    userAdvance.numberAvggrate = _.first(numberAvg).number
                 }
 
                 return userAdvance

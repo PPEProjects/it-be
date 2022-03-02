@@ -2,6 +2,7 @@
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
 import { triggerAsyncId } from 'async_hooks';
+import { NOTFOUND } from 'dns';
 import { UniqueDirectiveNamesRule } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
 import { ary, maxBy, pullAllWith } from 'lodash';
@@ -17,7 +18,11 @@ export default {
             try {
                 const listProject = await prisma.project.findMany({
                     where: {
-                        deleted: null
+                        deleted: null,
+                        NOT:{
+                            status: "pending"
+                        }
+
                     },
                 })
                 let allProject = _.orderBy(listProject, ["type", "id"], ["desc", "desc"])

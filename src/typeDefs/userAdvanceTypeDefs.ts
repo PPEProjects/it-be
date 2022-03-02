@@ -35,6 +35,7 @@ export default gql`
   numberSelfIdeas:  Int
   numberJoinedProject: Int
   numberFramework: Int
+  numberAvggrate: String
     
   }
    

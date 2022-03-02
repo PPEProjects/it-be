@@ -304,7 +304,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query Query($type: String, $arrange: String, $name: String, $status: String) {\n  adminProject(type: $type, arrange: $arrange, name: $name, status: $status) {\n    name\n    authorUserId\n    category\n    countProject\n    type\n    status\n  }\n}",
-								"variables": "{\n  \"name\": \"w\",\n  \"type\": \"project\",\n  \"arrange\": \"countProject\",\n  \"status\": \"regi\"\n  \n}"
+								"variables": "{\n  \"name\": \"w\",\n  \"type\": \"project\",\n  \"arrange\": \"countProject\",\n  \"status\": \"reg\"\n  \n}"
 							}
 						},
 						"url": {
