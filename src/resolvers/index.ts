@@ -17,7 +17,10 @@ import userFeedbackMutation from './mutation/userFeedbackMutation'
 import userFeedbackQueries from './query/userFeedbackQueries'
 
 import exampleQueries from './query/exampleQueries'
-const resolvers =  [
+import { models } from '../model'
+import _ = require('lodash')
+
+const resolvers =  _.merge([
                         userQueries, userMutation, 
                         projectMutation, projectQueries,
                         projectInterestedMutation,projectInterestedQueries,
@@ -25,6 +28,8 @@ const resolvers =  [
                         userAdvanceMutation,userAdvanceQueries,
                         userFeedbackMutation,userFeedbackQueries,
                         exampleQueries
-                    ]
+                    ],
+                    models
+                    )
 
 export  { resolvers }
