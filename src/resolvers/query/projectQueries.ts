@@ -270,7 +270,7 @@ export default {
                     project.countProject = number
 
                 });
-                if (args?.arrange == "lastest") {
+                if (args?.arrange == "countProject") {
                     allProject = _.orderBy(listProject, ["countProject"], ["desc"])
                 }
                 return allProject
