@@ -53,7 +53,7 @@ export default {
               in: getIdUsers
             },
           }
-        }) 
+        })
         const userAdvances = _.keyBy(listUserAdvance, "userId")
         const users = _.map(allUser, function (user) {
           user.userAdvance = userAdvances[user.id]
@@ -134,7 +134,7 @@ export default {
     me: async (parent, args, context) => {
       try {
         const { userId } = context
-
+        console.log(userId)
         if (!userId) {
           return new ApolloError("please login")
         }
@@ -143,6 +143,9 @@ export default {
             id: userId
           }
         })
+        if (me === null) {
+          return null
+        }
         const getUserAdvance = await prisma.userAdvance.findFirst({
           where: {
             userId: userId

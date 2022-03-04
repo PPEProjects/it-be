@@ -3,9 +3,10 @@ const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
 import { triggerAsyncId } from 'async_hooks';
 import { NOTFOUND } from 'dns';
+import { appendFile } from 'fs';
 import { UniqueDirectiveNamesRule } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
-import { ary, maxBy, pullAllWith } from 'lodash';
+import { ary, isNull, maxBy, pullAllWith } from 'lodash';
 import { arch, type } from 'os';
 import { arrayBuffer } from 'stream/consumers';
 const { prisma, prismaUser, getUsers } = require('../../database')
@@ -62,6 +63,9 @@ export default {
                         type: args.type
                     }
                 })
+                if(myProject.length === 0){
+                    return new ApolloError(`Data not exist`)
+                }
                 const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
                                                                 FROM project 
                                                                 WHERE 
@@ -161,7 +165,7 @@ export default {
                         }
                     },
                 })
-                if (listProject.length === 0) {
+                if(listProject.length === 0){
                     return null
                 }
                 const getIdUsers = _.map(listProject, "authorUserId") // get id user from project
@@ -214,6 +218,9 @@ export default {
                         id: +args.id
                     },
                 })
+                if(detailProject === null){
+                    return null
+                }
                 const projectMembers = await prisma.projectMembers.findMany({
                     where: {
                         projectId: detailProject.id

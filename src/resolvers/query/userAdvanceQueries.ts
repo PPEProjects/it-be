@@ -18,9 +18,6 @@ export default {
                 const allUserAdvance = await prisma.userAdvance.findMany({
                     where: {
                         deleted: null,
-                        NOT:{
-                            status: "pending"
-                        }
                     },
 
 
@@ -73,6 +70,9 @@ export default {
                             id: +args.userId
                         }
                     })
+                    if(getUser === null){
+                        return null
+                    }
 
                     const project = await prisma.Project.findMany({
                         where: {

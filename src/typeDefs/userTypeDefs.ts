@@ -3,6 +3,7 @@ import { gql } from 'apollo-server'
 export default gql`
   type Mutation {
     signupUser(data: UserCreateInput!): AuthPayload!
+    signupLocalUser(data: UserCreateInput!): AuthPayload!
   }
 
   type Query {

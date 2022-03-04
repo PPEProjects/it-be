@@ -49,10 +49,42 @@ export default {
         return new ApolloError(`${e}`)
       }
     },
-
+    signupLocalUser: async(parent, args, context) =>{
+      try {
+        const checkEmail = await prisma.user.findUnique({
+          where:{
+            email: args.data.email
+          }
+        })
+        if(checkEmail){
+          return new ApolloError("email is full of ears")
+        }
+        
+        const postData = args.data.posts?.map((post) => {
+          return { title: post.title, content: post.content || undefined }
+        })
+        if(args.data.password != args.data.password_confirmation){
+          return new ApolloError("password in correct ")
+        }
+        const password = await bcrypt.hash(args.data.password, 10)
+        const user = await prisma.user.create({
+          data: {
+            name: args.data.name,
+           email: args.data.email,    
+            password,
+            roles:["user"]
+          },
+        })
+        const token = jwt.sign({ userId: user.id }, `${process.env.APP_SECRET}`)
+        return {
+          token,
+          user,
+        }
+      }
+      catch (e) {
+        console.log(e)
+      }
 
   }
-
-
-
-}
+  }
+  }

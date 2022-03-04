@@ -13,8 +13,22 @@ export default {
         allProjectInterested: async (parent, args, context) => {
             try {
                 const allProjectInterested = await prisma.projectInterested.findMany({
+                    where: {
 
+                        deleted: null,
+                        id: args.id
+                    }
                 })
+                for (const projectInterested of allProjectInterested) {
+                    var projectId = projectInterested.id
+
+                    const projects = await prisma.project.findFirst({
+                        where: {
+                            id: projectId
+                        }
+                    })
+                   projectInterested.project = projects
+                }
                 return allProjectInterested
             }
             catch (e) {
@@ -30,6 +44,9 @@ export default {
                     },
 
                 })
+                if(detailProjectInterested === null){
+                    return null
+                }
                 const project = await prisma.Project.findMany({
                     where: {
                         id: +args.projectId

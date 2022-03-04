@@ -4,6 +4,7 @@ import { ApolloError } from 'apollo-server';
 import { count } from 'console';
 import GraphQLJSON from 'graphql-type-json';
 import { ary, cond, includes, values } from 'lodash';
+import { allowedNodeEnvironmentFlags } from 'process';
 import { isDataView } from 'util/types';
 import projectQueries from './projectQueries';
 const _ = require('lodash')
@@ -22,18 +23,17 @@ export default {
 
                         deleted: null,
                         id: args.id
-                    },
+                    }
                 })
                 for (const projectMembers of allProjectMembers) {
                     var projectId = projectMembers.id
 
-                    const project = await prisma.project.findMany({
+                    const projects = await prisma.project.findFirst({
                         where: {
                             id: projectId
                         }
                     })
-                    projectMembers.project = project
-
+                   projectMembers.project = projects
                 }
 
                 return allProjectMembers
