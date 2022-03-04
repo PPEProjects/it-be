@@ -1,5 +1,39 @@
-import { parse } from "path/posix"
 
+const { prisma } = require('../database')
+
+const queryUserAdvance = async (parent, args) => {
+  return await prisma.userAdvance.findFirst({
+      where:{
+        userId: parent?.id || undefined
+      }
+  })
+}
+
+const queryUserFeedback = async (parent, args) => {
+  var feedback = await prisma.userFeedback.findMany({
+      where:{
+        userId: parent?.id || undefined
+      }
+  })
+   return (feedback.length === 0) ? null : feedback
+}
+
+const querySelfProject = async (parent, args) => {
+    var project = await prisma.project.findMany({
+      where:{
+        authorUserId: parent?.id || undefined
+      }
+    })
+    return (project.length === 0) ? null : project
+}
+const queryJoinProject = async (parent, args) => {
+  var joinProject = await prisma.projectMembers.findMany({
+    where: {
+      memberUserId: parent?.id || undefined
+    }
+  })
+  return (joinProject.length === 0) ? null : joinProject
+}
 export default{
     User:{
         email:(parent) => parent.email,
@@ -30,6 +64,9 @@ export default{
         date_of_birth :(parent) => parent.date_of_birth,
         createdAt: (parent) => parent.created_at,
         updatedAt: (parent) => parent.updated_at,
-        
+        userAdvance: (parent, args) => queryUserAdvance(parent, args),
+        userFeedback: (parent, args) =>  queryUserFeedback(parent, args),
+        selfProject: (parent, args) => querySelfProject(parent, args),
+        joinProject: (parent, args) => queryJoinProject(parent, args)
       },
 }
