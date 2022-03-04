@@ -12,8 +12,12 @@ export default {
   Mutation: {
     createUserFeedback: async (parent, args, context,) => {
             
-      try {
-        const { userId } = context
+      try {  
+          var { userId } = context
+          if(args.data.userId){
+            userId = +args.data.userId
+          }
+          
         const user = await prismaUser.user.findUnique({
               where:{ id: userId}
           })
@@ -29,7 +33,7 @@ export default {
       }
       catch (e) {
         console.log(e)
-        return new ApolloError("this email invalid")
+        return new ApolloError(`${e}`)
 
       }
     },

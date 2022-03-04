@@ -13,20 +13,6 @@ export default {
         const allUser = await prismaUser.user.findMany({
           id: args.userId
         })
-
-        for (const user of allUser) {
-          const { userId } = context
-          const getUserFeedback = await prisma.userFeedback.findMany({
-            where: {
-              userId: userId
-            }
-          })
-
-          user.userFeedback = getUserFeedback
-
-        }
-
-
         return allUser
       } catch (e) {
         console.log(e)
@@ -76,29 +62,6 @@ export default {
             }
           });
         }
-        // console.log("test: ", results)
-        // for (const user of allUser) {
-        //   const { userId } = context
-        //   const getUserFeedback = await prisma.userFeedback.findMany({
-        //     where: {
-        //       userId: userId
-        //     }
-        //   })
-        //   const getUserAdvance = await prisma.userAdvance.findMany({
-        //     where:{
-        //       userId : args.userId
-        //     }
-        //   })
-
-        //   user.userFeedback = getUserFeedback
-        //   user.userAdvance = getUserAdvance
-
-        // }
-
-        // const selectroles = prisma.$queryRaw`SELECT * FROM user_advance WHERE roles LIKE '%${args.roles}%'`
-
-        // allUser.roles = selectroles
-
         return results
       }
       catch (e) {
@@ -134,7 +97,6 @@ export default {
     me: async (parent, args, context) => {
       try {
         const { userId } = context
-        console.log(userId)
         if (!userId) {
           return new ApolloError("please login")
         }
@@ -179,10 +141,10 @@ export default {
                                                           FROM project_members 
                                                           WHERE member_user_id=${userId}`
 
-        me.userAdvance = getUserAdvance
-        me.userFeedback = getUserFeedback
-        me.projectMembers = getProjectMember
-        me.project = selfProject
+        // me.userAdvance = getUserAdvance
+        // me.userFeedback = getUserFeedback
+        // me.projectMembers = getProjectMember
+        // me.project = selfProject
         me.numberSelfProject = _.first(numberSelfProject).number
         me.numberJoinedProject = _.first(numberJoinProject).joined
 
@@ -201,50 +163,6 @@ export default {
             id: +args.id
           },
         })
-        const userAdvance = await prisma.userAdvance.findFirst({
-          where: {
-            userId: +args.id
-          }
-        })
-        user.userAdvance = userAdvance
-        if (userAdvance) {
-
-          const projectMember = await prisma.projectMembers.findMany({
-            where: {
-              memberUserId: user.id
-            },
-          })
-          const getIdProject = _.map(projectMember, "projectId")
-          const projects = await prisma.project.findMany({
-            where: {
-              OR: [{
-                id: {
-                  in: getIdProject
-                }
-              },
-              { authorUserId: user.id }
-              ]
-            },
-          })
-          const selfProject = _.filter(projects, function (project) {
-            return project.authorUserId == user.id
-          });
-          const joinProject = await prisma.projectMembers.findMany({
-            where: {
-              memberUserId: user.id
-            },
-            include: {
-              project: true
-            }
-          });
-          // let numberFramework = 0
-          // if (typeof user.userAdvance.skill[0].framework !== 'undefined') {
-          //   numberFramework = (user.userAdvance.skill[0].framework).length
-          // }
-          // user.userAdvance.numberFramework = numberFramework
-          user.userAdvance.selfProject = selfProject
-          user.userAdvance.joinProject = joinProject
-        }
         return user
       }
       catch (e) {

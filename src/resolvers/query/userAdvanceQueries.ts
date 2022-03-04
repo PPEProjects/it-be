@@ -19,17 +19,9 @@ export default {
                     where: {
                         deleted: null,
                     },
-
-
                 })
                 for (const userAdvance of allUserAdvance) {
                     var userId = userAdvance.userId
-
-                    const user = prismaUser.user.findUnique({
-                        where: {
-                            id: userId
-                        },
-                    })
 
                     const project = await prisma.Project.findMany({
                         where: {
@@ -43,7 +35,7 @@ export default {
 
                         }
                     })
-                    userAdvance.user = user
+                    // userAdvance.user = user
                     userAdvance.project = project
                     userAdvance.projectMembers = projectMember
 

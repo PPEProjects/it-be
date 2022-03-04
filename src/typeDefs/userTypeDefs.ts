@@ -27,12 +27,11 @@ export default gql`
     quotes: String  
     avatar_attachment_id: JSON
     background_attachment_id: JSON
-    project:[Project]
+    selfProject:[Project]
+    joinProject: [ProjectMembers]
     projectMembers: [ProjectMembers]
     userFeedback:   [UserFeedback]
     userAdvance:    UserAdvance
-    selfProject:    String
-    joinedProject:  String
     numberSelfProject:    Int
     numberJoinedProject:  Int
     avatar_attachment:     JSON
@@ -56,7 +55,7 @@ export default gql`
     password_confirmation: String!
   }
   input UserUpdateInput {
-    id: Int
+    id: ID
     first_name: String
     name: String
     phone_number: String
