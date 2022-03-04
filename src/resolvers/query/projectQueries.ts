@@ -1,14 +1,7 @@
 
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
-import { triggerAsyncId } from 'async_hooks';
-import { NOTFOUND } from 'dns';
-import { appendFile } from 'fs';
-import { UniqueDirectiveNamesRule } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
-import { ary, isNull, maxBy, pullAllWith } from 'lodash';
-import { arch, type } from 'os';
-import { arrayBuffer } from 'stream/consumers';
 const { prisma, prismaUser, getUsers } = require('../../database')
 
 export default {
@@ -23,7 +16,6 @@ export default {
                         NOT:{
                             status: "pending"
                         }
-
                     },
                 })
                 let allProject = _.orderBy(listProject, ["type", "id"], ["desc", "desc"])
@@ -164,46 +156,49 @@ export default {
                             contains: args.status || undefined
                         }
                     },
+                    orderBy:{
+                        updatedAt: 'desc'
+                    }
                 })
                 if(listProject.length === 0){
                     return null
                 }
-                const getIdUsers = _.map(listProject, "authorUserId") // get id user from project
+                // const getIdUsers = _.map(listProject, "authorUserId") // get id user from project
 
-                const getIdProject = _.map(listProject, "id")
-                const projectMembers = await prisma.projectMembers.findMany({
-                    where: {
-                        projectId: {
-                            in: getIdProject
-                        }
-                    },
-                })
+                // const getIdProject = _.map(listProject, "id")
+                // const projectMembers = await prisma.projectMembers.findMany({
+                //     where: {
+                //         projectId: {
+                //             in: getIdProject
+                //         }
+                //     },
+                // })
 
-                var userIds = _.map(projectMembers, "memberUserId") // get id user from project_member
-                userIds = _.difference(userIds, [null]) // diff all value is null
+                // var userIds = _.map(projectMembers, "memberUserId") // get id user from project_member
+                // userIds = _.difference(userIds, [null]) // diff all value is null
 
-                var listIdUsers = _.merge(userIds, getIdUsers)
+                // var listIdUsers = _.merge(userIds, getIdUsers)
 
-                listIdUsers = _.uniqWith(listIdUsers, _.isEqual) // remove all value is duplicate
+                // listIdUsers = _.uniqWith(listIdUsers, _.isEqual) // remove all value is duplicate
 
-                const users = await getUsers(listIdUsers) // get data user
+                // const users = await getUsers(listIdUsers) // get data user
 
-                projectMembers.forEach((member) => {
-                    member.memberUser = users[member.memberUserId]
-                });
+                // projectMembers.forEach((member) => {
+                //     member.memberUser = users[member.memberUserId]
+                // });
 
-                // group data project_member by projectId
-                var groupByProjectId = _.chain(projectMembers)
-                    .groupBy("projectId")
-                    .map((value, key) => ({ projectId: key, members: value }))
-                    .value()
+                // // group data project_member by projectId
+                // var groupByProjectId = _.chain(projectMembers)
+                //     .groupBy("projectId")
+                //     .map((value, key) => ({ projectId: key, members: value }))
+                //     .value()
 
-                const memberProject = _.keyBy(groupByProjectId, "projectId")
+                // const memberProject = _.keyBy(groupByProjectId, "projectId")
 
-                listProject.forEach((project) => {
-                    project.user = users[project.authorUserId]
-                    project.members = (memberProject[project.id]) ? memberProject[project.id].members : null
-                });
+                // listProject.forEach((project) => {
+                //     // project.user = users[project.authorUserId]
+                //     project.members = (memberProject[project.id]) ? memberProject[project.id].members : null
+                // });
 
                 return listProject
             } catch (e) {
