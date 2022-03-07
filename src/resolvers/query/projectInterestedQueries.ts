@@ -19,16 +19,16 @@ export default {
                         id: args.id
                     }
                 })
-                for (const projectInterested of allProjectInterested) {
-                    var projectId = projectInterested.id
+                // for (const projectInterested of allProjectInterested) {
+                //     var projectId = projectInterested.id
 
-                    const projects = await prisma.project.findFirst({
-                        where: {
-                            id: projectId
-                        }
-                    })
-                   projectInterested.project = projects
-                }
+                //     const projects = await prisma.project.findFirst({
+                //         where: {
+                //             id: projectId
+                //         }
+                //     })
+                //    projectInterested.project = projects
+                // }
                 return allProjectInterested
             }
             catch (e) {
@@ -42,18 +42,16 @@ export default {
                     where: {
                         projectId : +args.projectId
                     },
-
                 })
                 if(detailProjectInterested === null){
                     return null
                 }
-                const project = await prisma.Project.findMany({
-                    where: {
-                        id: +args.projectId
-                    }
-                })
-                detailProjectInterested.project = project
-                
+                // const project = await prisma.Project.findFirst({
+                //     where: {
+                //         id: +args.projectId
+                //     }
+                // })
+                // detailProjectInterested.project = project
                 return detailProjectInterested
             } catch (e) {
                 console.log(e)

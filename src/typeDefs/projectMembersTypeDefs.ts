@@ -10,7 +10,7 @@ export default gql`
 
   type Query {
     allProjectMembers: [ProjectMembers]
-    detailMemberByIdProject(projectId: Int): [ProjectMembers]
+    detailMemberByIdProject(projectId: ID): [ProjectMembers]
   }
 
   type ProjectMembers {
@@ -29,7 +29,6 @@ export default gql`
     createdAt:  DateTime!
     updatedAt:  DateTime!
     deleted:    DateTime
-    joinedProject: Int
   }
   
   input ProjectMembersInput {

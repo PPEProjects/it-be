@@ -1,8 +1,12 @@
 
 import { ApolloError } from 'apollo-server';
+import { convertNodeHttpToRequest } from 'apollo-server-core';
 import { count } from 'console';
+import { getOperationAST } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
+import { get } from 'http';
 import { ary } from 'lodash';
+import { getgroups } from 'process';
 import { isDataView } from 'util/types';
 const _ = require('lodash')
 const { prisma, prismaUser } = require('../../database')
@@ -35,9 +39,15 @@ export default {
 
                         }
                     })
+                    const getUserFeedback = await prisma.userFeedback.findMany({
+                        where: {
+                            userId: userId || undefined,
+                        }
+                    })
                     // userAdvance.user = user
                     userAdvance.project = project
                     userAdvance.projectMembers = projectMember
+                    userAdvance.userFeedback = getUserFeedback
 
 
 
@@ -74,19 +84,21 @@ export default {
                    
                     const getProjectMember = await prisma.projectMembers.findMany({
                         where: {
-                            pmUserId: +args.userId
+                            memberUserId: +args.userId
                         }
-
                     })
+                  
                     const getUserFeedback = await prisma.userFeedback.findMany({
                         where: {
                             userId: +args.userId
                         }
                     })
+                    
                     detailUserAdvance.user = getUser
                     detailUserAdvance.selfProject = project
                     detailUserAdvance.joinProject = getProjectMember
                     detailUserAdvance.userFeedback = getUserFeedback
+                   
 
                 const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
                                                                 FROM project 

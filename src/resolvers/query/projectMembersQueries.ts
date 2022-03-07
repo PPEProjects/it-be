@@ -25,16 +25,16 @@ export default {
                         id: args.id
                     }
                 })
-                for (const projectMembers of allProjectMembers) {
-                    var projectId = projectMembers.id
+                // for (const projectMembers of allProjectMembers) {
+                //     var projectId = projectMembers.id
 
-                    const projects = await prisma.project.findFirst({
-                        where: {
-                            id: projectId
-                        }
-                    })
-                   projectMembers.project = projects
-                }
+                //     const projects = await prisma.project.findFirst({
+                //         where: {
+                //             id: projectId
+                //         }
+                //     })
+                //    projectMembers.project = projects
+                // }
 
                 return allProjectMembers
             }
@@ -47,12 +47,12 @@ export default {
                 const { userId } = context
                 const detailMember = await prisma.projectMembers.findMany({
                     where: {
-                        projectId: args.projectId
+                        projectId: +args.projectId
                     },
                 })
                 const project = await prisma.project.findFirst({
                     where: {
-                        id: args.id
+                        id: +args.projectId
                     },                              
                 })
                 if(detailMember.length === 0){

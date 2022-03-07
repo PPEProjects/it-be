@@ -20,7 +20,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
-    project: Project
+    project: [Project]
     
   }
   

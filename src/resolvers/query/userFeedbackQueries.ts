@@ -17,19 +17,19 @@ export default {
                     id: args.id
                 },               
             })
-            const getProjectId = _.map(allUserFeedback, 'projectId')
-            const projects = await prisma.project.findMany({
-                where:{
-                    id:{
-                        in: getProjectId
-                    }
-                }
-            })
-            const setKeyProjects = _.keyBy(projects, 'id')
-            allUserFeedback = _.map(allUserFeedback, function(userFeedback){
-                userFeedback.project = setKeyProjects[userFeedback.projectId]
-                return userFeedback
-            })
+            // const getProjectId = _.map(allUserFeedback, 'projectId')
+            // const projects = await prisma.project.findMany({
+            //     where:{
+            //         id:{
+            //             in: getProjectId
+            //         }
+            //     }
+            // })
+            // const setKeyProjects = _.keyBy(projects, 'id')
+            // allUserFeedback = _.map(allUserFeedback, function(userFeedback){
+            //     userFeedback.project = setKeyProjects[userFeedback.projectId]
+            //     return userFeedback
+            // })
             return allUserFeedback
         }
         catch(e){
