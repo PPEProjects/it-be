@@ -17,7 +17,7 @@ export default {
         const { userId } = context
         var getUserId = userId
         if(args.data.userId){
-          getUserId = args.data.userId
+          getUserId = +args.data.userId
         }
         const user = await prismaUser.user.findUnique({
               where:{ id: getUserId}
@@ -25,6 +25,7 @@ export default {
         const createProjectMembers = await prisma.projectMembers.create({
           data: {
             ...args.data,
+            memberUserId: +args.data?.memberUserId,
             projectId: +args.data?.projectId,
             pmUserId: getUserId
           },
