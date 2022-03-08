@@ -50,36 +50,36 @@ export default {
                         projectId: +args.projectId
                     },
                 })
-                const project = await prisma.project.findFirst({
-                    where: {
-                        id: +args.projectId
-                    },                              
-                })
-                if(detailMember.length === 0){
-                    return null
-                }
+                // const project = await prisma.project.findFirst({
+                //     where: {
+                //         id: +args.projectId
+                //     },                              
+                // })
+                // if(detailMember.length === 0){
+                //     return null
+                // }
              
-                // author = _.keyBy()
-                var getIdMembers = _.map(detailMember, "memberUserId")
-                getIdMembers = _.difference(getIdMembers, [null])
-                const members = await prismaUser.user.findMany({
-                    where: {
-                        id: {
-                            in: getIdMembers || undefined
-                        }
-                    }
-                })   
-                const setKeyMembers = _.keyBy(members, "id")
-                const projectMembers = _.map(detailMember, (projectMember, index) => {
+                // // author = _.keyBy()
+                // var getIdMembers = _.map(detailMember, "memberUserId")
+                // getIdMembers = _.difference(getIdMembers, [null])
+                // const members = await prismaUser.user.findMany({
+                //     where: {
+                //         id: {
+                //             in: getIdMembers || undefined
+                //         }
+                //     }
+                // })   
+                // const setKeyMembers = _.keyBy(members, "id")
+                // const projectMembers = _.map(detailMember, (projectMember, index) => {
                    
-                    projectMember.project = project
+                //     projectMember.project = project
                 
-                    projectMember.memberUser = setKeyMembers[projectMember.memberUserId]
+                //     projectMember.memberUser = setKeyMembers[projectMember.memberUserId]
                  
-                    return projectMember
-                })
+                //     return projectMember
+                // })
 
-                return projectMembers
+                return detailMember
             } catch (e) {
                 console.log(e)
             }

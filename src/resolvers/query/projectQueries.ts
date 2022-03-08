@@ -13,26 +13,26 @@ export default {
                 const listProject = await prisma.project.findMany({
                     where: {
                         deleted: null,
-                        NOT:{
+                        NOT: {
                             status: "pending"
                         }
                     },
                 })
                 let allProject = _.orderBy(listProject, ["type", "id"], ["desc", "desc"])
 
-                const getIdUser = _.map(allProject, 'authorUserId')
-                const userCore = await prismaUser.user.findMany({
-                    where: {
-                        id: {
-                            in: getIdUser
-                        }
-                    },
-                })
-                const users = _.keyBy(await userCore, 'id')
+                // const getIdUser = _.map(allProject, 'authorUserId')
+                // const userCore = await prismaUser.user.findMany({
+                //     where: {
+                //         id: {
+                //             in: getIdUser
+                //         }
+                //     },
+                // })
+                // const users = _.keyBy(await userCore, 'id')
 
-                for (const project of allProject) {
-                    project.user = users[project.authorUserId]
-                }
+                // for (const project of allProject) {
+                //     project.user = users[project.authorUserId]
+                // }
 
                 return allProject
 
@@ -44,28 +44,36 @@ export default {
         myProject: async (parent, args, context) => {
             try {
                 const { userId } = context
-                const me = await prismaUser.user.findUnique({
-                    where: {
-                        id: userId
-                    }
-                })
+                // const me = await prismaUser.user.findUnique({
+                //     where: {
+                //         id: userId
+                //     }
+                // })
                 const myProject = await prisma.project.findMany({
                     where: {
                         authorUserId: userId,
                         type: args.type
                     }
                 })
-                if(myProject.length === 0){
+                if (myProject.length === 0) {
                     return new ApolloError(`Data not exist`)
                 }
-                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
-                                                                FROM project 
-                                                                WHERE 
-                                                                type= ${args.type}
-                                                               `
+                // const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
+                //                                                 FROM project 
+                //                                                 WHERE 
+                //                                                 type= ${args.type}
+                //                                                `
+                const numberSelfIdeas = await prisma.project.aggregate({
+                    _count:{
+                        id: true
+                    },
+                    where:{
+                        type: args.type
+                    }
+                })
                 for (const project of myProject) {
-                    project.user = me
-                    project.countProject = _.first(numberSelfIdeas).number
+                    // project.user = me
+                    project.countProject = numberSelfIdeas._count.id
                 }
 
                 return myProject
@@ -76,24 +84,32 @@ export default {
         listJoinProject: async (parent, args, context) => {
             try {
                 const { userId } = context
-                const me = await prismaUser.user.findUnique({
-                    where: {
-                        id: userId
-                    }
-                })
+                // const me = await prismaUser.user.findUnique({
+                //     where: {
+                //         id: userId
+                //     }
+                // })
                 const listJoinProject = await prisma.project.findMany({
                     where: {
                         authorUserId: userId,
                         type: args.type
                     }
                 })
-                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
-                                                                  FROM project_members 
-                                                                  WHERE 
-                                                                  member_user_id=${userId}`
+                // const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
+                //                                                   FROM project_members 
+                //                                                   WHERE 
+                //                                                   member_user_id=${userId}`
+                const numberSelfIdeas = await prisma.projectMembers.aggregate({
+                    _count:{
+                        id: true
+                    },
+                    where:{
+                        memberUserId : userId
+                    }
+                })
                 for (const project of listJoinProject) {
-                    project.user = me
-                    project.countProject = _.first(numberSelfIdeas).joined
+                    // project.user = me
+                    project.countProject = numberSelfIdeas._count.id
 
                 }
                 if (listJoinProject.length === 0) {
@@ -112,21 +128,31 @@ export default {
         listInterestedProject: async (parent, args, context) => {
             try {
                 const { userId } = context
-                const me = await prismaUser.user.findUnique({
-                    where: {
-                        id: userId
-                    }
-                })
+                // // const me = await prismaUser.user.findUnique({
+                // //     where: {
+                // //         id: userId
+                // //     }
+                // })
                 const listInterstedProject = await prisma.project.findMany({
                     where: {
                         authorUserId: userId,
                         type: args.type
                     }
                 })
-                const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as "number" FROM project_interested WHERE user_id=${userId}`
+                // const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as "number" FROM project_interested WHERE user_id=${userId}`
+                const numberSelfIdeas = await prisma.projectInterested.aggregate({
+                    _count: {
+                        id: true
+                    },
+                    where: {
+                       userId : userId
+                    }
+
+                })
+               
                 for (const project of listInterstedProject) {
-                    project.user = me
-                    project.countProject = _.first(numberSelfIdeas).number
+                    // project.user = me
+                    project.countProject = numberSelfIdeas._count.id
 
                 }
                 if (listInterstedProject.length === 0) {
@@ -156,11 +182,11 @@ export default {
                             contains: args.status || undefined
                         }
                     },
-                    orderBy:{
+                    orderBy: {
                         updatedAt: 'desc'
                     }
                 })
-                if(listProject.length === 0){
+                if (listProject.length === 0) {
                     return null
                 }
                 // const getIdUsers = _.map(listProject, "authorUserId") // get id user from project
@@ -213,23 +239,23 @@ export default {
                         id: +args.id
                     },
                 })
-                if(detailProject === null){
+                if (detailProject === null) {
                     return null
                 }
-                const projectMembers = await prisma.projectMembers.findMany({
-                    where: {
-                        projectId: detailProject.id
-                    }
-                })
-                var getIdMember = _.difference(_.map(projectMembers, "memberUserId"), [null])
-                getIdMember.push(detailProject.authorUserId)
-                const listUserIds = _.uniqWith(getIdMember, _.isEqual) // remove all value is duplicate
-                const users = _.keyBy(await getUsers(listUserIds), "id")
-                detailProject.user = users[detailProject.authorUserId]
-                projectMembers.forEach(member => {
-                    member.memberUser = users[member.memberUserId]
-                });
-                detailProject.members = projectMembers
+                // const projectMembers = await prisma.projectMembers.findMany({
+                //     where: {
+                //         projectId: detailProject.id
+                //     }
+                // })
+                // var getIdMember = _.difference(_.map(projectMembers, "memberUserId"), [null])
+                // getIdMember.push(detailProject.authorUserId)
+                // const listUserIds = _.uniqWith(getIdMember, _.isEqual) // remove all value is duplicate
+                // const users = _.keyBy(await getUsers(listUserIds), "id")
+                // detailProject.user = users[detailProject.authorUserId]
+                // projectMembers.forEach(member => {
+                //     member.memberUser = users[member.memberUserId]
+                // });
+                // detailProject.members = projectMembers
                 return detailProject
             } catch (e) {
                 console.log(e)
@@ -253,7 +279,7 @@ export default {
                         }
                     },
                 })
-                if(listProject.length === 0){
+                if (listProject.length === 0) {
                     return null
                 }
 
