@@ -115,7 +115,6 @@ export default {
                     }
 
                 })
-                console.log(numberSelfIdeas)
                 // const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
                 //                                                     FROM project_members 
                 //                                                     WHERE pm_user_id=${+args.userId}`
@@ -130,20 +129,21 @@ export default {
                 //  const numberAvg = await prisma.$queryRaw`SELECT AVG(grate) as number FROM user_feedback 
                 //                                                     WHERE user_id= ${+args.userId}` 
                 const numberAvg = await prisma.userFeedback.aggregate({
-                    _count: {
-                        id: true
+                    _avg: {
+                       grate: true
                     },
                     where: {
                         userId: +args.userId
                     }
                 })
+                console.log(numberAvg)
 
 
                 // const userAdvance = detailUserAdvance
                 // if (userAdvance) {              
                 detailUserAdvance.numberSelfIdeas = numberSelfIdeas._count.id
                 detailUserAdvance.numberJoinedProject = numberJoinProject._count.id
-                detailUserAdvance.numberAvggrate = numberAvg._count.id
+                detailUserAdvance.numberAvggrate = numberAvg._avg.grate
                 // }
 
                 return detailUserAdvance
