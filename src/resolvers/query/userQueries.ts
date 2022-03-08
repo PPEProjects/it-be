@@ -21,23 +21,26 @@ export default {
     },
     searchUsers: async (parent, args, context) => {
       try {
+       const getNameDB =  (process.env.DATABASE_URL_USER)?.split('/')
+       const UserCoreDB = _.last(getNameDB)
         var query =`SELECT u.* 
-                    FROM japanese_dev_core_db.users u, user_advance ua 
-                    WHERE u.id = ua.user_id `
+                    FROM ${UserCoreDB}.users u, user_advance ua 
+                    WHERE u.id = ua.user_id 
+                    AND ua.deleted is null `
         if(args?.name)
         {
           const name = `'%${args.name}%'`
-          const searchName = `and u.name LIKE ${name} `
+          const searchName = `AND u.name LIKE ${name} `
           query = query + searchName
         }
         if(args?.roles) 
         {
           const roles = `'%${args.roles}%'`
-          const searchRoles = `and ua.roles LIKE ${roles} `
+          const searchRoles = `AND LOWER(ua.roles) LIKE ${roles.toLowerCase()} `
           query = query + searchRoles
         }
-        var results = await prisma.$queryRawUnsafe(query)
-        return results
+        const searchUsers = await prisma.$queryRawUnsafe(query)
+        return searchUsers
       }
       catch (e) {
         console.log(e)
@@ -103,6 +106,14 @@ export default {
           },
           where:{
             memberUserId: userId
+          }
+        })
+        const userFeedback = await prisma.userFeedback.aggregate({
+          _avg:{
+            grate: true
+          },
+          where:{
+            userId: userId
           }
         })
         me.numberSelfProject = numberSelfProject._count.id
