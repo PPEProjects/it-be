@@ -4,7 +4,7 @@ const { prismaUser, prisma } = require('../../database')
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
 import axios from 'axios'
-import { Prisma } from '@prisma/client'
+
 export default {
 
   Query: {
@@ -21,47 +21,22 @@ export default {
     },
     searchUsers: async (parent, args, context) => {
       try {
-        var allUser = await prismaUser.user.findMany({
-          where: {
-            name: {
-              contains: args.name
-            },
-          },
-
-        })
-        if (allUser.length === 0) {
-          return null
+        var query =`SELECT u.* 
+                    FROM japanese_dev_core_db.users u, user_advance ua 
+                    WHERE u.id = ua.user_id `
+        if(args?.name)
+        {
+          const name = `'%${args.name}%'`
+          const searchName = `and u.name LIKE ${name} `
+          query = query + searchName
         }
-        const getIdUsers = _.map(allUser, "id")
-        const listUserAdvance = await prisma.userAdvance.findMany({
-          where: {
-            userId: {
-              in: getIdUsers
-            },
-          }
-        })
-        const userAdvances = _.keyBy(listUserAdvance, "userId")
-        const users = _.map(allUser, function (user) {
-          user.userAdvance = userAdvances[user.id]
-          return user
-        })
-        var results = users
-        if (args?.roles) {
-          results = _.filter(users, function (item) {
-            if (item.userAdvance?.roles !== undefined) {
-              var roles = item.userAdvance?.roles
-              var searchRoles = roles.filter(function (str) {
-                let role = str.toLowerCase()
-                let search = (args.roles).toLowerCase()
-                return role.indexOf(search) > -1
-              })
-              var checkRoles = _.isEmpty(_.intersection(roles, searchRoles))
-              if (!checkRoles) {
-                return item
-              }
-            }
-          });
+        if(args?.roles) 
+        {
+          const roles = `'%${args.roles}%'`
+          const searchRoles = `and ua.roles LIKE ${roles} `
+          query = query + searchRoles
         }
+        var results = await prisma.$queryRawUnsafe(query)
         return results
       }
       catch (e) {
@@ -108,45 +83,30 @@ export default {
         if (me === null) {
           return null
         }
-        const getUserAdvance = await prisma.userAdvance.findFirst({
-          where: {
-            userId: userId
+        // const numberSelfProject = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
+        //                                                 FROM project 
+        //                                                 WHERE author_user_id = ${userId}`
+        const numberSelfProject = await prisma.project.aggregate({
+          _count:{
+            id: true
           },
-
-        })
-
-        const getUserFeedback = await prisma.userFeedback.findMany({
-          where: {
-            userId: userId
+          where:{
+            authorUserId: userId
           }
         })
-        const getProjectMember = await prisma.projectMembers.findMany({
-          where: {
+        // const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
+        //                                                   FROM project_members 
+        //                                                   WHERE member_user_id=${userId}`
+        const numberJoinProject = await prisma.projectMembers.aggregate({
+          _count:{
+            id: true
+          },
+          where:{
             memberUserId: userId
-          },
-          include: {
-            project: true
           }
         })
-
-        const selfProject = await prisma.project.findMany({
-          where: {
-            authorUserId: me.id
-          },
-        })
-        const numberSelfProject = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
-                                                        FROM project 
-                                                        WHERE author_user_id = ${userId}`
-        const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
-                                                          FROM project_members 
-                                                          WHERE member_user_id=${userId}`
-
-        // me.userAdvance = getUserAdvance
-        // me.userFeedback = getUserFeedback
-        // me.projectMembers = getProjectMember
-        // me.project = selfProject
-        me.numberSelfProject = _.first(numberSelfProject).number
-        me.numberJoinedProject = _.first(numberJoinProject).joined
+        me.numberSelfProject = numberSelfProject._count.id
+        me.numberJoinedProject = numberJoinProject._count.id
 
         return me
       }

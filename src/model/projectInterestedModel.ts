@@ -1,5 +1,5 @@
 const { prisma } = require('../database')
-const querySelfProject = async (parent, args) => {
+const queryProject = async (parent, args) => {
   var project = await prisma.project.findMany({
     where: {
       id: parent?.projectId || undefined
@@ -15,6 +15,6 @@ export default {
     createdAt: (parent) => (parent.created_at === undefined) ? parent.createdAt : parent.created_at,
     updatedAt: (parent) => (parent.updated_at === undefined) ? parent.updatedAt : parent.updated_at,
     deleted: (parent) => parent.deleted,
-    project:(parent,args) => querySelfProject(parent,args)
+    project:(parent,args) => queryProject(parent,args)
   },
 }
