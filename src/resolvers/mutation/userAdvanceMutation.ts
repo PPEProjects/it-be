@@ -15,12 +15,14 @@ export default {
       try {
         const { userId } = context
         const user = await prismaUser.user.findUnique({
-              where:{ id: userId}
+              where:{ id: +userId}
           })
+          console.log(user)
         const createUserAdvance  = await prisma.userAdvance.create({
           data: {
             ...args.data,
-            userId: userId
+            userId: +userId
+           
           },
         })
         createUserAdvance.user = user

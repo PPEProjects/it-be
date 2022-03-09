@@ -21,20 +21,18 @@ export default {
     },
     searchUsers: async (parent, args, context) => {
       try {
-       const getNameDB =  (process.env.DATABASE_URL_USER)?.split('/')
-       const UserCoreDB = _.last(getNameDB)
-        var query =`SELECT u.* 
+        const getNameDB = (process.env.DATABASE_URL_USER)?.split('/')
+        const UserCoreDB = _.last(getNameDB)
+        var query = `SELECT u.* 
                     FROM ${UserCoreDB}.users u, user_advance ua 
                     WHERE u.id = ua.user_id 
                     AND ua.deleted is null `
-        if(args?.name)
-        {
+        if (args?.name) {
           const name = `'%${args.name}%'`
           const searchName = `AND u.name LIKE ${name} `
           query = query + searchName
         }
-        if(args?.roles) 
-        {
+        if (args?.roles) {
           const roles = `'%${args.roles}%'`
           const searchRoles = `AND LOWER(ua.roles) LIKE ${roles.toLowerCase()} `
           query = query + searchRoles
@@ -86,33 +84,27 @@ export default {
         if (me === null) {
           return null
         }
-        // const numberSelfProject = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
-        //                                                 FROM project 
-        //                                                 WHERE author_user_id = ${userId}`
         const numberSelfProject = await prisma.project.aggregate({
-          _count:{
+          _count: {
             id: true
           },
-          where:{
+          where: {
             authorUserId: userId
           }
         })
-        // const numberJoinProject = await prisma.$queryRaw`SELECT COUNT(id) as 'joined' 
-        //                                                   FROM project_members 
-        //                                                   WHERE member_user_id=${userId}`
         const numberJoinProject = await prisma.projectMembers.aggregate({
-          _count:{
+          _count: {
             id: true
           },
-          where:{
+          where: {
             memberUserId: userId
           }
         })
         const userFeedback = await prisma.userFeedback.aggregate({
-          _avg:{
+          _avg: {
             grate: true
           },
-          where:{
+          where: {
             userId: userId
           }
         })
