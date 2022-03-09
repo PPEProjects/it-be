@@ -1,6 +1,8 @@
 
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
+import { isNonNullType } from 'graphql';
+import { PhoneNumberResolver } from 'graphql-scalars';
 import GraphQLJSON from 'graphql-type-json';
 const { prisma, prismaUser, getUsers } = require('../../database')
 
@@ -50,32 +52,28 @@ export default {
                 //     }
                 // })
                 const myProject = await prisma.project.findMany({
+                   
                     where: {
                         authorUserId: userId,
                         type: args.type
                     }
                 })
+                // console.log(myProject)
                 if (myProject.length === 0) {
                     return new ApolloError(`Data not exist`)
                 }
-                // const numberSelfIdeas = await prisma.$queryRaw`SELECT COUNT(id) as 'number' 
-                //                                                 FROM project 
-                //                                                 WHERE 
-                //                                                 type= ${args.type}
-                //                                                `
-                const numberSelfIdeas = await prisma.project.aggregate({
-                    _count:{
-                        id: true
-                    },
-                    where:{
-                        type: args.type
-                    }
-                })
-                for (const project of myProject) {
-                    // project.user = me
-                    project.countProject = numberSelfIdeas._count.id
-                }
-
+             
+                                                             
+                // // const numberSelfIdeas = await prisma.project.aggregate({
+                // //     _select:{
+                // //         type:true
+                // //     },
+                // //     where:{
+                // //         type: args.type
+                // //     }
+                // // })
+                
+            
                 return myProject
             } catch (e) {
                 console.log(e)
