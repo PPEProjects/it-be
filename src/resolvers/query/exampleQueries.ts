@@ -10,7 +10,7 @@ export default {
     Query: {
         ExampleQuery: async (parent, args, context) => {
             try {
-              const example = {id: 1}
+              const example = {sayHi: "hello world"}
                 return example
             }
             catch (e) {

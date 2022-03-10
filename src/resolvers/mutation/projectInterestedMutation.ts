@@ -11,12 +11,12 @@ export default {
 
   Mutation: {
     createProjectInterested: async (parent, args, context,) => {
-  
+
       try {
         const { userId } = context
         const user = await prismaUser.user.findUnique({
-              where:{ id: userId}
-          })
+          where: { id: userId }
+        })
         const createProjectInterested = await prisma.projectInterested.create({
           data: {
             ...args.data,
@@ -24,7 +24,7 @@ export default {
           },
         })
         createProjectInterested.user = user
-        return createProjectInterested 
+        return createProjectInterested
       }
       catch (e) {
         console.log(e)
@@ -32,42 +32,42 @@ export default {
 
       }
     },
-    updateProjectInterested: async (parent, args, content,) =>{
-      try{
+    updateProjectInterested: async (parent, args, content,) => {
+      try {
         const updateProjectInterested = await prisma.projectInterested.update({
-            where:{
-              id: args.data.id
-            },
-            data:{
-              ...args.data
-            }
+          where: {
+            id: args.data.id
+          },
+          data: {
+            ...args.data
+          }
         })
         return updateProjectInterested
       }
-      catch(e){
+      catch (e) {
         console.log(e)
       }
     },
 
-    deleteProjectInterested: async (parent, args, content,) =>{
-      try{
+    deleteProjectInterested: async (parent, args, content,) => {
+      try {
         const now = new Date()
-        const deleteProjectInterested= await prisma.projectInterested.update({
-            where:{
-              id: args.id 
-            },
-            data:{
-              deleted: now
-            }
+        const deleteProjectInterested = await prisma.projectInterested.update({
+          where: {
+            id: args.id
+          },
+          data: {
+            deleted: now
+          }
         })
         return true
       }
-      catch(e){
+      catch (e) {
         console.log(e)
       }
     },
 
-    }
+  }
 }
 
 

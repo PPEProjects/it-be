@@ -84,22 +84,7 @@ export default {
         if (me === null) {
           return null
         }
-        const numberSelfProject = await prisma.project.aggregate({
-          _count: {
-            id: true
-          },
-          where: {
-            authorUserId: userId
-          }
-        })
-        const numberJoinProject = await prisma.projectMembers.aggregate({
-          _count: {
-            id: true
-          },
-          where: {
-            memberUserId: userId
-          }
-        })
+        
         const userFeedback = await prisma.userFeedback.aggregate({
           _avg: {
             grate: true
@@ -108,9 +93,14 @@ export default {
             userId: userId
           }
         })
-        me.numberSelfProject = numberSelfProject._count.id
-        me.numberJoinedProject = numberJoinProject._count.id
-
+        
+         const projectMembers = await prisma.projectMembers.findMany({
+            where:{
+              memberUserId: me.id
+            }
+         })
+         const allPosition = _.map(projectMembers, 'position')
+         me.allPosition = _.uniq(allPosition).join(',') 
         return me
       }
       catch (e) {

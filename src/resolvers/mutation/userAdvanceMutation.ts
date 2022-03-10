@@ -10,19 +10,19 @@ export default {
   JSON: GraphQLJSON,
 
   Mutation: {
-    createUserAdvance : async (parent, args, context,) => {
-  
+    createUserAdvance: async (parent, args, context,) => {
+
       try {
         const { userId } = context
         const user = await prismaUser.user.findUnique({
-              where:{ id: +userId}
-          })
-          console.log(user)
-        const createUserAdvance  = await prisma.userAdvance.create({
+          where: { id: +userId }
+        })
+        console.log(user)
+        const createUserAdvance = await prisma.userAdvance.create({
           data: {
             ...args.data,
             userId: +userId
-           
+
           },
         })
         createUserAdvance.user = user
@@ -34,84 +34,84 @@ export default {
 
       }
     },
-    updateUserAdvance : async (parent, args, content,) =>{
-      try{
-        const updateUserAdvance = await prisma.userAdvance .update({
-            where:{
-              id: args.data.id
-            },
-            data:{
-              ...args.data
-            }
+    updateUserAdvance: async (parent, args, content,) => {
+      try {
+        const updateUserAdvance = await prisma.userAdvance.update({
+          where: {
+            id: args.data.id
+          },
+          data: {
+            ...args.data
+          }
         })
-        return updateUserAdvance 
+        return updateUserAdvance
       }
-      catch(e){
+      catch (e) {
         console.log(e)
       }
     },
 
-    deleteUserAdvance : async (parent, args, content,) =>{
-       
-      try{
+    deleteUserAdvance: async (parent, args, content,) => {
+
+      try {
         const now = new Date()
-        const deleteProjectMembers= await prisma.userAdvance.update({
-            where:{
-              id: +args.id 
-            },
-            data:{
-              deleted: now
-            }
+        const deleteProjectMembers = await prisma.userAdvance.update({
+          where: {
+            id: +args.id
+          },
+          data: {
+            deleted: now
+          }
         })
         return true
       }
-      catch(e){
+      catch (e) {
         console.log(e)
       }
     },
-    upsertUserAdvance: async (parent, args, context) =>{
-      try{
+    upsertUserAdvance: async (parent, args, context) => {
+      try {
         const { userId } = context
         const upsertUserAdvance = await prisma.userAdvance.upsert({
           where: {
             userId: userId,
           },
           update: {
-              language: args.data.language,
-              roles: args.data.roles,
-              skill: args.data.skill,
-              info: args.data.info,
-              plan: args.data.plan,
-              goal: args.data.goal
+            language: args.data.language,
+            roles: args.data.roles,
+            skill: args.data.skill,
+            info: args.data.info,
+            plan: args.data.plan,
+            goal: args.data.goal
           },
           create: {
-                language: args.data.language,
-                roles: args.data.roles,
-                skill: args.data.skill,
-                info: args.data.info,
-                plan: args.data.plan,
-                goal: args.data.goal,
-                userId: userId
+            language: args.data.language,
+            roles: args.data.roles,
+            skill: args.data.skill,
+            info: args.data.info,
+            plan: args.data.plan,
+            goal: args.data.goal,
+            userId: userId
           },
         })
-          const dataUser = args.data.user
-          const updateUser = await prismaUser.user.update({
-            where:{
-              id: userId
-            },
-            data:{
-              ...dataUser
-            },
-          })
-          upsertUserAdvance.user = updateUser
+        const dataUser = args.data.user
+        const updateUser = await prismaUser.user.update({
+          where: {
+            id: userId
+          },
+          data: {
+            ...dataUser
+          },
+        })
+        upsertUserAdvance.user = updateUser
         return upsertUserAdvance
       }
-      catch(e){
+      catch (e) {
         console.log(e)
       }
     },
 
-    }
+  }
 }
 
 

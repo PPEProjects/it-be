@@ -7,14 +7,11 @@ export default gql`
   }
 
   type example {
-    id:Int
+    sayHi: String
   }
   
   input ProjectInterestedInput {
-   id:Int 
-   projectId: Int
-   userId:Int
-
+    sayHi: String
   }
 
   scalar JSON

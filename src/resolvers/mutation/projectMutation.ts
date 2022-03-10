@@ -14,8 +14,8 @@ export default {
       try {
         const { userId } = context
         const user = await prismaUser.user.findUnique({
-              where:{ id: userId}
-          })
+          where: { id: userId }
+        })
         const createProject = await prisma.project.create({
           data: {
             ...args.data,
@@ -23,7 +23,7 @@ export default {
           },
         })
         createProject.user = user
-        return createProject 
+        return createProject
       }
       catch (e) {
         console.log(e)
@@ -31,63 +31,63 @@ export default {
 
       }
     },
-    updateProject: async (parent, args, content,) =>{
-      try{
+    updateProject: async (parent, args, content,) => {
+      try {
         const updateProject = await prisma.project.update({
-            where:{
-              id: args.data.id
-            },
-            data:{
-              ...args.data
-            }
+          where: {
+            id: args.data.id
+          },
+          data: {
+            ...args.data
+          }
         })
-        return updateProject 
+        return updateProject
       }
-      catch(e){
+      catch (e) {
         console.log(e)
       }
     },
-    upsertProjectMembers: async (parent, args, context,) =>{
+    upsertProjectMembers: async (parent, args, context,) => {
       try {
-        
-        const upsertProjectMember= await prisma.project.upsert({
-          where:{
-           memberUserId: args.data.memberUserId
+
+        const upsertProjectMember = await prisma.project.upsert({
+          where: {
+            memberUserId: args.data.memberUserId
           },
-          update:{
+          update: {
             ...args.data,
           },
-          create:{
+          create: {
             ...args.data,
           }
-        
-      })
-      return upsertProjectMember
-        
+
+        })
+        return upsertProjectMember
+
       } catch (e) {
         console.log(e)
-        
+
       }
     },
-    deleteProject: async (parent, args, content,) =>{
-      try{
+    deleteProject: async (parent, args, content,) => {
+      try {
         const now = new Date()
         const deleteProject = await prisma.project.update({
-            where:{
-              id: +args.id 
-            },
-            data:{
-              deleted: now
-            }
+          where: {
+            id: +args.id
+          },
+          data: {
+            deleted: now
+          }
         })
         return true
       }
-      catch(e){
+      catch (e) {
         console.log(e)
       }
     },
 
-    }
+  }
 }
 
 

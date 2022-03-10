@@ -40,6 +40,7 @@ export default gql`
     country:               String
     gender:                String
     date_of_birth:         String
+    allPosition: String
     createdAt: DateTime
     updatedAt: DateTime
     
