@@ -23,12 +23,42 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation Mutation($data: UserCreateInput!) {\n  signupUser(data: $data) {\n    token\n    user {\n      id\n      email\n      name\n    }\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"email\": \"test6034ss@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"email\": \"test60339@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
 							},
 							"options": {
 								"raw": {
 									"language": "json"
 								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUpLocal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Mutation($data: UserCreateInput!) {\n  signupLocalUser(data: $data) {\n    token\n    user {\n      id\n      email\n      name\n    }\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"email\": \"minhtuan@gmail.com\",\n    \"name\": \"minhdat\",\n    \"password\": \"minhdat2702\",\n    \"password_confirmation\":\"minhdat2702\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -94,7 +124,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProject($data: ProjectInput!) {\n  createProject(data: $data) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"status\": \"registering\",\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"name\": \"IT-Square\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"status\": \"interesting\",\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
 							}
 						},
 						"url": {
@@ -183,7 +213,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query Query {\n  allProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query Query {\n  allProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n}"
 							}
 						},
@@ -213,7 +243,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailProject($detailProjectId: Int) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
+								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
 								"variables": "{\n  \"detailProjectId\": 2\n}"
 							}
 						},
@@ -244,7 +274,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query SearchProject($name: String, $type: String, $status: String) {\n  searchProject(name: $name, type: $type, status: $status) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUserId\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n}"
+								"variables": "{\n  \"type\": \"project\",\n  \"status\": \"inter\",\n  \"name\": \"I\"\n}"
 							}
 						},
 						"url": {
@@ -273,8 +303,68 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query MyProject {\n  myProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n}"
+								"query": "query MyProject($type: String) {\n  myProject(type: $type) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n    \"type\": \"project\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_list_join_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ListJoinProject($type: String) {\n  listJoinProject(type: $type) {\n    user {\n      avatar_attachment_id\n    }\n    name\n    attachments\n    countProject\n  }\n}",
+								"variables": "{\n  \"type\": \"ideas\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_list_interested_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ListInterestedProject($type: String) {\n  listInterestedProject(type: $type) {\n    user {\n      avatar_attachment_id\n    }\n    name\n    attachments\n    countProject\n  }\n}",
+								"variables": "{\n  \"type\": \"ideas\"\n}"
 							}
 						},
 						"url": {
@@ -304,7 +394,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query Query($type: String, $arrange: String, $name: String, $status: String) {\n  adminProject(type: $type, arrange: $arrange, name: $name, status: $status) {\n    name\n    authorUserId\n    category\n    countProject\n    type\n    status\n  }\n}",
-								"variables": "{\n  \"name\": \"w\",\n  \"type\": \"project\",\n  \"arrange\": \"countProject\",\n  \"status\": \"reg\"\n  \n}"
+								"variables": "{\n  \"type\": \"ideas\",\n  \"name\": \"Ban\",\n  \"status\": \"interesting\",\n  \"arrange\": \"countProject\"\n \n  \n}"
 							}
 						},
 						"url": {
@@ -338,8 +428,38 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query Me {\n  me {\n    name\n    userAdvance {\n      personalGoal\n      language\n     \n    }\n    userFeedback {\n      grate\n    }\n    project {\n      name\n    }\n    projectMembers {\n      project {\n        name\n      }\n      roles\n    }\n    selfProject\n    joinedProject\n  }\n}\n",
+								"query": "query Me {\n  me {\n    name\n    userAdvance {\n      language\n     \n    }\n    userFeedback {\n      grate\n    }\n  \n    projectMembers {\n      project {\n        name\n      }\n      roles\n    }\n  }\n}\n",
 								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_search_user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query AllUsers($roles: JSON, $name: String) {\n  searchUsers(roles: $roles, name: $name) {\n    email\n    name\n    userAdvance {\n      roles\n    }\n  }\n}",
+								"variables": "{\n  \"roles\": \"U\",\n  \"name\":  \"m\"\n}"
 							}
 						},
 						"url": {
@@ -398,7 +518,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailUser($detailUserId: Int) {\n  detailUser(id: $detailUserId) {\n    id\n    first_name\n    name\n    email\n    phone_number\n    address\n    date_of_birth\n    gender\n    userAdvance{\n        id\n        userId\n        roles\n        language\n        skill\n        info\n        plan\n        goal\n        numberFramework\n        selfProject{\n            id\n            name\n            attachments\n        }\n        joinProject{\n            id \n            position\n            project{\n                id\n                name\n                category\n                attachments\n                timeToDo\n            }\n        }\n    }\n  }\n}",
+								"query": "query DetailUser($detailUserId: ID) {\n  detailUser(id: $detailUserId) {\n    id\n    first_name\n    name\n    email\n    phone_number\n    address\n    date_of_birth\n    gender\n    userAdvance{\n        id\n        userId\n        roles\n        language\n        skill\n        info\n        plan\n        goal\n        numberFramework\n        selfProject{\n            id\n            name\n            attachments\n        }\n        joinProject{\n            id \n            position\n            project{\n                id\n                name\n                category\n                attachments\n                timeToDo\n            }\n        }\n    }\n  }\n}",
 								"variables": "{\n  \"detailUserId\": 3\n}"
 							}
 						},
@@ -434,7 +554,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectInterested($data: ProjectInterestedInput!) {\n  createProjectInterested(data: $data) {\n    id\n    projectId\n    createdAt\n    updatedAt\n    userId\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 4\n  }\n}"
 							}
 						},
 						"url": {
@@ -523,7 +643,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query AllProjectInterested {\n  allProjectInterested {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query AllProjectInterested {\n  allProjectInterested {\n    id\n    projectId\n    project{\n        name\n    }\n    userId\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n \n}"
 							}
 						},
@@ -553,8 +673,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailProjectInterested($detailProjectInterestedId: Int) {\n  detailProjectInterested(id: $detailProjectInterestedId) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"detailProjectInterestedId\": 1\n  }"
+								"query": "query DetailUser($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    project {\n      name\n    }\n  }\n}",
+								"variables": "  {\n  \"projectId\": 2\n  \n}"
 							}
 						},
 						"url": {
@@ -589,7 +709,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectMembers($data: ProjectMembersInput!) {\n  createProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 1,\n    \"memberUserId\": null,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 4,\n    \"memberUserId\": 5,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
@@ -619,7 +739,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProjectMembers($data: ProjectMembersInput!) {\n  updateProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"position\": \"dev\",\n    \"memberUserId\": 2\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"position\": \"dev\",\n    \"memberUserId\": 3\n  }\n}"
 							}
 						},
 						"url": {
@@ -649,7 +769,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation DeleteProjectMembers($deleteProjectMembersId: Int) {\n  deleteProjectMembers(id: $deleteProjectMembersId)\n}",
-								"variables": "  {\n    \"deleteProjectMembersId\": null\n  }"
+								"variables": "  {\n    \"deleteProjectMembersId\": 2\n  }"
 							}
 						},
 						"url": {
@@ -708,8 +828,38 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailMemberByIdProject($projectId: Int) {\n  detailMemberByIdProject(projectId: $projectId) {\n   id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    memberUser{\n        id\n        name\n    }\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query DetailMemberByIdProject($projectId: ID) {\n  detailMemberByIdProject(projectId: $projectId) {\n   id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    memberUser{\n        id\n        name\n    }\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "  {\n    \"projectId\": 2\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_member_by_Id_pm",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailProjectMemberByIdPm($pmUserId: Int) {\n  detailProjectMemberByIdPm(pmUserId: $pmUserId) {\n    projectId\n    roles\n    pmUserId\n    project {\n      name\n    }\n  }\n}",
+								"variables": "{\n  \"pmUserId\": 7\n}"
 							}
 						},
 						"url": {
@@ -743,8 +893,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation UpsertUserAdvance($data: UserAdvanceInput!) {\n  upsertUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    goal\n    plan\n  }\n}",
-								"variables": "{\n  \"data\": {\n     \"roles\": [\"admin\", \"pm\"],\n      \"goal\": \"Backend developer\",\n      \"language\": \"VietNames, English\",\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"kelvin\",\n      \"name\": \"kids\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
+								"query": "mutation UpsertUserAdvance($data: UserAdvanceInput!) {\n  upsertUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    goal\n    plan\n    user{\n        name\n    }\n  }\n}",
+								"variables": "{\n  \"data\": {\n     \"roles\": [\"leader\"],\n      \"goal\": \"Backend developer\",\n      \"language\": [\"VietNames\", \"English\"],\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"kelvin\",\n      \"name\": \"dat\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
@@ -773,7 +923,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation CreateUserAdvance($data: UserAdvanceInput!) {\n  createUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    personalGoal\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "mutation CreateUserAdvance($data: UserAdvanceInput!) {\n  createUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "  {\n    \"data\": {\n      \"roles\": [\"user\"],\n      \"goal\": \"Backend developer\",\n      \"language\": \"VietNames, English\",\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\"\n    }\n  }"
 							}
 						},
@@ -893,8 +1043,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query Query($userId: Int) {\n  detailUserAdvance(userId: $userId) {\n    id\n    userId\n    user{\n        id\n        name\n        email\n        phone_number\n    }\n    roles\n    language\n    skill\n    info\n    goal\n    numberSelfIdeas\n    numberJoinedProject\n    numberFramework\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"userId\": 3\n  }"
+								"query": "query Query($userId: ID) {\n  detailUserAdvance(userId: $userId) {\n    id\n    userId\n    user{\n        id\n        name\n        email\n        phone_number\n    }\n    roles\n    language\n    skill\n    info\n    goal\n    numberSelfIdeas\n    numberJoinedProject\n    numberFramework\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"userId\": 5\n  }"
 							}
 						},
 						"url": {
@@ -929,7 +1079,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateUserFeedback($data: UserFeedbackInput!) {\n  createUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"userId\": null,\n      \"projectId\": null,\n      \"grate\": null\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"userId\": 7,\n      \"projectId\": 8,\n      \"grate\": \"9\"\n    }\n  }"
 							}
 						},
 						"url": {
@@ -1018,7 +1168,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query AllUserFeedback {\n  allUserFeedback {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query AllUserFeedback {\n  allUserFeedback {\n    id\n    userId\n    projectId\n    project{\n        id,\n        name\n    }\n    grate\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n  \n}"
 							}
 						},
