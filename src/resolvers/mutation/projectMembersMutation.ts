@@ -3,7 +3,9 @@ import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
 import { DateTimeResolver } from 'graphql-scalars'
-import { ary } from 'lodash';
+import { ary, countBy, create, isNull } from 'lodash';
+import { log } from 'console';
+import _ = require('lodash');
 
 
 
@@ -60,21 +62,44 @@ export default {
     },
     upsertProjectMembers: async (parent, args, context,) => {
       try {
-
-        const upsertProjectMembers = await prisma.projectMembers.upsert({
-          where: {
-            memberUserId: +args.data.memberUserId
-          },
-          update: {
-            ...args.data,
-          },
-          create: {
-            ...args.data,
-          }
-
+        const { userId } = context
+        var getUserId = userId
+        if (args.data.userId) {
+          getUserId = +args.data.userId
+        }
+        const user = await prismaUser.user.findUnique({
+          where: { id: getUserId }
         })
-        return upsertProjectMembers
-
+        const projectMember = await prisma.projectMembers.findFirst({
+          where: {
+            memberUserId: +args.data.memberUserId,
+            projectId: +args.data.projectId
+          }
+       
+        })
+         if (projectMember.length === 0) {
+          const createProjectMembers = await prisma.projectMembers.create({
+            data: {
+              ...args.data,
+              memberUserId: +args.data?.memberUserId,
+              projectId: +args.data?.projectId,
+              pmUserId: getUserId
+            },
+          })
+          return createProjectMembers
+        }
+          const updateProjectMembers = await prisma.projectMembers.update({
+            where:{
+               id: projectMember.id
+            },
+            data: {
+              ...args.data,
+              memberUserId: +args.data?.memberUserId,
+              projectId: +args.data?.projectId,
+              pmUserId: getUserId
+            },
+          })
+          return updateProjectMembers
       } catch (e) {
         console.log(e)
 
