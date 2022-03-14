@@ -43,6 +43,7 @@ export default gql`
     timeToDo: String
     countProject: Int
     arrange: String
+    contentStatus: String
     members: [ProjectMembers]
   }
   
@@ -64,6 +65,7 @@ export default gql`
     framework:  JSON
     programingLanguage: JSON
     memberJoin: JSON
+    contentStatus: String
     is_recruit: Boolean
     is_involved: Boolean
   }
