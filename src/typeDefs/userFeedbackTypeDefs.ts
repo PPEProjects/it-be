@@ -15,7 +15,8 @@ export default gql`
     
     id:       ID      
     userId:   ID     
-    projectId: Int       
+    projectId: Int    
+    content: String   
     grate:     Int
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -27,7 +28,8 @@ export default gql`
   input UserFeedbackInput {
     id:       ID  
     userId:   ID   
-    projectId: Int       
+    projectId: Int  
+    content:String     
     grate:     Int
   }
 

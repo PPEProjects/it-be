@@ -87,6 +87,7 @@ model UserFeedback {
   userId    Int       @map("user_id")
   projectId Int       @map("project_id")
   grate     Int?
+  content String?
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?

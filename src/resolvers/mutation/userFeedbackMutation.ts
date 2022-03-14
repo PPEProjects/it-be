@@ -11,17 +11,16 @@ export default {
 
   Mutation: {
     createUserFeedback: async (parent, args, context,) => {
-
-      try {
-        var { userId } = context
-        if (args.data.userId) {
-          userId = +args.data.userId
-        }
-
+            
+      try {  
+          var { userId } = context
+          if(args.data.userId){
+            userId = +args.data.userId
+          }
+          
         const user = await prismaUser.user.findUnique({
-          where: { id: userId }
-        })
-
+              where:{ id: userId}
+          })
         const createUserFeedback = await prisma.userFeedback.create({
           data: {
             ...args.data,
@@ -37,45 +36,45 @@ export default {
 
       }
     },
-    updateUserFeedback: async (parent, args, content,) => {
-      try {
+    updateUserFeedback: async (parent, args, content,) =>{
+      try{
         const id = +args.data.id
         delete (args.data)['id']
-        const updateUserFeedback = await prisma.userFeedback.update({
-          where: {
-            id: id
-          },
-          data: {
-            ...args.data,
-            userId: +args.data.userId
-          }
+        const updateUserFeedback = await prisma.userFeedback .update({
+            where:{
+              id: id
+            },
+            data:{
+              ...args.data,
+              userId: +args.data.userId
+            }
         })
-        return updateUserFeedback
+        return updateUserFeedback 
       }
-      catch (e) {
+      catch(e){
         console.log(e)
       }
     },
 
-    deleteUserFeedback: async (parent, args, content,) => {
-      try {
+    deleteUserFeedback: async (parent, args, content,) =>{
+      try{
         const now = new Date()
         const deleteUserFeedback = await prisma.userFeedback.update({
-          where: {
-            id: +args.id
-          },
-          data: {
-            deleted: now
-          }
+            where:{
+              id: +args.id 
+            },
+            data:{
+              deleted: now
+            }
         })
         return true
       }
-      catch (e) {
+      catch(e){
         console.log(e)
       }
     },
 
-  }
+    }
 }
 
 
