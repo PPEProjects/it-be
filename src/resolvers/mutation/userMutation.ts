@@ -22,12 +22,13 @@ export default {
         if (args.data.password != args.data.password_confirmation) {
           return new ApolloError("the password not confirm.")
         }
+        const password = await bcrypt.hash(args.data.password, 10)
         const register = await prismaUser.user.create(
           {
             data: {
               name: args.data.name,
               email: args.data.email,
-              password: args.data.password
+              password: password
             }
           })
         const user = register
