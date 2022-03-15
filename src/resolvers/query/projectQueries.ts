@@ -4,6 +4,7 @@ import { ApolloError } from 'apollo-server';
 import { isNonNullType } from 'graphql';
 import { PhoneNumberResolver } from 'graphql-scalars';
 import GraphQLJSON from 'graphql-type-json';
+import { ary } from 'lodash';
 const { prisma, prismaUser, getUsers } = require('../../database')
 
 export default {
@@ -35,7 +36,9 @@ export default {
                    
                     where: {
                         authorUserId: userId,
-                        type: args.type
+                        type: {
+                            contains: args.type
+                        }
                     }
                 })
                 if (myProject.length === 0) {
@@ -110,6 +113,7 @@ export default {
         },
         searchProject: async (parent, args, context) => {
             try {
+                const {userId} = context
                 var listProject = await prisma.project.findMany({
                     where: {
                         name: {
@@ -121,10 +125,12 @@ export default {
                         status: {
                             contains: args.status || undefined
                         }
+
                     },
+                    
                     orderBy: {
                         updatedAt: 'desc'
-                    }
+                    },
                 })
                 if (listProject.length === 0) {
                     return null
@@ -134,6 +140,7 @@ export default {
                 return new ApolloError(`${e}`)
             }
         },
+       
         detailProject: async (parent, args, context) => {
             try {
                 const detailProject = await prisma.project.findFirst({
