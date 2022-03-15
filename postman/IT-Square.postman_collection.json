@@ -208,8 +208,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query MyProject {\n  myProject {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n}"
+								"query": "query MyProject($type: String) {\n  myProject(type: $type) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n    \"type\":\"ideas\"\n}"
 							}
 						},
 						"url": {
@@ -703,7 +703,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailMemberByIdProject($projectId: ID) {\n  detailMemberByIdProject(projectId: $projectId) {\n   id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    memberUser{\n        id\n        name\n    }\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query DetailMemberByIdProject($projectId: ID) {\n  detailMemberByIdProject(projectId: $projectId) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    memberUser{\n        id\n        name\n    }\n    userFeedback{\n        id\n        grate\n        content\n    }\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "  {\n    \"projectId\": 2\n  }"
 							}
 						},
