@@ -35,6 +35,20 @@ export default {
                         projectId: +args.projectId
                     },
                 })
+                const getIdMember = _.difference(_.map(detailMember, 'memberUserId'), [null])
+                const userFeedback = await prisma.userFeedback.findMany({
+                    where:{
+                        userId:{
+                            in: getIdMember
+                        },
+                        projectId: +args.projectId
+                    }
+                })
+                const setKeyUserFeedback = _.keyBy(userFeedback, "userId")
+                _.map(detailMember, (member)=>{
+                    member.userFeedback = setKeyUserFeedback[member.memberUserId]
+                    return member
+                })
                 return detailMember
             } catch (e) {
                 console.log(e)

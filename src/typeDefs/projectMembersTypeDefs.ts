@@ -26,6 +26,7 @@ export default gql`
     salary:        JSON
     fee:           JSON
     status:        String
+    userFeedback: UserFeedback
     memberUser: User
     createdAt:  DateTime!
     updatedAt:  DateTime!
