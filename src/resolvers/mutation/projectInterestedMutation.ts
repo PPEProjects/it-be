@@ -3,6 +3,7 @@ import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
 import { DateTimeResolver } from 'graphql-scalars'
+import projectInterestedTypeDefs from '../../typeDefs/projectInterestedTypeDefs';
 
 
 
@@ -20,26 +21,31 @@ export default {
         const createProjectInterested = await prisma.projectInterested.create({
           data: {
             ...args.data,
+            projectId : +args.data.projectId,
             userId: userId
           },
         })
+        console.log(createProjectInterested)
         createProjectInterested.user = user
         return createProjectInterested
       }
       catch (e) {
         console.log(e)
-        return new ApolloError("this email invalid")
+        return new ApolloError(`${e}`)
 
       }
     },
-    updateProjectInterested: async (parent, args, content,) => {
+    updateProjectInterested: async (parent, args, context,) => {
       try {
         const updateProjectInterested = await prisma.projectInterested.update({
           where: {
-            id: args.data.id
+            id: +args.data.id
           },
           data: {
-            ...args.data
+              id: +args.data.id,
+              projectId: +args.data.projectId,
+              userId: +args.data.userId
+          
           }
         })
         return updateProjectInterested
@@ -54,7 +60,7 @@ export default {
         const now = new Date()
         const deleteProjectInterested = await prisma.projectInterested.update({
           where: {
-            id: args.id
+            id: +args.id
           },
           data: {
             deleted: now
