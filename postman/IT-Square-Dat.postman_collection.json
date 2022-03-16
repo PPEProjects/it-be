@@ -24,11 +24,6 @@
 							"graphql": {
 								"query": "mutation Mutation($data: UserCreateInput!) {\n  signupUser(data: $data) {\n    token\n    user {\n      id\n      email\n      name\n    }\n  }\n}",
 								"variables": "{\n  \"data\": {\n    \"email\": \"test60339@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
-							},
-							"options": {
-								"raw": {
-									"language": "json"
-								}
 							}
 						},
 						"url": {
@@ -304,7 +299,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query MyProject($type: String) {\n  myProject(type: $type) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    is_involved\n    is_recruit\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n    \"type\": \"project\"\n}"
+								"variables": "{\n    \"type\": \"i\"\n}"
 							}
 						},
 						"url": {
@@ -334,7 +329,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query ListJoinProject($type: String) {\n  listJoinProject(type: $type) {\n    user {\n      avatar_attachment_id\n    }\n    name\n    attachments\n    countProject\n  }\n}",
-								"variables": "{\n  \"type\": \"ideas\"\n}"
+								"variables": "{\n  \"type\": \"i\"\n}"
 							}
 						},
 						"url": {
@@ -364,7 +359,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query ListInterestedProject($type: String) {\n  listInterestedProject(type: $type) {\n    user {\n      avatar_attachment_id\n    }\n    name\n    attachments\n    countProject\n  }\n}",
-								"variables": "{\n  \"type\": \"ideas\"\n}"
+								"variables": "{\n  \"type\": \"i\"\n}"
 							}
 						},
 						"url": {
@@ -394,7 +389,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query Query($type: String, $arrange: String, $name: String, $status: String) {\n  adminProject(type: $type, arrange: $arrange, name: $name, status: $status) {\n    name\n    authorUserId\n    category\n    countProject\n    type\n    status\n  }\n}",
-								"variables": "{\n  \"type\": \"ideas\",\n  \"name\": \"Ban\",\n  \"status\": \"interesting\",\n  \"arrange\": \"countProject\"\n \n  \n}"
+								"variables": "{\n  \"type\": \"ideas\",\n  \"name\": \"B\",\n  \"status\": \"interesting\"\n \n \n  \n}"
 							}
 						},
 						"url": {
@@ -709,7 +704,37 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectMembers($data: ProjectMembersInput!) {\n  createProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 4,\n    \"memberUserId\": 5,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 3,\n    \"memberUserId\": 5,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_member_project_user_id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateProjectMembers($data: ProjectMembersInput!) {\n  createProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 3,\n    \"memberUserId\": 5,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
@@ -768,8 +793,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation UpdateProjectMembers($data: ProjectMembersInput!) {\n  updateProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"position\": \"dev\",\n    \"memberUserId\": 3\n  }\n}"
+								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 6,\n    \"memberUserId\": 7,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -924,7 +949,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpsertUserAdvance($data: UserAdvanceInput!) {\n  upsertUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    goal\n    plan\n    user{\n        name\n    }\n  }\n}",
-								"variables": "{\n  \"data\": {\n     \"roles\": [\"leader\"],\n      \"goal\": \"Backend developer\",\n      \"language\": [\"VietNames\", \"English\"],\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"kelvin\",\n      \"name\": \"dat\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
+								"variables": "{\n  \"data\": {\n     \"roles\": [\"tester\"],\n      \"goal\": \"Backend developer\",\n      \"language\": [\"VietNames\", \"English\"],\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"kelvin\",\n      \"name\": \"dat\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
