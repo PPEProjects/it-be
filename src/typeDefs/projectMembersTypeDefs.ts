@@ -3,6 +3,7 @@ import { gql } from 'apollo-server'
 export default gql`
   type Mutation {
     createProjectMembers(data: ProjectMembersInput!): ProjectMembers !
+    createProjectMembers_User_Ids(data: ProjectMembersInputId!): ProjectMembers !
     updateProjectMembers(data: ProjectMembersInput!): ProjectMembers 
     upsertProjectMembers(data: ProjectMembersInput!):ProjectMembers
     deleteProjectMembers(id: Int): Boolean
@@ -39,6 +40,18 @@ export default gql`
     projectId: ID     
     roles:    JSON 
     memberUserId:   ID
+    position:        String
+    linkTest:      String    
+    salary:        JSON
+    fee:           JSON
+    status:        String
+  }
+  input ProjectMembersInputId{
+    id:    ID 
+    pmUserId:  ID      
+    projectId: ID     
+    roles:    JSON 
+    memberUserId:   [ID]
     position:        String
     linkTest:      String    
     salary:        JSON

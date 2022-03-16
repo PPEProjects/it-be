@@ -3,9 +3,10 @@ import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
 import { DateTimeResolver } from 'graphql-scalars'
-import { ary, countBy, create, isNull } from 'lodash';
+import { ary, countBy, create, forEach, isElement, isNull } from 'lodash';
 import { log } from 'console';
 import _ = require('lodash');
+import projectMembersQueries from '../query/projectMembersQueries';
 
 
 
@@ -35,6 +36,41 @@ export default {
         createProjectMembers.user = user
         return createProjectMembers
       }
+      catch (e) {
+        console.log(e)
+        return new ApolloError(`${e}`)
+
+      }
+    },
+    createProjectMembers_User_Ids: async (parent, args, context,) => {
+
+      try {
+        const { userId } = context
+        const { memberUserId } = context
+
+        var getUserId = userId
+        if (args.data.userId) {
+          getUserId = +args.data.userId
+        }
+        const user = await prismaUser.user.findUnique({
+          where: { id: getUserId }
+        })
+        const member = args.data.memberUserId
+        let createProjectMembers = {}
+        for (const element of member) {
+          createProjectMembers = await prisma.projectMembers.create({
+            data: {
+              ...args.data,
+              memberUserId: +element,
+              projectId: +args.data?.projectId,
+              pmUserId: getUserId
+            },
+          })
+        }
+        return createProjectMembers
+
+      }
+
       catch (e) {
         console.log(e)
         return new ApolloError(`${e}`)
@@ -75,31 +111,35 @@ export default {
             memberUserId: +args.data.memberUserId,
             projectId: +args.data.projectId
           }
-       
+
         })
-         if (projectMember.length === 0) {
+        if (projectMember.length === 0) {
           const createProjectMembers = await prisma.projectMembers.create({
-            data: {
+            data: [{
               ...args.data,
-              memberUserId: +args.data?.memberUserId,
+              memberUserId:
+                +args.data?.memberUserId,
+
               projectId: +args.data?.projectId,
               pmUserId: getUserId
-            },
+            }],
+            skipDuplicates: true,
+
           })
           return createProjectMembers
         }
-          const updateProjectMembers = await prisma.projectMembers.update({
-            where:{
-               id: projectMember.id
-            },
-            data: {
-              ...args.data,
-              memberUserId: +args.data?.memberUserId,
-              projectId: +args.data?.projectId,
-              pmUserId: getUserId
-            },
-          })
-          return updateProjectMembers
+        const updateProjectMembers = await prisma.projectMembers.update({
+          where: {
+            id: projectMember.id
+          },
+          data: {
+            ...args.data,
+            memberUserId: +args.data?.memberUserId,
+            projectId: +args.data?.projectId,
+            pmUserId: getUserId
+          },
+        })
+        return updateProjectMembers
       } catch (e) {
         console.log(e)
 

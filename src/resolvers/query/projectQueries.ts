@@ -55,7 +55,9 @@ export default {
                 const listJoinProject = await prisma.project.findMany({
                     where: {
                         authorUserId: userId,
-                        type: args.type
+                        type :{
+                            contains: args.contains
+                        }
                     }
                 })
                 const numberSelfIdeas = await prisma.projectMembers.aggregate({
@@ -89,7 +91,10 @@ export default {
                 const listInterstedProject = await prisma.project.findMany({
                     where: {
                         authorUserId: userId,
-                        type: args.type
+                        type:{
+                           contains: args.type
+                        }
+                         
                     }
                 })
                 const numberSelfIdeas = await prisma.projectInterested.aggregate({
@@ -171,7 +176,7 @@ export default {
                         },
                         status: {
                             contains: args.status || undefined
-                        }
+                        },
                     },
                 })
                 if (listProject.length === 0) {
