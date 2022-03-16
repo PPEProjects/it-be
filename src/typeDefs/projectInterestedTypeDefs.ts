@@ -13,9 +13,9 @@ export default gql`
   }
 
   type ProjectInterested {
-    id:Int
-    projectId: Int 
-    userId:Int
+    id:ID
+    projectId: ID
+    userId:ID
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
@@ -23,9 +23,9 @@ export default gql`
   }
   
   input ProjectInterestedInput {
-   id:Int 
-   projectId: Int
-   userId:Int
+   id: ID
+   projectId:ID
+   userId:ID
 
   }
 

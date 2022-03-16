@@ -33,7 +33,7 @@ export default {
             try {
                 const { userId } = context
                 const myProject = await prisma.project.findMany({
-                   
+
                     where: {
                         authorUserId: userId,
                         type: {
@@ -43,7 +43,7 @@ export default {
                 })
                 if (myProject.length === 0) {
                     return new ApolloError(`Data not exist`)
-                }      
+                }
                 return myProject
             } catch (e) {
                 console.log(e)
@@ -55,17 +55,17 @@ export default {
                 const listJoinProject = await prisma.project.findMany({
                     where: {
                         authorUserId: userId,
-                        type :{
+                        type: {
                             contains: args.contains
                         }
                     }
                 })
                 const numberSelfIdeas = await prisma.projectMembers.aggregate({
-                    _count:{
+                    _count: {
                         id: true
                     },
-                    where:{
-                        memberUserId : userId
+                    where: {
+                        memberUserId: userId
                     }
                 })
                 for (const project of listJoinProject) {
@@ -91,10 +91,10 @@ export default {
                 const listInterstedProject = await prisma.project.findMany({
                     where: {
                         authorUserId: userId,
-                        type:{
-                           contains: args.type
+                        type: {
+                            contains: args.type
                         }
-                         
+
                     }
                 })
                 const numberSelfIdeas = await prisma.projectInterested.aggregate({
@@ -102,9 +102,9 @@ export default {
                         id: true
                     },
                     where: {
-                       userId : userId
+                        userId: userId
                     }
-                })       
+                })
                 for (const project of listInterstedProject) {
                     project.countProject = numberSelfIdeas._count.id
                 }
@@ -118,7 +118,7 @@ export default {
         },
         searchProject: async (parent, args, context) => {
             try {
-                const {userId} = context
+                const { userId } = context
                 var listProject = await prisma.project.findMany({
                     where: {
                         name: {
@@ -132,7 +132,7 @@ export default {
                         }
 
                     },
-                    
+
                     orderBy: {
                         updatedAt: 'desc'
                     },
@@ -145,7 +145,7 @@ export default {
                 return new ApolloError(`${e}`)
             }
         },
-       
+
         detailProject: async (parent, args, context) => {
             try {
                 const detailProject = await prisma.project.findFirst({

@@ -17,7 +17,6 @@ export default {
         const user = await prismaUser.user.findUnique({
           where: { id: +userId }
         })
-        console.log(user)
         const createUserAdvance = await prisma.userAdvance.create({
           data: {
             ...args.data,
@@ -44,6 +43,7 @@ export default {
             ...args.data
           }
         })
+       
         return updateUserAdvance
       }
       catch (e) {
@@ -59,7 +59,7 @@ export default {
           where: {
             id: +args.id
           },
-          data: {
+          data: { 
             deleted: now
           }
         })
@@ -74,7 +74,7 @@ export default {
         const { userId } = context
         const upsertUserAdvance = await prisma.userAdvance.upsert({
           where: {
-            userId: userId,
+            userId: +userId,
           },
           update: {
             language: args.data.language,

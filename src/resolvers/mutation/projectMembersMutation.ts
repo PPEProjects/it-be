@@ -42,19 +42,14 @@ export default {
 
       }
     },
-    createProjectMembers_User_Ids: async (parent, args, context,) => {
+    createProjectMembersUserIds: async (parent, args, context,) => {
 
       try {
         const { userId } = context
-        const { memberUserId } = context
-
         var getUserId = userId
         if (args.data.userId) {
           getUserId = +args.data.userId
         }
-        const user = await prismaUser.user.findUnique({
-          where: { id: getUserId }
-        })
         const member = args.data.memberUserId
         let createProjectMembers = {}
         for (const element of member) {

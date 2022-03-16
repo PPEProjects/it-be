@@ -14,7 +14,7 @@ export default {
                 var allUserFeedback = await prisma.userFeedback.findMany({
                     where: {
                         deleted: null,
-                        id: args.id
+                        id: +args.id
                     },
                 })
                 return allUserFeedback

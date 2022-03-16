@@ -14,7 +14,7 @@ export default {
                     where: {
 
                         deleted: null,
-                        id: args.id
+                        id: +args.id
                     }
                 })
                 return allProjectInterested

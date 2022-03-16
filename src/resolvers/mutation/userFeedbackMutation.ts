@@ -19,13 +19,13 @@ export default {
           }
           
         const user = await prismaUser.user.findUnique({
-              where:{ id: userId}
+              where:{ id: +userId}
           })
         
         const createUserFeedback = await prisma.userFeedback.create({
           data: {
             ...args.data,
-            userId: userId
+            userId: +userId
           },
         })
         createUserFeedback.user = user

@@ -3,7 +3,7 @@ const { prisma, prismaUser } = require('../database')
 const queryUser = async (parent, args) => {
   return prismaUser.user.findFirst({
     where: {
-      id: +parent.userId || undefined
+      id: +parent.authorUserId || undefined
     }
   })
 }
