@@ -25,9 +25,11 @@ export default {
     },
     updateProject: async (parent, args, content,) => {
       try {
+        const idProject = +args.data.id
+        delete (args.data)['id']
         const updateProject = await prisma.project.update({
           where: {
-            id: +args.data.id
+            id: idProject
           },
           data: {
             ...args.data

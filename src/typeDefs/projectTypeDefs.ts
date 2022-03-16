@@ -48,7 +48,7 @@ export default gql`
   }
   
   input ProjectInput {
-    id: Int
+    id: ID
     name: String
     coAuthorUserIds: JSON
     attachments: JSON
