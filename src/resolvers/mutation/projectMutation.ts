@@ -1,7 +1,7 @@
 import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
-
+import { sendNotification } from '../repositories/notificationRepository'
 export default {
   JSON: GraphQLJSON,
 
@@ -15,6 +15,7 @@ export default {
             authorUserId: userId
           },
         })
+        sendNotification(userId, 1, createProject, 'project')
         return createProject
       }
       catch (e) {
