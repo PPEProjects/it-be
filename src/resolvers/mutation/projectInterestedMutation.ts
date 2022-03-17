@@ -15,6 +15,9 @@ export default {
 
       try {
         const { userId } = context
+        const user = await prismaUser.user.findUnique({
+          where: { id: userId }
+        })
         const createProjectInterested = await prisma.projectInterested.create({
           data: {
             ...args.data,
@@ -22,6 +25,7 @@ export default {
             userId: userId
           },
         })
+        createProjectInterested.user = user
         return createProjectInterested
       }
       catch (e) {

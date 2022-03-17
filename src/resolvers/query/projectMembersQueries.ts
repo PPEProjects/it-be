@@ -18,7 +18,6 @@ export default {
                     where: {
 
                         deleted: null,
-                        id: +args.id
                     }
                 })
                 return allProjectMembers

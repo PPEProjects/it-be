@@ -72,8 +72,7 @@ export default {
     },
     me: async (parent, args, context) => {
       try {
-        const { userId } = context
-         console.log(userId)
+        const { userId } = context  
         if (!userId) {
           return new ApolloError("please login")
         }
