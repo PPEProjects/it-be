@@ -24,7 +24,7 @@ model Project {
   is_recruit         Boolean?
   type               String?
   status             String?
-  contentStatus     String?          @db.MediumText @map("content_status")
+  contentStatus      String?          @map("content_status") @db.MediumText
   timeToDo           String?          @map("time_to_do")
   memberJoin         Json?            @map("member_join")
   programingLanguage Json?            @map("programing_language")
@@ -88,10 +88,25 @@ model UserFeedback {
   userId    Int       @map("user_id")
   projectId Int       @map("project_id")
   grate     Int?
-  content String?
+  content   String?
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deleted   DateTime?
 
   @@map("user_feedback")
+}
+
+model Notification {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @map("user_id")
+  userReceiveId Int       @map("user_receive_id")
+  type          String?
+  typeId        Int?      @map("type_id")
+  content       Json?
+  isRead        Boolean   @default(false) @map("is_read")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deleted       DateTime?
+
+  @@map("notification")
 }

@@ -5,6 +5,8 @@ import projectMembersTypeDefs from './projectMembersTypeDefs'
 import userAdvanceTypeDefs from './userAdvanceTypeDefs'
 import userFeedbackTypeDefs from './userFeedbackTypeDefs'
 import exampleTypeDefs from './exampleTypeDefs'
+import notificationTypeDefs from './notificationTypeDefs'
+
 import { gql } from 'apollo-server-express'
 
 const baseTypeDefs = gql`
@@ -14,6 +16,7 @@ const typeDefs = [baseTypeDefs,
   userTypeDefs, projectTypeDefs, 
   ,projectInterestedTypeDefs,projectMembersTypeDefs,
   userAdvanceTypeDefs,userFeedbackTypeDefs,
-  exampleTypeDefs
+  exampleTypeDefs,
+  notificationTypeDefs
 ]
 export { typeDefs }

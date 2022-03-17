@@ -17,6 +17,10 @@ import userFeedbackMutation from './mutation/userFeedbackMutation'
 import userFeedbackQueries from './query/userFeedbackQueries'
 
 import exampleQueries from './query/exampleQueries'
+
+import notificationMutation from './mutation/notificationMutation'
+import notificationQueries from './query/notificationQueries'
+
 import { models } from '../model'
 import _ = require('lodash')
 
@@ -27,7 +31,8 @@ const resolvers =  _.merge([
                         projectMembersMutation, projectMembersQueries,
                         userAdvanceMutation,userAdvanceQueries,
                         userFeedbackMutation,userFeedbackQueries,
-                        exampleQueries
+                        exampleQueries,
+                        notificationMutation, notificationQueries
                     ],
                     models
                     )
