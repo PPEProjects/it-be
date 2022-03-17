@@ -28,7 +28,7 @@ export default {
         const createProjectMembers = await prisma.projectMembers.create({
           data: {
             ...args.data,
-            memberUserId: +args.data?.memberUserId,
+            memberUserId: +args.data?.memberUserId || undefined,
             projectId: +args.data?.projectId,
             pmUserId: getUserId
           },
