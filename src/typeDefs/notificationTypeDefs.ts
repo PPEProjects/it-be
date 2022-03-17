@@ -9,7 +9,7 @@ export default gql`
 
   type Query {  
     allNotification: [Notification]
-    detailNotification(projectId:ID): Notification
+    detailNotification(id:ID): Notification
     notificationByType(type:[String]): [Notification]
   }
 

@@ -12,6 +12,12 @@ export default {
     Query: {
         allNotification: async (parent, args, context) => {
             try {
+                const notification = await prisma.notification.findMany({
+                    where:{
+                        deleted: null
+                    }
+                })
+                return notification
                
             }
             catch (e) {
@@ -21,6 +27,18 @@ export default {
 
         detailNotification: async (parent, args, context) => {
             try {
+                
+                const detailNotification = await prisma.notification.findFirst({
+                    where: {
+                       id : +args.id
+                    },
+                })
+                console.log(detailNotification)
+                if (detailNotification === 0) {
+                    return null
+                }
+
+                return detailNotification
                 
             } catch (e) {
                 console.log(e)
@@ -34,7 +52,7 @@ export default {
                     where:{
                         userReceiveId: userId || undefined,
                         type:{
-                            in: args.type
+                            in : args.type
                         }
                     },
                     orderBy:{
@@ -53,6 +71,9 @@ export default {
                     }
                     return noti
                 })
+                if(notification.length ===0){
+                    return null
+                }
                 return notification
             } catch (e) {
                 console.log(e)

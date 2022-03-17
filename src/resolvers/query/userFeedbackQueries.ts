@@ -13,7 +13,7 @@ export default {
             try {
                 var allUserFeedback = await prisma.userFeedback.findMany({
                     where: {
-                        deleted: null, },
+                        deleted: null, },   
                 })
                 return allUserFeedback
             }
