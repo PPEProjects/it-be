@@ -1,11 +1,8 @@
 
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
-import { isNonNullType } from 'graphql';
-import { PhoneNumberResolver } from 'graphql-scalars';
 import GraphQLJSON from 'graphql-type-json';
-import { ary } from 'lodash';
-const { prisma, prismaUser, getUsers } = require('../../database')
+const { prisma, prismaUser} = require('../../database')
 
 export default {
     JSON: GraphQLJSON,
@@ -33,12 +30,15 @@ export default {
             try {
                 const { userId } = context
                 const myProject = await prisma.project.findMany({
-
                     where: {
+                        deleted: null,
                         authorUserId: userId,
                         type: {
                             contains: args.type
                         }
+                    },
+                    orderBy:{
+                        updatedAt: 'desc'
                     }
                 })
                 if (myProject.length === 0) {
