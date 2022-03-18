@@ -121,6 +121,7 @@ export default {
                 const { userId } = context
                 var listProject = await prisma.project.findMany({
                     where: {
+                        deleted: null,
                         name: {
                             contains: args.name || undefined
                         },
