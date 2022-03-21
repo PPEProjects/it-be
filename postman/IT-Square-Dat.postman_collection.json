@@ -793,8 +793,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n     \n  }\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 7,\n    \"memberUserId\": 9,\n    \"position\": \"BE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\",\n     \"jobDescription\": \"ban hanh\"\n  }\n  }\n  }\n}"
+								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    jobDescription\n     \n  }\n  }\n",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 7,\n    \"memberUserId\": 9,\n    \"position\": \"BE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\",\n     \"jobDescription\": \"ban hanh\"\n  }\n  \n}"
 							}
 						},
 						"url": {
