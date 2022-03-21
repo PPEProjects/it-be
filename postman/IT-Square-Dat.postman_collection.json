@@ -579,7 +579,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProjectInterested($data: ProjectInterestedInput!) {\n  updateProjectInterested(data: $data) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"projectId\": 2\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\": \"3\",\n    \"projectId\": \"2\",\n    \"userId\":\"5\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -669,7 +669,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailUser($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    project {\n      name\n    }\n  }\n}",
-								"variables": "  {\n  \"projectId\": 2\n  \n}"
+								"variables": "  {\n  \"projectId\":3\n  \n}"
 							}
 						},
 						"url": {
@@ -733,8 +733,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation CreateProjectMembers($data: ProjectMembersInput!) {\n  createProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 3,\n    \"memberUserId\": 5,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
+								"query": "mutation CreateProjectMembersUserIds($data: ProjectMembersInputId!) {\n  createProjectMembersUserIds(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 3,\n    \"memberUserId\": [9,6],\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n        \"money\": 200000,\n        \"code\": \"VND\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
@@ -764,7 +764,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProjectMembers($data: ProjectMembersInput!) {\n  updateProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\": 1,\n    \"position\": \"dev\",\n    \"memberUserId\": 3\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\": \"2\",\n    \"position\": \"DEV\",\n    \"memberUserId\": 3\n  }\n}"
 							}
 						},
 						"url": {
@@ -793,8 +793,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 6,\n    \"memberUserId\": 7,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\"\n  }\n}"
+								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n     \n  }\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 7,\n    \"memberUserId\": 9,\n    \"position\": \"BE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\",\n     \"jobDescription\": \"ban hanh\"\n  }\n  }\n  }\n}"
 							}
 						},
 						"url": {
@@ -1008,8 +1008,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation UpdateUserAdvance($data: UserAdvanceInput!) {\n  updateUserAdvance(data: $data) {\n    id\n    roles\n    userId\n    language\n    skill\n    info\n    programLanguage\n    personalGoal\n    selfIntroduction\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"id\": null,\n      \"userId\": null,\n      \"roles\": null,\n      \"language\": null,\n      \"skill\": null,\n      \"info\": null,\n      \"programLanguage\": null,\n      \"personalGoal\": null,\n      \"selfIntroduction\": null\n    }\n  }"
+								"query": "mutation UpdateUserAdvance($data: UserAdvanceInput!) {\n  updateUserAdvance(data: $data) {\n    id\n    roles\n    userId\n    language\n    skill\n    info\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n    \"data\": {\n        \"id\": 1,\n      \"roles\": [\"user\"],\n      \"goal\": \"Fontend developer\",\n      \"language\": \"VietNames, English\",\n      \"skill\": [{\n          \"programe_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      }],\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\"\n    }\n  }"
 							}
 						},
 						"url": {
@@ -1164,7 +1164,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateUserFeedback($data: UserFeedbackInput!) {\n  updateUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"id\": null,\n      \"userId\": null,\n      \"projectId\": null,\n      \"grate\": null\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"id\": \"6\",\n      \"userId\": \"5\",\n      \"projectId\": 4,\n      \"grate\": 5\n    }\n  }"
 							}
 						},
 						"url": {
