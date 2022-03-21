@@ -58,7 +58,8 @@ export default {
                 const searchProjectMember = await prisma.projectMembers.findMany({
                     distinct: ['projectId'],
                     where: {
-                        pmUserId: +args.pmUserId
+                        memberUserId: +args.pmUserId,
+                        position: 'pm'
                     }
                 })
                 if (searchProjectMember.length === 0) {
