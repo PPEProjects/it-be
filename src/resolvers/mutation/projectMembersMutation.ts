@@ -108,17 +108,18 @@ export default {
           }
 
         })
-        if (projectMember.length === 0) {
+        console.log(projectMember)
+        if (projectMember === null) {
           const createProjectMembers = await prisma.projectMembers.create({
-            data: [{
+            data: {
               ...args.data,
               memberUserId:
                 +args.data?.memberUserId,
 
               projectId: +args.data?.projectId,
               pmUserId: getUserId
-            }],
-            skipDuplicates: true,
+            },
+      
 
           })
           return createProjectMembers

@@ -28,6 +28,7 @@ export default gql`
     fee:           JSON
     status:        String
     userFeedback: UserFeedback
+    jobDescription: String
     memberUser: User
     createdAt:  DateTime!
     updatedAt:  DateTime!
@@ -45,6 +46,7 @@ export default gql`
     salary:        JSON
     fee:           JSON
     status:        String
+    jobDescription: String
   }
   input ProjectMembersInputId{
     id:    ID 
@@ -57,6 +59,7 @@ export default gql`
     salary:        JSON
     fee:           JSON
     status:        String
+    jobDescription: String
   }
 
   scalar JSON
