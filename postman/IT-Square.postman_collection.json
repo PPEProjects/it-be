@@ -239,7 +239,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    contentStatus\n    memberJoin\n    framework\n    programingLanguage\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
-								"variables": "{\n  \"detailProjectId\": \"31\"\n}"
+								"variables": "{\n  \"detailProjectId\": \"1\"\n}"
 							}
 						},
 						"url": {
@@ -303,7 +303,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query Me {\n  me {\n    id\n    name\n    email\n    phone_number\n    gender\n    date_of_birth\n    allPosition\n    avatar_attachment\n    userAdvance {\n      goal\n      plan\n      language\n      roles\n    }\n    userFeedback {\n      grate\n    }\n    selfProject {\n        id\n        name\n        type\n    }\n    joinProject{\n        id\n        project {\n            name\n        }\n        position\n    }\n  }\n}\n",
+								"query": "query Me {\n  me {\n    id\n    first_name\n    name\n    email\n    phone_number\n    gender\n    date_of_birth\n    allPosition\n    avatar_attachment\n    userAdvance {\n      goal\n      plan\n      language\n      roles\n    }\n    userFeedback {\n      grate\n    }\n    selfProject {\n        id\n        name\n        type\n    }\n    joinProject{\n        id\n        project {\n            name\n        }\n        position\n    }\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -570,6 +570,36 @@
 			"name": "member-project",
 			"item": [
 				{
+					"name": "upsert_member_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 6,\n    \"memberUserId\": 3,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    }\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create_member_project",
 					"request": {
 						"method": "POST",
@@ -615,6 +645,36 @@
 							"graphql": {
 								"query": "mutation UpdateProjectMembers($data: ProjectMembersInput!) {\n  updateProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n  \"data\": {\n    \"id\": \"1\",\n    \"position\": \"dev\",\n    \"memberUserId\": 1\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upsert_member_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    jobDescription\n     \n  }\n  }\n",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 7,\n    \"memberUserId\": 9,\n    \"position\": \"BE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\",\n    \"jobDescription\": \"ban hanh\"\n  }\n  \n}"
 							}
 						},
 						"url": {
@@ -734,7 +794,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailProjectMemberByIdPm($pmUserId: Int) {\n  detailProjectMemberByIdPm(pmUserId: $pmUserId) {\n    projectId\n    roles\n    pmUserId\n    project {\n      name\n    }\n  }\n}",
-								"variables": "{\n  \"pmUserId\": 1\n}"
+								"variables": "{\n  \"pmUserId\": 20454\n}"
 							}
 						},
 						"url": {
