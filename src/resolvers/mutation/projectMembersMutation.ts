@@ -98,24 +98,17 @@ export default {
         if (args.data.userId) {
           getUserId = +args.data.userId
         }
-        const user = await prismaUser.user.findUnique({
-          where: { id: getUserId }
-        })
         const projectMember = await prisma.projectMembers.findFirst({
           where: {
-            memberUserId: +args.data.memberUserId,
-            projectId: +args.data.projectId
+            memberUserId: +args.data?.memberUserId || 0,
+            projectId: +args.data?.projectId
           }
-
         })
-        console.log(projectMember)
         if (projectMember === null) {
           const createProjectMembers = await prisma.projectMembers.create({
             data: {
               ...args.data,
-              memberUserId:
-                +args.data?.memberUserId,
-
+              memberUserId: +args.data?.memberUserId || undefined,
               projectId: +args.data?.projectId,
               pmUserId: getUserId
             },
@@ -130,7 +123,7 @@ export default {
           },
           data: {
             ...args.data,
-            memberUserId: +args.data?.memberUserId,
+            memberUserId: +args.data?.memberUserId || undefined,
             projectId: +args.data?.projectId,
             pmUserId: getUserId
           },
