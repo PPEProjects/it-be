@@ -101,7 +101,8 @@ export default {
         const projectMember = await prisma.projectMembers.findFirst({
           where: {
             memberUserId: +args.data?.memberUserId || 0,
-            projectId: +args.data?.projectId
+            projectId: +args.data?.projectId,
+            deleted: null
           }
         })
         if (projectMember === null) {
@@ -110,7 +111,7 @@ export default {
               ...args.data,
               memberUserId: +args.data?.memberUserId || undefined,
               projectId: +args.data?.projectId,
-              pmUserId: getUserId
+              pmUserId: getUserId,
             },
       
 
