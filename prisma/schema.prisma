@@ -12,7 +12,7 @@ model Project {
   name               String
   attachments        Json?
   category           String?
-  description        String?
+  description        String?          @db.MediumText
   level              String?
   privacy            String?
   version            String?
