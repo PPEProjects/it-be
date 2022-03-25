@@ -6,7 +6,7 @@ export default gql`
     createProjectMembersUserIds(data: ProjectMembersInputId!): ProjectMembers !
     updateProjectMembers(data: ProjectMembersInput!): ProjectMembers 
     upsertProjectMembers(data: ProjectMembersInput!):ProjectMembers
-    deleteProjectMembers(id: Int): Boolean
+    deleteProjectMembers(id: ID): Boolean
   }
 
   type Query {
