@@ -8,7 +8,7 @@ export default gql`
 
   type Query {
     allUsers: [User!]!
-    searchUsers(name:String,roles:JSON):[User]
+    searchUsers(name:String,roles:JSON,page:String,limit:String):[User]
     signIn(email: String!, password: String!): AuthPayload!
     me: User!
     detailUser(id: ID): User 
@@ -40,6 +40,7 @@ export default gql`
     country:               String
     gender:                String
     date_of_birth:         String
+   
     allPosition: String
     createdAt: DateTime
     updatedAt: DateTime

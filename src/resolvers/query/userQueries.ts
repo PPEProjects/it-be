@@ -4,6 +4,7 @@ const { prismaUser, prisma } = require('../../database')
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
 import axios from 'axios'
+import { ary } from 'lodash'
 
 export default {
 
@@ -11,6 +12,8 @@ export default {
     allUsers: async (parent, args, context) => {
       try {
         const allUser = await prismaUser.user.findMany({
+          take: 4,
+          skip: 1, // Skip the cursor
           id: args.userId
         })
         return allUser
@@ -22,9 +25,11 @@ export default {
     searchUsers: async (parent, args, context) => {
       try {
         const getNameDB = (process.env.DATABASE_URL_USER)?.split('/')
+        const page = args.page;
+        const limit = args.limit;
         const UserCoreDB = _.last(getNameDB)
         var query = `SELECT u.* 
-                    FROM ${UserCoreDB}.users u, user_advance ua 
+                    FROM ${UserCoreDB}.users u, user_advance ua
                     WHERE u.id = ua.user_id 
                     AND ua.deleted is null `
         if (args?.name) {
@@ -37,6 +42,7 @@ export default {
           const searchRoles = `AND LOWER(ua.roles) LIKE ${roles.toLowerCase()} `
           query = query + searchRoles
         }
+        query = query + ` LIMIT ${limit } OFFSET ${(page-1)*limit} `
         const searchUsers = await prisma.$queryRawUnsafe(query)
         return searchUsers
       }
