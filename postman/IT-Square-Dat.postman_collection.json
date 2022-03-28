@@ -23,7 +23,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation Mutation($data: UserCreateInput!) {\n  signupUser(data: $data) {\n    token\n    user {\n      id\n      email\n      name\n    }\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"email\": \"test60339@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"email\": \"minh@gmail.com\",\n    \"name\": \"kelvin\",\n    \"password\": \"1093978287799666\",\n    \"password_confirmation\":\"1093978287799666\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -52,8 +52,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation Mutation($data: UserCreateInput!) {\n  signupLocalUser(data: $data) {\n    token\n    user {\n      id\n      email\n      name\n    }\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"email\": \"minhtuan@gmail.com\",\n    \"name\": \"minhdat\",\n    \"password\": \"minhdat2702\",\n    \"password_confirmation\":\"minhdat2702\"\n  }\n}"
+								"query": "mutation SignupLocalUser($data: UserCreateInput!) {\n  signupLocalUser(data: $data) {\n    token\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"email\": \"nangdau@gmail.com\",\n    \"name\": \"Tran Chi\",\n    \"password\": \"minhdat2702\",\n    \"password_confirmation\":\"minhdat2702\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -549,7 +549,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectInterested($data: ProjectInterestedInput!) {\n  createProjectInterested(data: $data) {\n    id\n    projectId\n    createdAt\n    updatedAt\n    userId\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 4\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
 							}
 						},
 						"url": {
@@ -656,6 +656,131 @@
 				},
 				{
 					"name": "query_detail_interested_project Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailUser($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    project {\n      name\n    }\n  }\n}",
+								"variables": "  {\n  \"projectId\":3\n  \n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "project-like",
+			"item": [
+				{
+					"name": "create-project-like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateProjectInterested($data: ProjectInterestedInput!) {\n  createProjectInterested(data: $data) {\n    id\n    projectId\n    createdAt\n    updatedAt\n    userId\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_project_like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: Int) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
+								"variables": "{\n  \"deleteProjectInterestedId\": 1\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_project_like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query AllProjectInterested {\n  allProjectInterested {\n    id\n    projectId\n    project{\n        name\n    }\n    userId\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n \n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_project_like",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1134,7 +1259,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateUserFeedback($data: UserFeedbackInput!) {\n  createUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"userId\": 7,\n      \"projectId\": 8,\n      \"grate\": \"9\"\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"userId\": \"7\",\n      \"projectId\": 8,\n      \"grate\": 7\n    }\n  }"
 							}
 						},
 						"url": {
