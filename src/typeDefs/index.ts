@@ -8,6 +8,7 @@ import exampleTypeDefs from './exampleTypeDefs'
 import notificationTypeDefs from './notificationTypeDefs'
 
 import { gql } from 'apollo-server-express'
+import projectLikesTypeDefs from './projectLikesTypeDefs'
 
 const baseTypeDefs = gql`
   type Query
@@ -17,6 +18,6 @@ const typeDefs = [baseTypeDefs,
   ,projectInterestedTypeDefs,projectMembersTypeDefs,
   userAdvanceTypeDefs,userFeedbackTypeDefs,
   exampleTypeDefs,
-  notificationTypeDefs
+  notificationTypeDefs,projectLikesTypeDefs
 ]
 export { typeDefs }
