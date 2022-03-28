@@ -16,6 +16,9 @@ export default {
                         deleted: null,
                     }
                 })
+                if(allProjectInterested.length === 0){
+                    return null
+                }
                 return allProjectInterested
             }
             catch (e) {

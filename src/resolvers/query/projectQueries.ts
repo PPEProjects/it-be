@@ -1,6 +1,7 @@
 
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
+import { count } from 'console';
 import GraphQLJSON from 'graphql-type-json';
 const { prisma, prismaUser} = require('../../database')
 
@@ -120,8 +121,10 @@ export default {
             try {
                 const { userId } = context
                 var listProject = await prisma.project.findMany({
+                    skip: args.skip,
+                    take: args.take,
                     where: {
-                        deleted: null,
+                        deleted: null,  
                         name: {
                             contains: args.name || undefined
                         },
@@ -130,7 +133,7 @@ export default {
                         },
                         status: {
                             contains: args.status || undefined
-                        }
+                        },
 
                     },
 
@@ -140,7 +143,9 @@ export default {
                 })
                 if (listProject.length === 0) {
                     return null
-                } return listProject
+                } 
+                
+                return listProject
             } catch (e) {
                 console.log(e)
                 return new ApolloError(`${e}`)

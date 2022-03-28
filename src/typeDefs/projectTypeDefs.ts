@@ -12,7 +12,7 @@ export default gql`
     myProject(type:String): [Project]
     listJoinProject(id:Int,type:String):[Project]
     listInterestedProject(id:ID, type:String):[Project]
-    searchProject(name: String, type: String, status: String):[Project]
+    searchProject(name: String, type: String, status: String,skip:Int,take:Int):[Project]
     detailProject(id: ID): Project
   adminProject(type:String, name: String, arrange:String,status:String):[Project]
   }
@@ -44,7 +44,7 @@ export default gql`
     countProject: Int
     arrange: String
     contentStatus: String
-    members: [ProjectMembers]
+    members: [ProjectMembers],  
   }
   
   input ProjectInput {
