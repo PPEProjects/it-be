@@ -703,7 +703,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation CreateProjectInterested($data: ProjectInterestedInput!) {\n  createProjectInterested(data: $data) {\n    id\n    projectId\n    createdAt\n    updatedAt\n    userId\n  }\n}",
+								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  createProjectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }}",
 								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
 							}
 						},
@@ -763,8 +763,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query AllProjectInterested {\n  allProjectInterested {\n    id\n    projectId\n    project{\n        name\n    }\n    userId\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n \n}"
+								"query": "query Query {\n  allProjectLikes {\n    id\n    userId\n    projectId\n    project {\n      name\n    }\n  }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -793,7 +793,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailUser($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    project {\n      name\n    }\n  }\n}",
+								"query": "query Query($projectId: ID) {\n  detailProjectLikes(projectId: $projectId) {\n    projectId\n    project {\n      name\n    }\n    numberLikes\n  }\n}",
 								"variables": "  {\n  \"projectId\":3\n  \n}"
 							}
 						},
