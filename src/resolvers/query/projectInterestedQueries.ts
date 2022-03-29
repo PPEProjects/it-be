@@ -36,8 +36,19 @@ export default {
                 if (detailProjectInterested === null) {
                     return null
                 }
+                const numberInterested = await prisma.projectInterested.aggregate({
+                    _count:{
+                        id: true
+                    },
+                    where:{
+                        projectId: +args.projectId
+                    }
+                })
+            
+                detailProjectInterested.numberInterested = numberInterested._count.id;
 
                 return detailProjectInterested
+               
             } catch (e) {
                 console.log(e)
 

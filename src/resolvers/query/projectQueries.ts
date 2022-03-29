@@ -167,14 +167,23 @@ export default {
                 if (detailProject === null) {
                     return null
                 }
-                const like = await prisma.projectLikes.findMany({
+                const projectlike = await prisma.projectLikes.findMany({
                     where:{
                         projectId : +args.id,
                     }
 
+                }) 
+                const projectIntersted = await prisma.projectInterested.findMany({
+                    where:{
+                        projectId: +args.id,
+                    }
                 })
-                detailProject.projectLikes = like  
-                detailProject.numberLikes = like.length
+
+
+                detailProject.projectLikes = projectlike 
+                detailProject.numberLikes = projectlike.length
+                detailProject.projectInterested = (projectIntersted.length === 0) ? null : projectIntersted
+                detailProject.numberInterested = projectIntersted.length
              
                 
                 

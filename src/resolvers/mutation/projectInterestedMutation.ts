@@ -4,6 +4,7 @@ const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
 import { DateTimeResolver } from 'graphql-scalars'
 import projectInterestedTypeDefs from '../../typeDefs/projectInterestedTypeDefs';
+import { isTypeNode } from 'graphql';
 
 
 
@@ -12,28 +13,34 @@ export default {
 
   Mutation: {
     createProjectInterested: async (parent, args, context,) => {
-
       try {
         const { userId } = context
-        const user = await prismaUser.user.findUnique({
-          where: { id: userId }
+        var getUserId = userId
+        if (args.data.userId) {
+          getUserId = +args.data.userId
+        }
+        const checkInterested = await prisma.projectInterested.findFirst({
+          where:{
+              userId: getUserId,
+              projectId: +args.data?.projectId,
+          }
         })
-        const createProjectInterested = await prisma.projectInterested.create({
-          data: {
-            ...args.data,
-            projectId : +args.data.projectId,
-            userId: userId
-          },
-        })
-        createProjectInterested.user = user
-        return createProjectInterested
+        console.log(checkInterested)
+        if(checkInterested === null){
+          const createProjectInterested= await prisma.projectInterested.create({
+            data: {
+              projectId : +args.data.projectId,
+              userId: getUserId
+            },
+          })
+          return createProjectInterested
+        }
+      } catch (e) {
+        console.log(e) 
       }
-      catch (e) {
-        console.log(e)
-        return new ApolloError(`${e}`)
-
-      }
+    
     },
+
     updateProjectInterested: async (parent, args, context,) => {
       try {
         const updateProjectInterested = await prisma.projectInterested.update({

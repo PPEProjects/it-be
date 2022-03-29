@@ -238,8 +238,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n     projectLikes {\n      projectId\n    }\n    numberLikes\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
-								"variables": "{\n  \"detailProjectId\": 4\n}"
+								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n     projectLikes {\n      projectId\n    }\n    numberLikes\n    createdAt\n    updatedAt\n    timeToDo\n    numberInterested\n    projectInterested {\n      projectId\n    }\n  }\n}",
+								"variables": "{\n  \"detailProjectId\": 3\n}"
 							}
 						},
 						"url": {
@@ -608,8 +608,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: Int) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
-								"variables": "{\n  \"deleteProjectInterestedId\": 1\n}"
+								"query": "mutation Mutation($deleteProjectInterestedId: Int) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
+								"variables": "{\n  \"deleteProjectInterestedId\": 43\n}"
 							}
 						},
 						"url": {
@@ -668,7 +668,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailUser($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    project {\n      name\n    }\n  }\n}",
+								"query": "query DetailUser($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    project {\n      name\n    }\n    numberInterested\n  }\n}",
 								"variables": "  {\n  \"projectId\":3\n  \n}"
 							}
 						},

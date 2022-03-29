@@ -46,8 +46,10 @@ export default gql`
     arrange: String
     contentStatus: String
     members: [ProjectMembers],  
-    projectLikes: [ProjectLikes]
+    projectLikes: [ProjectLikes],
+    projectInterested: [ProjectInterested],
     numberLikes: Int
+    numberInterested: Int
   }
   
   input ProjectInput {

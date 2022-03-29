@@ -42,7 +42,7 @@ export default {
                         projectId: +args.projectId
                     }
                 })
-                console.log(numberLikes)
+            
                 detailProjectLikes.numberLikes = numberLikes._count.id;
 
                 return detailProjectLikes
