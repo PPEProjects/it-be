@@ -720,6 +720,36 @@
 					"response": []
 				},
 				{
+					"name": "upsert-project-like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  createProjectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "delete_project_like",
 					"request": {
 						"method": "POST",
