@@ -54,7 +54,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query SignIn($email: String!, $password: String!) {\n  signIn(email: $email, password: $password) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}",
-								"variables": "{\n   \"email\": \"test612sss@gmail.com\",\n    \"password\": \"1093978287799666\"\n}\n\n\n "
+								"variables": "{\n   \"email\": \"hoainam123@gmail.com\",\n    \"password\": \"hoainam123\"\n}\n\n\n "
 							}
 						},
 						"url": {
@@ -89,7 +89,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProject($data: ProjectInput!) {\n  createProject(data: $data) {\n    id\n    name\n    user {\n      email\n      id\n      name\n    }\n    attachments\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    contentStatus\n    memberJoin\n    framework\n    programingLanguage\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"name\": \"app AI\",\n    \"contentStatus\":\"this is stuck\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"create website for it engineerd\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"timeToDo\":\"2022-02-24\",\n    \"status\": \"draft\",\n    \"framework\": [ \"Laravel\", \"Tailwind\"],\n    \"programingLanguage\": [\"React Native\", \"Java\"],\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"name\": \"app AI\",\n    \"contentStatus\":\"this is stuck\",\n    \"coAuthorUserIds\": [2,3,6],\n    \"attachments\": {\n        \"main_picture\":[\n            {\n            \"id\":1,\n            \"thumb\":\"mainPicture.png\"\n            },\n             {\n            \"id\":2,\n            \"thumb\":\"mainPicture2.png\"\n            }\n        ],\n        \"plitch_deck\":[\n            {\n            \"id\":1,\n            \"thumb\":\"plitchDeck.pdf\"\n        },\n        {\n            \"id\":2,\n            \"thumb\":\"plitchDeck2.pdf\"\n        }\n        ],\n        \"other\":[\n            {\n                \"id\":7,\n                \"thumb\":\"fileVideo.mp4\"\n            },\n             {\n            \"id\":9,\n            \"thumb\":\"fileWord.DOCX\"\n            }\n            ]\n    },\n    \"category\": \"website\",\n    \"description\": \"Magna mauris tincidunt viverra quis mauris fermentum in pretium, arcu. Nunc, platea sit ligula massa. Mi laoreet nascetur phasellus feugiat adipiscing semper accumsan. Aliquam sit in sed elementum mauris. Egestas accumsan congue viverra blandit a ultrices fringilla in dignissim. Vestibulum aliquet lacus, ultrices at porta id rutrum in. Velit leo eget odio in morbi eros. Tincidunt felis augue facilisis orci curabitur aliquam et faucibus. Purus nisl sit dictum sit interdum consectetur. Sed nisl ullamcorper.\",\n    \"level\": \"medium\",\n    \"privacy\": \"public\",\n    \"version\": \"0.1\",\n    \"budget\": {\n        \"money\": \"200000\",\n        \"iso_code\": \"USD\"\n    },\n    \"salary\": {\n        \"money\": \"15000\",\n        \"iso_code\": \"USD\"\n    },\n    \"type\": \"ideas\",\n    \"timeToDo\":\"2022-02-24\",\n    \"status\": \"draft\",\n    \"framework\": [ \"Laravel\", \"Tailwind\"],\n    \"programingLanguage\": [\"React Native\", \"Java\"],\n    \"is_recruit\": true,\n    \"is_involved\": true\n  }\n}"
 							}
 						},
 						"url": {
@@ -239,7 +239,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    contentStatus\n    memberJoin\n    framework\n    programingLanguage\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
-								"variables": "{\n  \"detailProjectId\": \"1\"\n}"
+								"variables": "{\n  \"detailProjectId\": \"30\"\n}"
 							}
 						},
 						"url": {
@@ -364,7 +364,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailUser($detailUserId: ID) {\n  detailUser(id: $detailUserId) {\n    id\n    first_name\n    name\n    email\n    phone_number\n    address\n    date_of_birth\n    gender\n    avatar_attachment\n    background_attachment\n    selfProject{\n            id\n            name\n            attachments\n        }\n    joinProject{\n            id \n            position\n            project{\n                id\n                name\n                category\n                attachments\n                timeToDo\n            }\n        }\n    userAdvance{\n        id\n        userId\n        roles\n        language\n        skill\n        info\n        plan\n        goal\n        \n    }\n  }\n}",
-								"variables": "{\n  \"detailUserId\":  154\n}"
+								"variables": "{\n  \"detailUserId\":  20454\n}"
 							}
 						},
 						"url": {
@@ -394,7 +394,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query SearchUsers($name: String, $roles: JSON) {\n  searchUsers(name: $name, roles: $roles) {\n    id\n    name\n    email\n    phone_number\n    userAdvance {\n      id\n      roles\n      goal\n      plan\n      userId\n    }\n  }\n}",
-								"variables": "{\n   \"roles\":\"admin\"\n}"
+								"variables": "{\n}"
 							}
 						},
 						"url": {
@@ -583,8 +583,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 6,\n    \"memberUserId\": 3,\n    \"position\": \"FE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    }\n  }\n}"
+								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    jobDescription\n     \n  }\n  }\n",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 4,\n    \"memberUserId\":1,\n    \"position\": \"BE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"jobDescription\": \"Magna mauris tincidunt viverra quis mauris fermentum in pretium, arcu. Nunc, platea sit ligula massa. Mi laoreet nascetur phasellus feugiat adipiscing semper accumsan. Aliquam sit in sed elementum mauris. Egestas accumsan congue viverra blandit a ultrices fringilla in dignissim. Vestibulum aliquet lacus, ultrices at porta id rutrum in. Velit leo eget odio in morbi eros. Tincidunt felis augue facilisis orci curabitur aliquam et faucibus. Purus nisl sit dictum sit interdum consectetur. Sed nisl ullamcorper.\"\n  }\n  \n}"
 							}
 						},
 						"url": {
@@ -644,7 +644,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateProjectMembers($data: ProjectMembersInput!) {\n  updateProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"id\": \"1\",\n    \"position\": \"dev\",\n    \"memberUserId\": 1\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"id\": \"9\",\n    \"position\": \"DEV\",\n    \"memberUserId\": 2\n  }\n}"
 							}
 						},
 						"url": {
@@ -703,8 +703,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteProjectMembers($deleteProjectMembersId: Int) {\n  deleteProjectMembers(id: $deleteProjectMembersId)\n}",
-								"variables": "  {\n    \"deleteProjectMembersId\": 5\n  }"
+								"query": "mutation DeleteProjectMembers($deleteProjectMembersId: ID) {\n  deleteProjectMembers(id: $deleteProjectMembersId)\n}",
+								"variables": "  {\n    \"deleteProjectMembersId\": \"48\"\n  }"
 							}
 						},
 						"url": {
@@ -829,7 +829,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpsertUserAdvance($data: UserAdvanceInput!) {\n  upsertUserAdvance(data: $data) {\n    id\n    userId\n    roles\n    language\n    skill\n    info\n    goal\n    plan\n    user{\n        id\n        email\n        first_name\n        name\n        phone_number\n        address\n        country\n        gender\n        date_of_birth\n        avatar_attachment\n        background_attachment\n    }\n  }\n}",
-								"variables": "{\n  \"data\": {\n     \"roles\": [ \"pm\", \"fullstack\"],\n      \"goal\": \"Backend developer\",\n      \"language\": [\"VietNames\", \"English\"],\n      \"skill\": {\n          \"program_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      },\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"hello\",\n      \"name\": \"users\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": [{\n          \"id\":1,\n          \"thumb\": \"avatar.png\"\n      }],\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
+								"variables": "{\n  \"data\": {\n     \"roles\": [ \"pm\", \"fullstack\"],\n      \"goal\": \"Backend developer\",\n      \"language\": [\"VietNames\", \"English\"],\n      \"skill\": {\n          \"program_language\":[\"php\", \"java\", \"C\"],\n          \"framework\":[\"laravel\", \"nodejs\", \"reactjs\"]\n      },\n      \"info\": \"At arcu nullam scelerisque sed quisque. Sodales tellus adipiscing cursus odio adipiscing. Adipiscing tempor id aenean tristique. Nunc eget commodo id nec nisl in semper. Elit suscipit lacus donec augue. Quam vestibulum, fringilla ornare massa duis. Neque sagittis, turpis feugiat lectus etiam. Tortor massa semper quisque vitae, sed. Tristique sit neque faucibus nibh donec felis. Volutpat dolor lectus donec turpis.\",\n      \"plan\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus facilisis vel, tempus rhoncus. In quam nisl, eu pharetra in quam. Adipiscing a, sed adipiscing rhoncus, nulla. Aenean orci fermentum scelerisque risus tincidunt ut habitasse. Magna adipiscing urna donec enim. Pellentesque sed pretium vel purus.\",\n    \"user\": {\n      \"first_name\": \"Jason\",\n      \"name\": \"Bill Gates\",\n      \"phone_number\": \"093465721\",\n      \"avatar_attachment\": {\n          \"id\":1,\n          \"thumb\": \"https://imageio.forbes.com/specials-images/imageserve/5f4ebe0c87612dab4f12a597/0x0.jpg?format=jpg&crop=3392,3395,x292,y592,safe&fit=crop\"\n      },\n      \"background_attachment\": [{\n          \"id\":2,\n          \"thumb\": \"background.png\"\n      }],\n      \"address\": \"lost anglest\",\n      \"country\": \"America\",\n      \"gender\": \"male\",\n      \"date_of_birth\": \"2000-03-16\"\n    }\n  }\n}"
 							}
 						},
 						"url": {
@@ -1230,6 +1230,161 @@
 							"graphql": {
 								"query": "query NotificationByType($type: [String]) {\n  notificationByType(type: $type) {\n    id\n    userId\n    userReceiveId\n    type\n    message\n    typeId\n    content\n    isRead\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "{\n  \"type\": [\"project\", \"idea\"]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "project-like",
+			"item": [
+				{
+					"name": "create-project-like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  createProjectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upsert-project-like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  createProjectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_project_like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: Int) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
+								"variables": "{\n  \"deleteProjectInterestedId\": 1\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_all_project_like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Query {\n  allProjectLikes {\n    id\n    userId\n    projectId\n    project {\n      name\n    }\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_project_like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Query($projectId: ID) {\n  detailProjectLikes(projectId: $projectId) {\n    projectId\n    project {\n      name\n    }\n    numberLikes\n  }\n}",
+								"variables": "  {\n  \"projectId\":3\n  \n}"
 							}
 						},
 						"url": {
