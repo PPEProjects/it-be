@@ -238,7 +238,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n     projectLikes {\n      projectId\n    }\n    numberLikes\n    createdAt\n    updatedAt\n    timeToDo\n    numberInterested\n    projectInterested {\n      projectId\n    }\n  }\n}",
+								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n     projectLikes {\n      projectId\n      userId\n    }\n    numberLikes\n    createdAt\n    updatedAt\n    timeToDo\n    numberInterested\n    projectInterested {\n      projectId\n    }\n  }\n}",
 								"variables": "{\n  \"detailProjectId\": 3\n}"
 							}
 						},
@@ -734,7 +734,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectInterested($deleteProjectLikesId: ID) {\n  deleteProjectLikes(id: $deleteProjectLikesId)\n}",
-								"variables": "{\n  \"deleteProjectLikesId\": 32\n}"
+								"variables": "{\n  \"deleteProjectLikesId\": 57\n}"
 							}
 						},
 						"url": {
@@ -1193,8 +1193,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteUserAdvance($deleteUserAdvanceId: Int) {\n  deleteUserAdvance(id: $deleteUserAdvanceId)\n}",
-								"variables": "  {\n    \"deleteUserAdvanceId\": 1\n  }"
+								"query": "mutation DeleteUserAdvance($deleteUserAdvanceId: ID) {\n  deleteUserAdvance(id: $deleteUserAdvanceId)\n}",
+								"variables": "  {\n    \"deleteUserAdvanceId\": \"1\"\n  }"
 							}
 						},
 						"url": {
