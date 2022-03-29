@@ -25,8 +25,8 @@ export default {
     searchUsers: async (parent, args, context) => {
       try {
         const getNameDB = (process.env.DATABASE_URL_USER)?.split('/')
-        const page = args.page;
-        const limit = args.limit;
+        const page = args?.page;
+        const limit = args?.limit;
         const UserCoreDB = _.last(getNameDB)
         var query = `SELECT u.* 
                     FROM ${UserCoreDB}.users u, user_advance ua
@@ -42,7 +42,9 @@ export default {
           const searchRoles = `AND LOWER(ua.roles) LIKE ${roles.toLowerCase()} `
           query = query + searchRoles
         }
-        query = query + ` LIMIT ${limit } OFFSET ${(page-1)*limit} `
+        if(page && limit){
+          query = query + ` LIMIT ${limit } OFFSET ${(page-1)*limit} `
+        }
         const searchUsers = await prisma.$queryRawUnsafe(query)
         return searchUsers
       }

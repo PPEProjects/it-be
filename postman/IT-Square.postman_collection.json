@@ -393,8 +393,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query SearchUsers($name: String, $roles: JSON) {\n  searchUsers(name: $name, roles: $roles) {\n    id\n    name\n    email\n    phone_number\n    userAdvance {\n      id\n      roles\n      goal\n      plan\n      userId\n    }\n  }\n}",
-								"variables": "{\n}"
+								"query": "query SearchUsers($name: String, $roles: JSON, \n$page: String, $limit: String) {\n  searchUsers(name: $name, roles: $roles, page: $page, limit: $limit) {\n    id\n    name\n    email\n    phone_number\n    userAdvance {\n      id\n      roles\n      goal\n      plan\n      userId\n    }\n  }\n}",
+								"variables": "{\n  \"page\": \"1\",\n  \"limit\": \"10\"\n}"
 							}
 						},
 						"url": {
