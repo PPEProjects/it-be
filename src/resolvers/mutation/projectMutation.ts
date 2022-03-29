@@ -67,13 +67,10 @@ export default {
     deleteProject: async (parent, args, content,) => {
       try {
         const now = new Date()
-        const deleteProject = await prisma.project.update({
+        const deleteProject = await prisma.project.delete({
           where: {
             id: +args.id
           },
-          data: {
-            deleted: now
-          }
         })
         return true
       }
