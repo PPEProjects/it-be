@@ -239,7 +239,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n     projectLikes {\n      projectId\n    }\n    numberLikes\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
-								"variables": "{\n  \"detailProjectId\": 2\n}"
+								"variables": "{\n  \"detailProjectId\": 4\n}"
 							}
 						},
 						"url": {
@@ -720,7 +720,7 @@
 					"response": []
 				},
 				{
-					"name": "upsert-project-like",
+					"name": "delete-project-like",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -733,8 +733,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  upsertprojectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": \"4\"\n    \n  }\n}"
+								"query": "mutation CreateProjectInterested($deleteProjectLikesId: ID) {\n  deleteProjectLikes(id: $deleteProjectLikesId)\n}",
+								"variables": "{\n  \"deleteProjectLikesId\": 32\n}"
 							}
 						},
 						"url": {
@@ -750,7 +750,7 @@
 					"response": []
 				},
 				{
-					"name": "delete_project_like",
+					"name": "upsert-project-like",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -763,8 +763,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: Int) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
-								"variables": "{\n  \"deleteProjectInterestedId\": 1\n}"
+								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  upsertprojectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": \"4\"\n    \n  }\n}"
 							}
 						},
 						"url": {
