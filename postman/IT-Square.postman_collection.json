@@ -84,11 +84,8 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query SignIn($email: String!, $password: String!) {\n  signIn(email: $email, password: $password) {\n    token\n    user {\n      id\n      name\n      email\n    }\n  }\n}",
-<<<<<<< ours
 								"variables": "{\n   \"email\": \"hoainam123@gmail.com\",\n    \"password\": \"hoainam123\"\n}\n\n\n "
-=======
-								"variables": "{\n   \"email\": \"sadasd122@gmail.com\",\n    \"password\": \"dsadasd\"\n}\n\n\n "
->>>>>>> theirs
+
 							}
 						},
 						"url": {
