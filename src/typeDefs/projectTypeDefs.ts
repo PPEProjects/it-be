@@ -12,6 +12,7 @@ export default gql`
     myProject(type:String): [Project]
     listJoinProject(id:Int,type:String):[Project]
     listInterestedProject(id:ID, type:String):[Project]
+    LikeProject(id:ID,type:String):[Project]
     searchProject(name: String, type: String, status: String,skip:Int,take:Int):[Project]
     detailProject(id: ID): Project
   adminProject(type:String, name: String, arrange:String,status:String):[Project]
@@ -45,6 +46,8 @@ export default gql`
     arrange: String
     contentStatus: String
     members: [ProjectMembers],  
+    projectLikes: [ProjectLikes]
+    numberLikes: Int
   }
   
   input ProjectInput {

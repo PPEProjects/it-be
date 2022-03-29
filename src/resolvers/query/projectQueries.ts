@@ -2,7 +2,10 @@
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
 import { count } from 'console';
+import { utimesSync } from 'fs';
 import GraphQLJSON from 'graphql-type-json';
+import { compact } from 'lodash';
+import { off } from 'process';
 const { prisma, prismaUser} = require('../../database')
 
 export default {
@@ -86,6 +89,7 @@ export default {
             }
 
         },
+       
         listInterestedProject: async (parent, args, context) => {
             try {
                 const { userId } = context
@@ -117,6 +121,7 @@ export default {
                 console.log(e)
             }
         },
+
         searchProject: async (parent, args, context) => {
             try {
                 const { userId } = context
@@ -162,6 +167,20 @@ export default {
                 if (detailProject === null) {
                     return null
                 }
+                const like = await prisma.projectLikes.findMany({
+                    where:{
+                        projectId : +args.id,
+                    }
+
+                })
+                detailProject.projectLikes = like  
+                detailProject.numberLikes = like.length
+             
+                
+                
+               
+            
+    
                 return detailProject
             } catch (e) {
                 console.log(e)
