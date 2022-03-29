@@ -1,4 +1,12 @@
-const { prisma } = require('../database')
+const { prisma,prismaUser } = require('../database')
+const queryMemberUser = async (parent, args) => {
+  var user = await prismaUser.user.findFirst({
+    where: {
+      id: parent?.memberUserId || undefined
+    }
+  })
+  return parent?.memberUserId ? user : null
+}
 const queryProject = async (parent, args) => {
 
 var project =  await prisma.project.findMany({
@@ -16,6 +24,7 @@ export default {
     createdAt: (parent) => (parent.created_at === undefined) ? parent.createdAt : parent.created_at,
     updatedAt: (parent) => (parent.updated_at === undefined) ? parent.updatedAt : parent.updated_at,
     deleted: (parent) => parent.deleted,
+    memberUser: (parent, args) => queryMemberUser(parent, args),
     project:(parent,args) => queryProject(parent,args)
   },
 }

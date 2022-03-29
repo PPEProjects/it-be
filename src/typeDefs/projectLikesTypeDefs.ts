@@ -2,7 +2,9 @@ import { gql } from 'apollo-server'
 
 export default gql`
   type Mutation {
-    createProjectLikes(data: ProjectLikesInput!): ProjectLikes!
+    createProjectLikes(data: ProjectLikesInput!): ProjectLikes
+    upsertProjectLikes(data: ProjectLikesInput!): ProjectLikes
+   
     deleteProjectLikes(id: ID): Boolean
   }
 
@@ -19,6 +21,7 @@ export default gql`
     createdAt: DateTime!
     updatedAt: DateTime!
     deleted: DateTime
+    memberUser: [User]
     project: [Project]
     numberLikes: Int
   }

@@ -114,7 +114,7 @@ model Notification {
 }
 model ProjectLikes{
   id Int @id @default(autoincrement())
-  userId Int @map("user_id")
+  userId Int  @map("user_id")
   projectId Int @map("project_id")
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
