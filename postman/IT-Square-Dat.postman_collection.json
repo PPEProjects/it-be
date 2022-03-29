@@ -238,7 +238,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
+								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n     projectLikes {\n      projectId\n    }\n    numberLikes\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
 								"variables": "{\n  \"detailProjectId\": 2\n}"
 							}
 						},
@@ -704,7 +704,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  createProjectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\":6\n  }\n}"
 							}
 						},
 						"url": {
@@ -733,8 +733,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  createProjectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  upsertprojectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": \"4\"\n    \n  }\n}"
 							}
 						},
 						"url": {
@@ -824,7 +824,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query Query($projectId: ID) {\n  detailProjectLikes(projectId: $projectId) {\n    projectId\n    project {\n      name\n    }\n    numberLikes\n  }\n}",
-								"variables": "  {\n  \"projectId\":3\n  \n}"
+								"variables": "  {\n  \"projectId\":2\n  \n}"
 							}
 						},
 						"url": {
@@ -949,7 +949,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    jobDescription\n     \n  }\n  }\n",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 7,\n    \"memberUserId\": 9,\n    \"position\": \"BE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\",\n     \"jobDescription\": \"ban hanh\"\n  }\n  \n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": \"7\",\n    \"memberUserId\": \"9\",\n    \"position\": \"BE\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"pmUserId\": \"5\",\n     \"jobDescription\": \"ban hanh\"\n  }\n  \n}"
 							}
 						},
 						"url": {
