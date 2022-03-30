@@ -4,7 +4,7 @@ export default gql`
   type Mutation {
     createProjectInterested(data: ProjectInterestedInput!): ProjectInterested
     updateProjectInterested(data: ProjectInterestedInput!): ProjectInterested
-    deleteProjectInterested(id: Int): Boolean
+    deleteProjectInterested(id: ID): Boolean
   }
 
   type Query {  
