@@ -268,7 +268,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query SearchProject($name: String, $type: String, $status: String) {\n  searchProject(name: $name, type: $type, status: $status) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUserId\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n  }\n}",
+								"query": "query SearchProject($name: String, $type: String, $status: String) {\n  searchProject(name: $name, type: $type, status: $status) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUserId\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    memberJoin\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    projectLikes {\n      projectId\n    }\n    projectInterested {\n      projectId\n    }\n    numberLikes\n    numberInterested\n  }\n}",
 								"variables": "{\n  \"type\": \"project\",\n  \"status\": \"inter\",\n  \"name\": \"I\"\n}"
 							}
 						},
