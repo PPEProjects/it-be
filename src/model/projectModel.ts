@@ -17,7 +17,24 @@ const queryMembers = async (parent, args) => {
   })
   return (members.length === 0) ? null : members
 }
-
+const queryLikes = async (parent, args)=>{
+  var like = await prisma.projectLikes.findMany({
+    where:{
+      projectId: parent.id || undefined,
+      deleted:null
+    }
+  })
+  return (like.length === 0) ? null : like
+}
+var queryInterested = async (parent, args)=>{
+  var interested = await prisma.projectInterested.findMany({
+    where:{
+      projectId: parent.id || undefined,
+      deleted: null
+    }
+  })
+  return (interested.length === 0) ? null : interested
+}
 export default {
 
   Project: {
@@ -52,6 +69,8 @@ export default {
     deleted: (parent) => parent.deleted,
     user: (parent, args) => queryUser(parent, args),
     members: (parent, args) => queryMembers(parent, args),
+    projectLikes:(parent, args) => queryLikes(parent, args),
+    projectInterested:(parent, args) => queryInterested(parent, args)
   }
 }
 

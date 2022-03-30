@@ -6,6 +6,7 @@ import { utimesSync } from 'fs';
 import GraphQLJSON from 'graphql-type-json';
 import { compact } from 'lodash';
 import { off } from 'process';
+import projectLikesQueries from './projectLikesQueries';
 const { prisma, prismaUser} = require('../../database')
 
 export default {
@@ -146,9 +147,14 @@ export default {
                         updatedAt: 'desc'
                     },
                 })
-                if (listProject.length === 0) {
-                    return null
-                } 
+                // for(const project of listProject){
+                //     project.numberLikes = listProject.length
+                //     project.numberInterested = listProject.length
+                
+                // }
+
+ 
+                      
                 
                 return listProject
             } catch (e) {
@@ -180,7 +186,7 @@ export default {
                 })
 
 
-                detailProject.projectLikes = projectlike 
+                detailProject.projectLikes = (projectlike.length === 0) ? null: projectlike
                 detailProject.numberLikes = projectlike.length
                 detailProject.projectInterested = (projectIntersted.length === 0) ? null : projectIntersted
                 detailProject.numberInterested = projectIntersted.length
