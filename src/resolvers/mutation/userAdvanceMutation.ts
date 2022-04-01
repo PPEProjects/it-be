@@ -55,10 +55,13 @@ export default {
 
       try {
         const now = new Date()
-        const deleteProjectMembers = await prisma.userAdvance.delete({
+        const deleteProjectMembers = await prisma.userAdvance.update({
           where: {
             id: +args.id
           },
+          data:{
+            deleted: now
+          }
         })
         return true
       }

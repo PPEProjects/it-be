@@ -147,11 +147,7 @@ export default {
                         updatedAt: 'desc'
                     },
                 })
-                // for(const project of listProject){
-                //     project.numberLikes = listProject.length
-                //     project.numberInterested = listProject.length
-                
-                // }
+               
 
  
                       

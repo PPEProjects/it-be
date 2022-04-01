@@ -60,10 +60,13 @@ export default {
     deleteUserFeedback: async (parent, args, content,) =>{
       try{
         const now = new Date()
-        const deleteUserFeedback = await prisma.userFeedback.delete({
+        const deleteUserFeedback = await prisma.userFeedback.update({
             where:{
               id: +args.id 
             },
+            data:{
+              deleted:now
+            }
         })
         return true
       }

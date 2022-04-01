@@ -143,7 +143,7 @@ export default {
           where: {
             id: +args.id
           },
-          data: {
+          data:{
             deleted: now
           }
         })
