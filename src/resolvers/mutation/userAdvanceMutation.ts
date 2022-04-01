@@ -2,8 +2,6 @@ import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
-import { DateTimeResolver } from 'graphql-scalars'
-import { update } from 'lodash';
 
 
 export default {
@@ -14,9 +12,6 @@ export default {
 
       try {
         const { userId } = context
-        const user = await prismaUser.user.findUnique({
-          where: { id: +userId }
-        })
         const createUserAdvance = await prisma.userAdvance.create({
           data: {
             ...args.data,
@@ -24,7 +19,6 @@ export default {
 
           },
         })
-        createUserAdvance.user = user
         return createUserAdvance
       }
       catch (e) {

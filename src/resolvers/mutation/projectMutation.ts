@@ -40,6 +40,7 @@ export default {
       }
       catch (e) {
         console.log(e)
+        return new ApolloError(`${e}`)
       }
     },
     upsertProjectMembers: async (parent, args, context,) => {
@@ -76,6 +77,7 @@ export default {
       }
       catch (e) {
         console.log(e)
+        return new ApolloError(`${e}`)
       }
     },
 

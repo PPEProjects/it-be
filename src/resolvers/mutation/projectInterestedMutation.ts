@@ -1,10 +1,6 @@
 import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
-const { prismaUser } = require('../../database')
-import { DateTimeResolver } from 'graphql-scalars'
-import projectInterestedTypeDefs from '../../typeDefs/projectInterestedTypeDefs';
-import { isTypeNode } from 'graphql';
 
 
 
@@ -25,7 +21,6 @@ export default {
               projectId: +args.data?.projectId,
           }
         })
-        console.log(checkInterested)
         if(checkInterested === null){
           const createProjectInterested= await prisma.projectInterested.create({
             data: {
@@ -37,6 +32,7 @@ export default {
         }
       } catch (e) {
         console.log(e) 
+        return new ApolloError(`${e}`)
       }
     
     },
@@ -58,6 +54,7 @@ export default {
       }
       catch (e) {
         console.log(e)
+        return new ApolloError(`${e}`)
       }
     },
 
@@ -72,6 +69,7 @@ export default {
       }
       catch (e) {
         console.log(e)
+        return new ApolloError(`${e}`)
       }
     },
 

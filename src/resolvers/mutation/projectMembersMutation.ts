@@ -2,11 +2,7 @@ import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
-import { DateTimeResolver } from 'graphql-scalars'
-import { ary, countBy, create, forEach, isElement, isNull } from 'lodash';
-import { log } from 'console';
 import _ = require('lodash');
-import projectMembersQueries from '../query/projectMembersQueries';
 
 
 

@@ -1,7 +1,6 @@
 import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
 const { prisma,prismaUser } = require('../../database')
-import { sendNotification } from '../repositories/notificationRepository'
 export default {
   JSON: GraphQLJSON,
 
@@ -31,6 +30,7 @@ export default {
 
       } catch (e) {
         console.log(e) 
+        return new ApolloError(`${e}`)
       }
     
     },
@@ -61,6 +61,7 @@ export default {
 
       } catch (e) {
         console.log(e) 
+        return new ApolloError(`${e}`)
       }
     },
     
@@ -75,6 +76,7 @@ export default {
       }
       catch (e) {
         console.log(e)
+        return new ApolloError(`${e}`)
       }
     },
 
