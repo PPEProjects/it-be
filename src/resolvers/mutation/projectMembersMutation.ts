@@ -102,7 +102,6 @@ export default {
           where: {
             memberUserId: +args.data?.memberUserId || 0,
             projectId: +args.data?.projectId,
-            deleted: null
           }
         })
         if (projectMember === null) {
@@ -138,13 +137,9 @@ export default {
 
     deleteProjectMembers: async (parent, args, content,) => {
       try {
-        const now = new Date()
-        const deleteProjectMembers = await prisma.projectMembers.update({
+        const deleteProjectMembers = await prisma.projectMembers.delete({
           where: {
             id: +args.id
-          },
-          data:{
-            deleted: now
           }
         })
         return true

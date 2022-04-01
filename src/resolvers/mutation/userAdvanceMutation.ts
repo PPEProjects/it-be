@@ -48,49 +48,46 @@ export default {
       }
       catch (e) {
         console.log(e)
+        new ApolloError(`${e}`)
       }
     },
 
     deleteUserAdvance: async (parent, args, content,) => {
 
       try {
-        const now = new Date()
-        const deleteProjectMembers = await prisma.userAdvance.update({
+        const deleteProjectMembers = await prisma.userAdvance.delete({
           where: {
             id: +args.id
           },
-          data:{
-            deleted: now
-          }
         })
         return true
       }
       catch (e) {
         console.log(e)
+        new ApolloError(`${e}`)
       }
     },
     upsertUserAdvance: async (parent, args, context) => {
       try {
         const { userId } = context
+        const dataUserAdvance = {
+          language: args.data.language,
+          roles: args.data.roles,
+          skill: args.data.skill,
+          info: args.data.info,
+          plan: args.data.plan,
+          goal: args.data.goal,
+          deleted: null
+        }
         const upsertUserAdvance = await prisma.userAdvance.upsert({
           where: {
             userId: +userId,
           },
           update: {
-            language: args.data.language,
-            roles: args.data.roles,
-            skill: args.data.skill,
-            info: args.data.info,
-            plan: args.data.plan,
-            goal: args.data.goal
+            ...dataUserAdvance
           },
           create: {
-            language: args.data.language,
-            roles: args.data.roles,
-            skill: args.data.skill,
-            info: args.data.info,
-            plan: args.data.plan,
-            goal: args.data.goal,
+            ...dataUserAdvance,
             userId: userId
           },
         })
@@ -108,6 +105,7 @@ export default {
       }
       catch (e) {
         console.log(e)
+        return new ApolloError(`${e}`)
       }
     },
 

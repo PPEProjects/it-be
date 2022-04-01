@@ -48,14 +48,10 @@ export default {
 
     deleteNotification: async (parent, args, content,) => {
       try {
-          const dateNow = new Date()
-        const deleteNotification = await prisma.notification.update({
+        const deleteNotification = await prisma.notification.delete({
             where:{
                 id: +args.id
             },
-            data:{
-                deleted: dateNow 
-            }
         })
         return true
       }

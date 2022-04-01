@@ -63,25 +63,9 @@ export default {
         console.log(e) 
       }
     },
-    // updateProjectLikes: async (parent, args, content,) => {
-    //   try {
-    //     const updateProject = await prisma.projectLikes.update({
-    //       where: {
-    //         id: args.id
-    //       },
-    //       data: {
-    //         ...args.data
-    //       }
-    //     })
-    //     return updateProject
-    //   }
-    //   catch (e) {
-    //     console.log(e)
-    //   }
-    // },
+    
     deleteProjectLikes: async (parent, args, content,) => {
       try {
-        const now = new Date()
         const deleteProjectLikes = await prisma.projectLikes.delete({
           where: {
             id: +args.id
