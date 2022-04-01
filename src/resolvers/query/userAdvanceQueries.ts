@@ -16,11 +16,7 @@ export default {
         allUserAdvance: async (parent, args, context) => {
             try {
 
-                const allUserAdvance = await prisma.userAdvance.findMany({
-                    where: {
-                        deleted: null,
-                    },
-                })
+                const allUserAdvance = await prisma.userAdvance.findMany({})
     
                 return allUserAdvance
 
@@ -37,39 +33,40 @@ export default {
                         userId: +args.userId
                     },
                 })
-                const numberSelfIdeas = await prisma.project.aggregate({
-                    _count: {
-                        id: true
-                    },
-                    where: {
-                        authorUserId: +args.userId
-                    }
+                // const numberSelfIdeas = await prisma.project.aggregate({
+                //     _count: {
+                //         id: true
+                //     },
+                //     where: {
+                //         authorUserId: +args.userId
+                //     }
 
-                })
+                // })
 
-                const numberJoinProject = await prisma.projectMembers.aggregate({
-                    _count: {
-                        id: true
-                    },
-                    where: {
-                        memberUserId: +args.userId
-                    }
-                })
-                const numberAvg = await prisma.userFeedback.aggregate({
-                    _avg: {
-                        grate: true
-                    },
-                    where: {
-                        userId: +args.userId
-                    }
-                })
-                detailUserAdvance.numberSelfIdeas = numberSelfIdeas._count.id
-                detailUserAdvance.numberJoinedProject = numberJoinProject._count.id
-                detailUserAdvance.numberAvggrate = numberAvg._avg.grate
+                // const numberJoinProject = await prisma.projectMembers.aggregate({
+                //     _count: {
+                //         id: true
+                //     },
+                //     where: {
+                //         memberUserId: +args.userId
+                //     }
+                // })
+                // const numberAvg = await prisma.userFeedback.aggregate({
+                //     _avg: {
+                //         grate: true
+                //     },
+                //     where: {
+                //         userId: +args.userId
+                //     }
+                // })
+                // detailUserAdvance.numberSelfIdeas = numberSelfIdeas._count.id
+                // detailUserAdvance.numberJoinedProject = numberJoinProject._count.id
+                // detailUserAdvance.numberAvggrate = numberAvg._avg.grate
 
                 return detailUserAdvance
             } catch (e) {
                 console.log(e)
+                return false
             }
         },
     }
