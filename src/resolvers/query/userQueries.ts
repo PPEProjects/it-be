@@ -4,7 +4,6 @@ const { prismaUser, prisma } = require('../../database')
 import * as bcrypt from 'bcryptjs'
 import { ApolloError } from 'apollo-server'
 import axios from 'axios'
-import { ary } from 'lodash'
 
 export default {
 
@@ -93,14 +92,14 @@ export default {
           return null
         }
         
-        const userFeedback = await prisma.userFeedback.aggregate({
-          _avg: {
-            grate: true
-          },
-          where: {
-            userId: userId
-          }
-        })
+        // const userFeedback = await prisma.userFeedback.aggregate({
+        //   _avg: {
+        //     grate: true
+        //   },
+        //   where: {
+        //     userId: userId
+        //   }
+        // })
         
          const projectMembers = await prisma.projectMembers.findMany({
             where:{
@@ -128,17 +127,11 @@ export default {
       }
       catch (e) {
         console.log(e)
+        return new ApolloError(`${e}`)
       }
     },
 
   },
 
-}
-function id(id: any) {
-  throw new Error('Function not implemented.')
-}
-
-export function User() {
-  throw new Error('Function not implemented.')
 }
 

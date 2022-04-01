@@ -1,6 +1,6 @@
 
+import { ApolloError } from 'apollo-server';
 import GraphQLJSON from 'graphql-type-json';
-import _ = require('lodash');
 
 const { prisma, prismaUser } = require('../../database')
 
@@ -19,6 +19,7 @@ export default {
             }
             catch (e) {
                 console.log(e)
+                return new ApolloError(`${e}`)
             }
         },
     }

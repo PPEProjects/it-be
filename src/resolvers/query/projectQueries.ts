@@ -1,12 +1,7 @@
 
 const _ = require('lodash')
 import { ApolloError } from 'apollo-server';
-import { count } from 'console';
-import { utimesSync } from 'fs';
 import GraphQLJSON from 'graphql-type-json';
-import { compact } from 'lodash';
-import { off } from 'process';
-import projectLikesQueries from './projectLikesQueries';
 const { prisma, prismaUser} = require('../../database')
 
 export default {
@@ -29,6 +24,7 @@ export default {
             }
             catch (e) {
                 console.log(e)
+                return new ApolloError(`${e}`)
             }
         },
         myProject: async (parent, args, context) => {
@@ -52,6 +48,7 @@ export default {
                 return myProject
             } catch (e) {
                 console.log(e)
+                return new ApolloError(`${e}`)
             }
         },
         listJoinProject: async (parent, args, context) => {
@@ -65,6 +62,9 @@ export default {
                         }
                     }
                 })
+                if (listJoinProject.length === 0) {
+                    return null
+                }
                 const numberSelfIdeas = await prisma.projectMembers.aggregate({
                     _count: {
                         id: true
@@ -77,16 +77,13 @@ export default {
                     project.countProject = numberSelfIdeas._count.id
 
                 }
-                if (listJoinProject.length === 0) {
-                    return null
-                }
 
 
                 return listJoinProject
 
             } catch (e) {
                 console.log(e)
-
+                return new ApolloError(`${e}`)
             }
 
         },
@@ -120,6 +117,7 @@ export default {
                 return listInterstedProject
             } catch (e) {
                 console.log(e)
+                return new ApolloError(`${e}`)
             }
         },
 
@@ -130,7 +128,6 @@ export default {
                     skip: args.skip,
                     take: args.take,
                     where: {
-                        deleted: null,  
                         name: {
                             contains: args.name || undefined
                         },
@@ -147,11 +144,6 @@ export default {
                         updatedAt: 'desc'
                     },
                 })
-               
-
- 
-                      
-                
                 return listProject
             } catch (e) {
                 console.log(e)
@@ -180,18 +172,8 @@ export default {
                         projectId: +args.id,
                     }
                 })
-
-
-                detailProject.projectLikes = (projectlike.length === 0) ? null: projectlike
                 detailProject.numberLikes = projectlike.length
-                detailProject.projectInterested = (projectIntersted.length === 0) ? null : projectIntersted
                 detailProject.numberInterested = projectIntersted.length
-             
-                
-                
-               
-            
-    
                 return detailProject
             } catch (e) {
                 console.log(e)
@@ -200,7 +182,6 @@ export default {
         },
         adminProject: async (parent, args, context) => {
             try {
-                const { type } = context
                 const listProject = await prisma.project.findMany({
                     where: {
                         id: args.id,
@@ -230,7 +211,9 @@ export default {
                     },
                 })
                 const users = _.keyBy(await userCore, 'id')
-                const numberSelfIdeas = await prisma.$queryRaw`SELECT  project_id ,COUNT(project_id) as number FROM project_interested WHERE project_id  GROUP BY project_id`
+                const numberSelfIdeas = await prisma.$queryRaw`SELECT  project_id ,COUNT(project_id) as number 
+                                                                FROM project_interested WHERE project_id  
+                                                                GROUP BY project_id`
                 var interested = _.keyBy(numberSelfIdeas, "project_id")
 
                 allProject.forEach(project => {

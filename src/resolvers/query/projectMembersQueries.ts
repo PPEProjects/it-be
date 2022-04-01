@@ -1,8 +1,6 @@
 
-import { triggerAsyncId } from 'async_hooks';
-import { typeFromAST } from 'graphql';
+import { ApolloError } from 'apollo-server';
 import GraphQLJSON from 'graphql-type-json';
-import { toArray } from 'lodash';
 const _ = require('lodash')
 
 const { prisma, prismaUser } = require('../../database')
@@ -24,6 +22,7 @@ export default {
             }
             catch (e) {
                 console.log(e)
+                return new ApolloError(`${e}`)
             }
         },
         detailMemberByIdProject: async (parent, args, context) => {
@@ -34,23 +33,24 @@ export default {
                         projectId: +args.projectId
                     },
                 })
-                const getIdMember = _.difference(_.map(detailMember, 'memberUserId'), [null])
-                const userFeedback = await prisma.userFeedback.findMany({
-                    where: {
-                        userId: {
-                            in: getIdMember
-                        },
-                        projectId: +args.projectId
-                    }
-                })
-                const setKeyUserFeedback = _.keyBy(userFeedback, "userId")
-                _.map(detailMember, (member) => {
-                    member.userFeedback = setKeyUserFeedback[member.memberUserId]
-                    return member
-                })
+                // const getIdMember = _.difference(_.map(detailMember, 'memberUserId'), [null])
+                // const userFeedback = await prisma.userFeedback.findMany({
+                //     where: {
+                //         userId: {
+                //             in: getIdMember
+                //         },
+                //         projectId: +args.projectId
+                //     }
+                // })
+                // const setKeyUserFeedback = _.keyBy(userFeedback, "userId")
+                // _.map(detailMember, (member) => {
+                //     member.userFeedback = setKeyUserFeedback[member.memberUserId]
+                //     return member
+                // })
                 return detailMember
             } catch (e) {
                 console.log(e)
+                return new ApolloError(`${e}`)
             }
         },
         detailProjectMemberByIdPm: async (parent, args, context) => {
