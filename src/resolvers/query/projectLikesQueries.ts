@@ -10,10 +10,6 @@ export default {
         allProjectLikes: async (parent, args, context) => {
             try {
                 const listProject = await prisma.projectLikes.findMany({
-                    where: {
-                        deleted: null,
-                       
-                    },
                 })
                
                  return listProject
