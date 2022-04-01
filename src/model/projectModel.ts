@@ -12,7 +12,6 @@ const queryMembers = async (parent, args) => {
   var members = await prisma.projectMembers.findMany({
     where: {
       projectId: parent.id || undefined,
-      deleted: null
     }
   })
   return (members.length === 0) ? null : members
