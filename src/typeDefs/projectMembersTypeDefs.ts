@@ -12,7 +12,7 @@ export default gql`
   type Query {
     allProjectMembers: [ProjectMembers]
     detailMemberByIdProject(projectId: ID): [ProjectMembers]
-    detailProjectMemberByIdPm(pmUserId:Int): [ProjectMembers]
+    detailProjectMemberByIdPm(pmUserId:ID): [ProjectMembers]
   }
 
   type ProjectMembers {
