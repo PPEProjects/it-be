@@ -7,8 +7,6 @@ const _ = require('lodash')
 const { prisma, prismaUser } = require('../../database')
 
 
-
-
 export default {
     JSON: GraphQLJSON,
 
@@ -33,36 +31,6 @@ export default {
                         userId: +args.userId
                     },
                 })
-                // const numberSelfIdeas = await prisma.project.aggregate({
-                //     _count: {
-                //         id: true
-                //     },
-                //     where: {
-                //         authorUserId: +args.userId
-                //     }
-
-                // })
-
-                // const numberJoinProject = await prisma.projectMembers.aggregate({
-                //     _count: {
-                //         id: true
-                //     },
-                //     where: {
-                //         memberUserId: +args.userId
-                //     }
-                // })
-                // const numberAvg = await prisma.userFeedback.aggregate({
-                //     _avg: {
-                //         grate: true
-                //     },
-                //     where: {
-                //         userId: +args.userId
-                //     }
-                // })
-                // detailUserAdvance.numberSelfIdeas = numberSelfIdeas._count.id
-                // detailUserAdvance.numberJoinedProject = numberJoinProject._count.id
-                // detailUserAdvance.numberAvggrate = numberAvg._avg.grate
-
                 return detailUserAdvance
             } catch (e) {
                 console.log(e)

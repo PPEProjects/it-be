@@ -2,7 +2,7 @@ import { ApolloError } from 'apollo-server'
 import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
-
+const _ = require('lodash')
 
 export default {
   JSON: GraphQLJSON,
@@ -102,7 +102,58 @@ export default {
         return new ApolloError(`${e}`)
       }
     },
-
+    addAsPosition: async (parent, args, context) => {
+      try {
+        const userAdvance = await prisma.userAdvance.findFirst({
+          where:{
+            userId: +args.userId
+          }
+        })
+        userAdvance.roles = [args.roles].concat(userAdvance.roles)
+        const upsertUserAdvance = await prisma.userAdvance.upsert({
+          where: {
+            userId: +args.userId,
+          },
+          update: {
+            ...userAdvance
+          },
+          create: {
+            ...userAdvance,
+            userId: +args.userId
+          },
+        })
+        return upsertUserAdvance
+      } catch (e) {
+        console.log(e)
+        return new ApolloError(`${e}`)
+      }
+    },
+    removeAsPosition: async (parent, args, context) => {
+      try {
+        const userAdvance = await prisma.userAdvance.findFirst({
+          where:{
+            userId: +args.userId
+          }
+        })
+        userAdvance.roles = (userAdvance.roles).filter(value => ![args.roles].includes(value))
+        const upsertUserAdvance = await prisma.userAdvance.upsert({
+          where: {
+            userId: +args.userId,
+          },
+          update: {
+            ...userAdvance
+          },
+          create: {
+            ...userAdvance,
+            userId: +args.userId
+          },
+        })
+        return upsertUserAdvance
+      } catch (e) {
+        console.log(e)
+        return new ApolloError(`${e}`)
+      }
+    },
   }
 }
 

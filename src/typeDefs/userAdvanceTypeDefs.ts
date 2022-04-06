@@ -2,15 +2,17 @@ import { gql } from 'apollo-server'
 
 export default gql`
   type Mutation {
-    createUserAdvance(data: UserAdvanceInput!): UserAdvance!
+    createUserAdvance(data: UserAdvanceInput!): UserAdvance
     updateUserAdvance(data: UserAdvanceInput!): UserAdvance
     upsertUserAdvance(data: UserAdvanceInput!): UserAdvance
+    addAsPosition(userId: ID, roles:String): UserAdvance
+    removeAsPosition(userId: ID, roles:String): UserAdvance
     deleteUserAdvance(id: ID): Boolean
   }
 
   type Query {
     allUserAdvance: [UserAdvance]
-     detailUserAdvance(userId: ID): UserAdvance
+    detailUserAdvance(userId: ID): UserAdvance
   }
 
   type UserAdvance{
