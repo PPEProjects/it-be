@@ -488,8 +488,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: Int) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
-								"variables": "{\n  \"deleteProjectInterestedId\": 8\n}"
+								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: ID) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
+								"variables": "{\n  \"deleteProjectInterestedId\": 19\n}"
 							}
 						},
 						"url": {
@@ -1324,7 +1324,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation Mutation($data: ProjectLikesInput!) {\n  createProjectLikes(data: $data) {\n    id\n    userId\n    projectId\n  }}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 49\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 4\n  }\n}"
 							}
 						},
 						"url": {
@@ -1383,8 +1383,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation DeleteProjectInterested($deleteProjectInterestedId: ID) {\n  deleteProjectInterested(id: $deleteProjectInterestedId)\n}",
-								"variables": "{\n  \"deleteProjectInterestedId\": 6\n}"
+								"query": "mutation DeleteProjectLikes($deleteProjectLikesId: ID) {\n  deleteProjectLikes(id: $deleteProjectLikesId)\n}",
+								"variables": "{\n  \"deleteProjectLikesId\": 3\n}"
 							}
 						},
 						"url": {
