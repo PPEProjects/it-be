@@ -13,7 +13,7 @@ const queryProject = async (parent, args) => {
       id: parent?.projectId || undefined
     }
   })
-  return (project) ? null : project
+  return (!project) ? null : project
 }
 export default {
   ProjectInterested: {
