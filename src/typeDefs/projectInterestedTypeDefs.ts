@@ -9,6 +9,7 @@ export default gql`
 
   type Query {  
     allProjectInterested: [ProjectInterested]
+    myProjectInterested: [ProjectInterested]
     detailProjectInterested(projectId:ID): ProjectInterested
   }
 

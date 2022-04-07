@@ -15,7 +15,7 @@ export default gql`
     LikeProject(id:ID,type:String):[Project]
     searchProject(name: String, type: String, status: String,skip:Int,take:Int):[Project]
     detailProject(id: ID): Project
-  adminProject(type:String, name: String, arrange:String,status:String):[Project]
+    adminProject(type:String, name: String, arrange:String,status:String):[Project]
   }
 
   type Project {

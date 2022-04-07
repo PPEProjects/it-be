@@ -109,6 +109,7 @@ export default {
             userId: +args.userId
           }
         })
+        userAdvance.roles = (userAdvance.roles).filter(value => ![args.roles].includes(value))
         userAdvance.roles = [args.roles].concat(userAdvance.roles)
         const upsertUserAdvance = await prisma.userAdvance.upsert({
           where: {

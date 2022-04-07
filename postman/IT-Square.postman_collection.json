@@ -429,7 +429,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateProjectInterested($data: ProjectInterestedInput!) {\n  createProjectInterested(data: $data) {\n    id\n    projectId\n    createdAt\n    updatedAt\n    userId\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 2\n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 4\n  }\n}"
 							}
 						},
 						"url": {
@@ -550,6 +550,36 @@
 							"graphql": {
 								"query": "query AdminProject($projectId: ID) {\n  detailProjectInterested(projectId: $projectId) {\n    id\n    projectId\n    userId\n    createdAt\n    updatedAt\n  }\n}",
 								"variables": "  {\n    \"projectId\": 2\n  }"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_my_interested_project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyProjectInterested {\n  myProjectInterested {\n    id\n    projectId\n    project {\n      id\n      name\n      status\n      user {\n        id\n        name\n      }\n      attachments\n      description\n      level\n      privacy\n      type\n    }\n  }\n}",
+								"variables": "{\n  \n}"
 							}
 						},
 						"url": {
@@ -859,7 +889,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation RemoveAsPosition($userId: ID, $roles: String) {\n  removeAsPosition(userId: $userId, roles: $roles) {\n    id\n    userId\n    roles\n    skill\n  }\n}",
-								"variables": "{\n  \"userId\": 154,\n  \"roles\": \"BE\"\n}"
+								"variables": "{\n  \"userId\": 154,\n  \"roles\": \"pr1\"\n}"
 							}
 						},
 						"url": {

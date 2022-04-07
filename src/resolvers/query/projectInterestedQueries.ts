@@ -56,5 +56,19 @@ export default {
 
             }
         },
+        myProjectInterested: async (parent, args, context) => {
+            try {
+                const {userId} = context
+                const myProjectInterested = await prisma.projectInterested.findMany({
+                    where:{
+                        userId: userId
+                    }
+                })
+                return myProjectInterested
+            } catch (e) {
+                console.log(e)
+                return new ApolloError(`${e}`)
+            }
+        }
     }
 }
