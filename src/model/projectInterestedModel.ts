@@ -8,7 +8,7 @@ const queryMemberUser = async (parent, args) => {
   return parent?.memberUserId ? user : null
 }
 const queryProject = async (parent, args) => {
-  var project = await prisma.project.findMany({
+  var project = await prisma.project.findFirst({
     where: {
       id: parent?.projectId || undefined
     }

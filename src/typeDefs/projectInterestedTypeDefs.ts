@@ -21,7 +21,7 @@ export default gql`
     updatedAt: DateTime!
     deleted: DateTime
     memberUser: [User]
-    project: [Project]
+    project: Project
     numberInterested: Int
   }
   
