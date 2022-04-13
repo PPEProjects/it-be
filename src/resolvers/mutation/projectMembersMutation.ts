@@ -38,7 +38,7 @@ export default {
 
       }
     },
-    createProjectMembersUserIds: async (parent, args, context,) => {
+    upsertProjectMembersUserIds: async (parent, args, context,) => {
 
       try {
         const { userId } = context
@@ -46,19 +46,53 @@ export default {
         if (args.data.userId) {
           getUserId = +args.data.userId
         }
-        const member = args.data.memberUserId
-        let createProjectMembers = {}
-        for (const element of member) {
-          createProjectMembers = await prisma.projectMembers.create({
+        const member = (args.data?.memberUserId)?.map(Number)
+        if(member?.length == 0  || !member){
+            return null
+        }
+        const checkMember = await prisma.projectMembers.findMany({
+            where:{
+              memberUserId:{
+                in: member
+              },
+              projectId: +args.data.projectId
+            }
+        })
+        const setKey = _.keyBy(checkMember, 'memberUserId')
+        
+        const getIdMembers = _.map(checkMember, 'memberUserId')
+        
+        var projectMembers = []
+        for(const memberId of member) {
+          if(getIdMembers.includes(memberId))
+          {
+            
+            const updateProjectMembers = await prisma.projectMembers.update({
+              where:{
+               id:setKey[memberId]?.id
+              },
+              data: {
+                ...args.data,
+                memberUserId: +memberId,
+                projectId: +args.data?.projectId,
+                pmUserId: getUserId
+              },
+            })
+            projectMembers.push(updateProjectMembers)
+          }
+          else{
+            const createProjectMembers = await prisma.projectMembers.create({
             data: {
               ...args.data,
-              memberUserId: +element,
+              memberUserId: +memberId,
               projectId: +args.data?.projectId,
               pmUserId: getUserId
             },
           })
+          projectMembers.push(createProjectMembers)
         }
-        return createProjectMembers
+        }
+        return projectMembers
 
       }
 
