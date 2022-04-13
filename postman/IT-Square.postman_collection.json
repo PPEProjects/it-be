@@ -660,6 +660,36 @@
 					"response": []
 				},
 				{
+					"name": "upsert_member_project_user_ids",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpsertProjectMembersUserIds($data: ProjectMembersInputId!) {\n  upsertProjectMembersUserIds(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"data\": {\n    \"projectId\": 3,\n    \"memberUserId\": [9,6, 154],\n    \"position\": \"pr\"\n    \n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "create_member_project",
 					"request": {
 						"method": "POST",
