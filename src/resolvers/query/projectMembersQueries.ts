@@ -33,6 +33,17 @@ export default {
                         projectId: +args.projectId
                     },
                 })
+                if (detailMember.length > 0) {
+                    for (const member of detailMember) {
+                        var userFeedback = await prisma.userFeedback.findFirst({
+                            where: {
+                                userId: member?.memberUserId || undefined,
+                                projectId: member?.projectId || undefined
+                            }
+                        })
+                        member.userFeedback = member?.memberUserId ? userFeedback : null
+                    }
+                }
                 return detailMember
             } catch (e) {
                 console.log(e)
@@ -41,8 +52,8 @@ export default {
         },
         detailProjectMemberByIdPm: async (parent, args, context) => {
             try {
-                var { userId } = context              
-                if(+args?.pmUserId){
+                var { userId } = context
+                if (+args?.pmUserId) {
                     userId = +args.pmUserId
                 }
                 const searchProjectMember = await prisma.projectMembers.findMany({
