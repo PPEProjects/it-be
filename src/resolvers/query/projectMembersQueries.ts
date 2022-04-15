@@ -33,17 +33,17 @@ export default {
                         projectId: +args.projectId
                     },
                 })
-                if (detailMember.length > 0) {
-                    for (const member of detailMember) {
-                        var userFeedback = await prisma.userFeedback.findFirst({
-                            where: {
-                                userId: member?.memberUserId || undefined,
-                                projectId: member?.projectId || undefined
-                            }
-                        })
-                        member.userFeedback = member?.memberUserId ? userFeedback : null
-                    }
-                }
+                // if (detailMember.length > 0) {
+                //     for (const member of detailMember) {
+                //         var userFeedback = await prisma.userFeedback.findFirst({
+                //             where: {
+                //                 userId: member?.memberUserId || undefined,
+                //                 projectId: member?.projectId || undefined
+                //             }
+                //         })
+                //         member.userFeedback = member?.memberUserId ? userFeedback : null
+                //     }
+                // }
                 return detailMember
             } catch (e) {
                 console.log(e)
