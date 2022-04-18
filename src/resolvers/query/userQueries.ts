@@ -44,7 +44,19 @@ export default {
         if(page && limit){
           query = query + ` LIMIT ${limit } OFFSET ${(page-1)*limit} `
         }
-        const searchUsers = await prisma.$queryRawUnsafe(query)
+        var avgUserFeedback = await prisma.userFeedback.groupBy({
+          by: ['userId'],
+          _avg: {
+            grate: true,
+          },
+        })          
+        avgUserFeedback = _.keyBy(avgUserFeedback, 'userId')
+        var searchUsers = await prisma.$queryRawUnsafe(query)
+        searchUsers = _.map(searchUsers, (user) => {
+          user.avgUserFeedback = avgUserFeedback[user.id]?._avg?.grate || 0
+          return user
+        })
+        
         return searchUsers
       }
       catch (e) {
