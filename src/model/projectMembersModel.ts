@@ -16,6 +16,16 @@ const queryProject = async (parent, args) => {
     }
   })
 }
+
+const queryUserFeedback = async (parent, args) => {
+  const userFeedback = await prisma.userFeedback.findFirst({
+    where: {
+      userId: parent?.memberUserId || undefined,
+      projectId: parent?.projectId || undefined
+    }
+  })
+  return parent?.memberUserId ? userFeedback : null
+}
 export default {
   ProjectMembers: {
     id: (parent) => parent.id,
@@ -32,6 +42,7 @@ export default {
     updatedAt: (parent) => (parent.updated_at === undefined) ? parent.updatedAt : parent.updated_at,
     deleted: (parent) => parent.deleted,
     memberUser: (parent, args) => queryMemberUser(parent, args),
+    userFeedback: (parent, args) => queryUserFeedback(parent, args),
     project: (parent, args) => queryProject(parent, args),
   },
 }
