@@ -62,7 +62,7 @@ export default {
         
         const getIdMembers = _.map(checkMember, 'memberUserId')
         
-        var projectMembers = []
+        var projectMembers = new Array()
         for(const memberId of member) {
           if(getIdMembers.includes(memberId))
           {
