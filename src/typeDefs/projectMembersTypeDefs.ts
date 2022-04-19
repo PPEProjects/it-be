@@ -13,6 +13,7 @@ export default gql`
     allProjectMembers: [ProjectMembers]
     detailMemberByIdProject(projectId: ID): [ProjectMembers]
     detailProjectMemberByIdPm(pmUserId:ID): [ProjectMembers]
+    detailProjectMemberByPosition(position: String): [ProjectMembers]
   }
 
   type ProjectMembers {

@@ -19,7 +19,8 @@ export default {
         const createUserFeedback = await prisma.userFeedback.create({
           data: {
             ...args.data,
-            userId: +userId
+            userId: +userId,
+            projectId: +args?.data?.projectId
           },
         })
         return createUserFeedback
@@ -40,7 +41,8 @@ export default {
             },
             data:{
               ...args.data,
-              userId: +args.data.userId
+              userId: +args.data.userId,
+              projectId: +args?.data?.projectId || undefined
             }
         })
         return updateUserFeedback 

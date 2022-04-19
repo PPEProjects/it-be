@@ -61,7 +61,26 @@ export default {
                 console.log(e)
             };
 
-        }
+        },
+        detailProjectMemberByPosition: async (parent, args, context) => {
+            try {
+                var { userId } = context
+                const searchProjectMember = await prisma.projectMembers.findMany({
+                    distinct: ['projectId'],
+                    where: {
+                        memberUserId: userId,
+                        position: args?.position
+                    }
+                })
+                if (searchProjectMember.length === 0) {
+                    return null
+                }
+                return searchProjectMember
+            }
+            catch (e) {
+                console.log(e)
+            };
 
+        }
     }
 }

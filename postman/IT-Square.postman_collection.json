@@ -239,7 +239,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query DetailProject($detailProjectId: ID) {\n  detailProject(id: $detailProjectId) {\n    id\n    name\n    user {\n      email\n      id\n      name\n      phone_number\n      avatar_attachment\n    }\n    members{\n        id\n        position\n        memberUser{\n            id\n            name\n            avatar_attachment\n        }\n    }\n    attachments\n    authorUserId\n    category\n    description\n    level\n    privacy\n    version\n    budget\n    type\n    salary\n    status\n    contentStatus\n    memberJoin\n    framework\n    programingLanguage\n    is_recruit\n    is_involved\n    createdAt\n    updatedAt\n    timeToDo\n  }\n}",
-								"variables": "{\n  \"detailProjectId\": 48\n}"
+								"variables": "{\n  \"detailProjectId\": 138\n}"
 							}
 						},
 						"url": {
@@ -423,7 +423,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query SearchUsers($name: String, $roles: JSON, \n$page: String, $limit: String) {\n  searchUsers(name: $name, roles: $roles, page: $page, limit: $limit) {\n    id\n    name\n    email\n    phone_number\n    userAdvance {\n      id\n      roles\n      goal\n      plan\n      userId\n    }\n  }\n}",
+								"query": "query SearchUsers($name: String, $roles: JSON, \n$page: String, $limit: String) {\n  searchUsers(name: $name, roles: $roles, page: $page, limit: $limit) {\n    id\n    name\n    email\n    avgUserFeedback\n    phone_number\n    userFeedback{\n        id \n        projectId\n        userId\n        grate\n    }\n    userAdvance {\n      id\n      roles\n      goal\n      plan\n      userId\n    }\n  }\n}",
 								"variables": "{\n\n}"
 							}
 						},
@@ -644,7 +644,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation Mutation($data: ProjectMembersInput!) {\n  upsertProjectMembers(data: $data) {\n    id\n    pmUserId\n    projectId\n    roles\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    jobDescription\n     \n  }\n  }\n",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 88,\n    \"memberUserId\": \"154\",\n    \"position\": \"pm\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"jobDescription\": \"Magna mauris tincidunt viverra quis mauris fermentum in pretium, arcu. Nunc, platea sit ligula massa. Mi laoreet nascetur phasellus feugiat adipiscing semper accumsan. Aliquam sit in sed elementum mauris. Egestas accumsan congue viverra blandit a ultrices fringilla in dignissim. Vestibulum aliquet lacus, ultrices at porta id rutrum in. Velit leo eget odio in morbi eros. Tincidunt felis augue facilisis orci curabitur aliquam et faucibus. Purus nisl sit dictum sit interdum consectetur. Sed nisl ullamcorper.\"\n  }\n  \n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": 3,\n    \"memberUserId\": \"154\",\n    \"position\": \"pr\",\n    \"linkTest\": \"testLink.googleDocs\",\n    \"salary\": {\n      \"money\": 200000,\n      \"code\": \"VND\"\n    },\n    \"jobDescription\": \"Magna mauris tincidunt viverra quis mauris fermentum in pretium, arcu. Nunc, platea sit ligula massa. Mi laoreet nascetur phasellus feugiat adipiscing semper accumsan. Aliquam sit in sed elementum mauris. Egestas accumsan congue viverra blandit a ultrices fringilla in dignissim. Vestibulum aliquet lacus, ultrices at porta id rutrum in. Velit leo eget odio in morbi eros. Tincidunt felis augue facilisis orci curabitur aliquam et faucibus. Purus nisl sit dictum sit interdum consectetur. Sed nisl ullamcorper.\"\n  }\n  \n}"
 							}
 						},
 						"url": {
@@ -674,7 +674,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpsertProjectMembersUserIds($data: ProjectMembersInputId!) {\n  upsertProjectMembersUserIds(data: $data) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"data\": {\n    \"projectId\": 3,\n    \"memberUserId\": [9,6, 154],\n    \"position\": \"pr\"\n    \n  }\n}"
+								"variables": "{\n  \"data\": {\n    \"projectId\": \"46\",\n    \"memberUserId\": [6,7,8],\n    \"position\": \"pr\"\n    \n  }\n}"
 							}
 						},
 						"url": {
@@ -794,7 +794,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation DeleteProjectMembers($deleteProjectMembersId: ID) {\n  deleteProjectMembers(id: $deleteProjectMembersId)\n}",
-								"variables": "  {\n    \"deleteProjectMembersId\": 31\n  }"
+								"variables": "  {\n    \"deleteProjectMembersId\": 222\n  }"
 							}
 						},
 						"url": {
@@ -853,8 +853,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailMemberByIdProject($projectId: ID) {\n  detailMemberByIdProject(projectId: $projectId) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    memberUser{\n        id\n        name\n    }\n    userFeedback{\n        id\n        grate\n        content\n    }\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"projectId\": 40\n  }"
+								"query": "query DetailMemberByIdProject($projectId: ID) {\n  detailMemberByIdProject(projectId: $projectId) {\n    id\n    pmUserId\n    projectId\n    project {\n      id\n      name\n    }\n    memberUserId\n    memberUser{\n        id\n        name\n        email \n    }\n    userFeedback{\n        id\n        grate\n        content\n    }\n    position\n    linkTest\n    salary\n    fee\n    status\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "  {\n    \"projectId\": 3\n  }"
 							}
 						},
 						"url": {
@@ -883,8 +883,38 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query DetailProjectMemberByIdPm($pmUserId: ID) {\n  detailProjectMemberByIdPm(pmUserId: $pmUserId) {\n    projectId\n    roles\n    pmUserId\n    project {\n      name\n    }\n  }\n}",
-								"variables": "{\n  \n}"
+								"query": "query DetailProjectMemberByIdPm($pmUserId: ID) {\n  detailProjectMemberByIdPm(pmUserId: $pmUserId) {\n      id\n    projectId\n    roles\n    pmUserId\n    project {\n      name\n      attachments\n      user{\n        id\n        name\n        avatar_attachment\n    }\n    }\n    \n  }\n}",
+								"variables": "{\n \n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}/graphql",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query_detail_member_by_position",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query DetailProjectMemberByPosition($position: String) {\n  detailProjectMemberByPosition(position: $position) {\n      id\n    projectId\n    roles\n    pmUserId\n    project {\n      name\n      attachments\n      type\n      user{\n        id\n        name\n        avatar_attachment\n    }\n    }\n    \n  }\n}",
+								"variables": "{\n \"position\": \"pr\"\n}"
 							}
 						},
 						"url": {
@@ -1164,7 +1194,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation CreateUserFeedback($data: UserFeedbackInput!) {\n  createUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"userId\": 1,\n      \"projectId\": 1,\n      \"grate\":2\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"userId\": 154,\n      \"projectId\": \"8\",\n      \"grate\":3\n    }\n  }"
 							}
 						},
 						"url": {
@@ -1194,7 +1224,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation UpdateUserFeedback($data: UserFeedbackInput!) {\n  updateUserFeedback(data: $data) {\n    id\n    userId\n    projectId\n    grate\n    createdAt\n    updatedAt\n  }\n}",
-								"variables": "  {\n    \"data\": {\n      \"id\": 1,\n         \"userId\": 1,\n      \"projectId\": 2,\n      \"grate\":\"2\"\n    }\n  }"
+								"variables": "  {\n    \"data\": {\n      \"id\": 20,\n      \"userId\": \"154\",\n      \"content\":\"test\"\n    }\n  }"
 							}
 						},
 						"url": {
@@ -1224,7 +1254,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation DeleteUserFeedback($deleteUserFeedbackId: ID) {\n  deleteUserFeedback(id: $deleteUserFeedbackId)\n}",
-								"variables": "  {\n    \"deleteUserFeedbackId\": 1\n  }"
+								"variables": "  {\n    \"deleteUserFeedbackId\": 4\n  }"
 							}
 						},
 						"url": {
