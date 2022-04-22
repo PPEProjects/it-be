@@ -3,6 +3,7 @@ import { gql } from 'apollo-server'
 export default gql`
   type Mutation {
     createUserFeedback(data: UserFeedbackInput!): UserFeedback!
+    upsertUserFeedback(data: UserFeedbackInput!): UserFeedback
     updateUserFeedback(data: UserFeedbackInput!): UserFeedback 
     deleteUserFeedback(id: ID): Boolean
   }
