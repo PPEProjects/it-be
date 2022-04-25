@@ -50,6 +50,9 @@ export default {
                     where: {
                         memberUserId: userId,
                         position: 'pm'
+                    },
+                    orderBy: {
+                        createdAt: 'desc'
                     }
                 })
                 if (searchProjectMember.length === 0) {

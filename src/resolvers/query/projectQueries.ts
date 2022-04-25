@@ -32,7 +32,6 @@ export default {
                 const { userId } = context
                 const myProject = await prisma.project.findMany({
                     where: {
-                        deleted: null,
                         authorUserId: userId,
                         type: {
                             contains: args.type
@@ -42,9 +41,6 @@ export default {
                         updatedAt: 'desc'
                     }
                 })
-                if (myProject.length === 0) {
-                    return new ApolloError(`Data not exist`)
-                }
                 return myProject
             } catch (e) {
                 console.log(e)
