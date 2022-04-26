@@ -109,23 +109,26 @@ export default {
             userId: +args.userId
           }
         })
-        if(userAdvance.roles){
+        var roles = [args?.roles]
+        if(userAdvance?.roles){
           userAdvance.roles = (userAdvance.roles).filter(value => ![args.roles].includes(value))
-          userAdvance.roles = [args.roles].concat(userAdvance.roles)
+          roles = [args.roles].concat(userAdvance.roles)
         }
-        else{
-          userAdvance.roles = [args.roles]
-        }
+        roles = _.remove(roles, null)
         const upsertUserAdvance = await prisma.userAdvance.upsert({
           where: {
             userId: +args.userId,
           },
           update: {
-            ...userAdvance
+            ...userAdvance,
+            roles: roles,
+            language: userAdvance?.language || undefined
           },
           create: {
             ...userAdvance,
-            userId: +args.userId
+            userId: +args.userId,
+            roles: roles,
+            language: userAdvance?.language || undefined
           },
         })
         return upsertUserAdvance
@@ -147,11 +150,13 @@ export default {
             userId: +args.userId,
           },
           update: {
-            ...userAdvance
+            ...userAdvance,
+            language: userAdvance?.language || undefined
           },
           create: {
             ...userAdvance,
-            userId: +args.userId
+            userId: +args.userId,
+            language: userAdvance?.language || undefined
           },
         })
         return upsertUserAdvance

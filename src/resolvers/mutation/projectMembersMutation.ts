@@ -3,7 +3,7 @@ import GraphQLJSON from 'graphql-type-json';
 const { prisma } = require('../../database')
 const { prismaUser } = require('../../database')
 import _ = require('lodash');
-
+import userAdvanceMutation from './userAdvanceMutation';
 
 
 export default {
@@ -43,7 +43,7 @@ export default {
       try {
         const { userId } = context
         var getUserId = userId
-        if (args.data.userId) {
+        if (args?.data?.userId) {
           getUserId = +args.data.userId
         }
         const member = (args.data?.memberUserId)?.map(Number)
@@ -58,23 +58,45 @@ export default {
               projectId: +args.data.projectId
             }
         })
+        const userAdvances = await prisma.userAdvance.findMany({
+            where:{
+              userId:{
+                in: member
+              }
+            },
+        })
+        const setKeyUserAdvances = _.keyBy(userAdvances, 'userId')
+        for(const userId of member){
+          var checkRoles = (setKeyUserAdvances[userId]?.roles ? setKeyUserAdvances[userId]?.roles : [])
+                            .filter(value => [args?.data?.position].includes(value))
+          if(checkRoles.length){
+            continue;
+          }
+          userAdvanceMutation?.
+          Mutation?.
+          addAsPosition(parent, {'roles': args?.data?.position, 'userId': userId}, context)
+        }
+        
         const setKey = _.keyBy(checkMember, 'memberUserId')
         
         const getIdMembers = _.map(checkMember, 'memberUserId')
         
         var projectMembers = new Array()
         for(const memberId of member) {
-          if(getIdMembers.includes(memberId))
+          if(getIdMembers.includes(memberId) || args?.id)
           {
-            
+            var idProjectMember = setKey[memberId]?.id
+            if(args?.id){
+              idProjectMember = args.id
+            }
             const updateProjectMembers = await prisma.projectMembers.update({
               where:{
-               id:setKey[memberId]?.id
+               id: idProjectMember
               },
               data: {
                 ...args.data,
                 memberUserId: +memberId,
-                projectId: +args.data?.projectId,
+                projectId: +args?.data?.projectId,
                 pmUserId: getUserId
               },
             })
@@ -95,7 +117,6 @@ export default {
         return projectMembers
 
       }
-
       catch (e) {
         console.log(e)
         return new ApolloError(`${e}`)
