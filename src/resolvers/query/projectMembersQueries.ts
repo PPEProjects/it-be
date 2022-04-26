@@ -49,7 +49,7 @@ export default {
                     distinct: ['projectId'],
                     where: {
                         memberUserId: userId,
-                        position: 'pm'
+                        position: 'project_manage'
                     },
                     orderBy: {
                         createdAt: 'desc'
