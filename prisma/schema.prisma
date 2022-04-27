@@ -24,6 +24,7 @@ model Project {
   is_recruit         Boolean?
   type               String?
   status             String?
+  companies          Json?          
   contentStatus      String?          @map("content_status") @db.MediumText
   timeToDo           String?          @map("time_to_do")
   memberJoin         Json?            @map("member_join")

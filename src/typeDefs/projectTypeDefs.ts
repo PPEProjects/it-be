@@ -48,8 +48,9 @@ export default gql`
     members: [ProjectMembers],  
     projectLikes: [ProjectLikes],
     projectInterested: [ProjectInterested],
-    numberLikes: Int
-    numberInterested: Int
+    numberLikes: Int,
+    numberInterested: Int,
+    companies: JSON
   }
   
   input ProjectInput {
@@ -73,6 +74,7 @@ export default gql`
     contentStatus: String
     is_recruit: Boolean
     is_involved: Boolean
+    companies: JSON
   }
 
   scalar JSON
