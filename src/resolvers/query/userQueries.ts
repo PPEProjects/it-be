@@ -27,14 +27,14 @@ export default {
         const page = args?.page;
         const limit = args?.limit;
         const UserCoreDB = _.last(getNameDB)
-        // var query = `SELECT u.* 
-        //             FROM ${UserCoreDB}.users u
-        //             LEFT JOIN user_advance ua ON ua.user_id = u.id  
-        //             WHERE ua.deleted is null `
-
         var query = `SELECT u.* 
-                      FROM ${UserCoreDB}.users u, user_advance ua  
-                      WHERE  ua.user_id = u.id AND ua.deleted is null `
+                    FROM ${UserCoreDB}.users u
+                    LEFT JOIN user_advance ua ON ua.user_id = u.id  
+                    WHERE ua.deleted is null `
+
+        // var query = `SELECT u.* 
+        //               FROM ${UserCoreDB}.users u, user_advance ua  
+        //               WHERE  ua.user_id = u.id AND ua.deleted is null `
         if (args?.name) {
           const name = `'%${args.name}%'`
           const searchName = `AND u.name LIKE ${name} `
